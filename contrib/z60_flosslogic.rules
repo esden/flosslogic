@@ -22,8 +22,8 @@ ACTION!="add|change", GOTO="flosslogic_rules_end"
 SUBSYSTEM!="usb", GOTO="flosslogic_rules_end"
 ENV{DEVTYPE}!="usb_device", GOTO="flosslogic_rules_end"
 
-# CWAV USBee
-# http://www.usbee.com
+# CWAV USBee SX
+# http://www.usbee.com/sx.html
 ATTRS{idVendor}=="08a9", ATTRS{idProduct}=="0009", MODE="664", GROUP="plugdev"
 
 # Braintechnology USB-LPS

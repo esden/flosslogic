@@ -19,14 +19,14 @@
 ##
 
 all:
-	make -C lib all
-	make -C cli all
+	$(MAKE) -C lib all
+	$(MAKE) -C cli all
 
 clean:
-	make -C lib clean
-	make -C cli clean
+	$(MAKE) -C lib clean
+	$(MAKE) -C cli clean
 
 install:
-	make -C lib install
-	make -C cli install
+	$(MAKE) -C lib install
+	$(MAKE) -C cli install
 

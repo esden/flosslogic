@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+README
+-------------------------------------------------------------------------------
+
+The flosslogic project aims at creating a portable, cross-platform,
+Free/Libre/Open-Source (floss) logic analyzer software that supports various
+(usually USB-based) logic analyzer hardware products.
+
+There will be a shared library with common code, a command line utility for
+basic usage and easy scriptability, as well as an intuitive GUI.
+
+Additionally a custom Open-Hardware logic analyzer hardware may be created
+at some point.
+
+
+Website
+-------
+
+http://www.flosslogic.org
+

@@ -36,8 +36,8 @@
 
 /* Command line options */
 int verbose = 0;
-uint8_t samplerate_value = 0;
-uint64_t num_samples = 0;
+uint8_t samplerate = 0;
+uint64_t numsamples = 0;
 
 static void handle_cmdline_options(int argc, char *argv[])
 {
@@ -56,10 +56,12 @@ static void handle_cmdline_options(int argc, char *argv[])
 				  long_options, &option_index)) >= 0) {
 		switch (opt) {
 		case 'n':
-			/* TODO */
+			/* TODO: Error handling. */
+			numsamples = strtol(optarg, (char **)NULL, 10);
 			break;
 		case 's':
-			/* TODO */
+			/* TODO: Error handling. */
+			samplerate = strtol(optarg, (char **)NULL, 10);
 			break;
 		case 'V':
 			verbose = 1;

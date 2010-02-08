@@ -20,12 +20,13 @@
 
 LIBNAME = flosslogic
 PREFIX ?= /usr/local
-CFLAGS = -Wall -Wextra -g -I../include
+CFLAGS = -Wall -Wextra -Werror -Wshadow -g -I../include
 # LDFLAGS = -lusb
 
 all: main.c ../include/flosslogic.h
 	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 \
-		-o lib$(LIBNAME).so main.c $(CFLAGS) $(LDFLAGS)
+		-o lib$(LIBNAME).so main.c \
+		$(CFLAGS) $(LDFLAGS)
 
 clean:
 	rm -f *.o *.so

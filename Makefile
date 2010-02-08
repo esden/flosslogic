@@ -20,10 +20,13 @@
 
 all:
 	make -C lib all
+	make -C cli all
 
 clean:
 	make -C lib clean
+	make -C cli clean
 
 install:
 	make -C lib install
+	make -C cli install
 

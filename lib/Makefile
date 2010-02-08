@@ -18,23 +18,32 @@
 ## Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 ##
 
-LIBNAME = flosslogic
-PREFIX ?= /usr/local
-CFLAGS = -Wall -Wextra -Werror -Wshadow -g -I../include
-# LDFLAGS = -lusb
+LIBNAME   = flosslogic
 
-all: main.c ../include/flosslogic.h
+CC       ?= gcc
+INSTALL  ?= install
+PREFIX   ?= /usr/local
+CFLAGS   ?= -g -Wall -Wextra -Werror -Wshadow
+CPPFLAGS ?= -I../include
+LDFLAGS  ?= -L/usr/local/lib
+LIBS     ?= -lusb
+SRC       = main.c
+
+all: $(SRC) ../include/flosslogic.h
 	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 \
-		-o lib$(LIBNAME).so main.c \
-		$(CFLAGS) $(LDFLAGS)
+		-o lib$(LIBNAME).so $(SRC) \
+		$(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LIBS)
+	ln -sf lib$(LIBNAME).so lib$(LIBNAME).so.1
+	ln -sf lib$(LIBNAME).so.1 lib$(LIBNAME).so.1.0.0
 
 clean:
-	rm -f *.o *.so
+	rm -f *.o *.so *.so.1 *.so.1.0.0
 
 install: all
-	mkdir -p $(PREFIX)/include $(PREFIX)/lib
-	install -m 644 ../include/$(LIBNAME).h $(PREFIX)/include
-	install -m 755 lib$(LIBNAME).so $(PREFIX)/lib/lib$(LIBNAME).so.1.0.0
-	ln -sf lib$(LIBNAME).so.0.0.0 $(PREFIX)/lib/lib$(LIBNAME).so.1
-	ln -sf lib$(LIBNAME).so.1.0.0 $(PREFIX)/lib/lib$(LIBNAME).so
+	mkdir -p $(PREFIX)/include
+	mkdir -p $(PREFIX)/lib
+	$(INSTALL) -m 644 ../include/$(LIBNAME).h $(PREFIX)/include
+	$(INSTALL) -m 755 lib$(LIBNAME).so $(PREFIX)/lib/lib$(LIBNAME).so.1.0.0
+	ln -sf lib$(LIBNAME).so $(PREFIX)/lib/lib$(LIBNAME).so.1
+	ln -sf lib$(LIBNAME).so.1 $(PREFIX)/lib/lib$(LIBNAME).so.1.0.0
 

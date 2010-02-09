@@ -21,8 +21,7 @@
 PROGRAM = flosslogic
 
 PREFIX ?= /usr/local
-# TODO: Add -Werror later.
-CFLAGS  = -Wall -Wextra -Wshadow -g -I../include
+CFLAGS  = -Wall -Wextra -Werror -Wshadow -g -I../include
 LDFLAGS = -L../lib
 LIBS    = -lflosslogic
 MANDIR ?= $(PREFIX)/share/man

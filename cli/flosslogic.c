@@ -92,7 +92,22 @@ static void handle_cmdline_options(int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
+	int ret;
+	struct flosslogic_context ctx;
+
 	handle_cmdline_options(argc, argv);
+
+	if ((ret = flosslogic_init(&ctx)) < 0) {
+		fprintf(stderr, "Error initializing flosslogic (%d).\n", ret);
+		return EXIT_FAILURE;
+	}
+
+	if (ret = flosslogic_scan_for_devices(&ctx) < 0) {
+		fprintf(stderr, "Error scanning for devices (%d).\n", ret);
+		return EXIT_FAILURE;
+	}
+
+	printf("Found %d supported logic analyzers.\n", ret);
 
 	return EXIT_SUCCESS;
 }

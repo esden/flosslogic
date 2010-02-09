@@ -18,9 +18,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
-#include "main.h"
+#ifndef FLOSSLOGIC_MAIN_H
+#define FLOSSLOGIC_MAIN_H
 
-void flosslogic_init(void)
-{
-	/* TODO */
-}
+void flosslogic_init(void);
+void flosslogic_libusb_init(void);
+
+#endif

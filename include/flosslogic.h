@@ -21,7 +21,10 @@
 #ifndef FLOSSLOGIC_FLOSSLOGIC_H
 #define FLOSSLOGIC_FLOSSLOGIC_H
 
-/* Initialize libflosslogic. */
+/* main.c */
 void flosslogic_init(void);
+
+/* libusb.c */
+void flosslogic_libusb_init(void);
 
 #endif

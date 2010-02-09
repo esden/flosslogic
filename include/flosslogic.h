@@ -21,10 +21,30 @@
 #ifndef FLOSSLOGIC_FLOSSLOGIC_H
 #define FLOSSLOGIC_FLOSSLOGIC_H
 
+#include <usb.h>
+
+struct flosslogic_context {
+	int num_devices_found;
+};
+
+struct logic_analyzer {
+	const char *shortname;
+	uint16_t vid;
+	uint16_t pid;
+};
+
+static const struct logic_analyzer flosslogic_logic_analyzers[] = {
+	{"usbeesx",	0x08a9, 0x0009},
+	{"lps",		0x16d0, 0x0498},
+	{"logic",	0x0925, 0x3881},
+	{NULL,		0,	0},
+};
+
 /* main.c */
-void flosslogic_init(void);
+/* TODO */
 
 /* libusb.c */
-void flosslogic_libusb_init(void);
+int flosslogic_init(struct flosslogic_context *ctx);
+int flosslogic_scan_for_devices(struct flosslogic_context *ctx);
 
 #endif

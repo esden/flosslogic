@@ -19,11 +19,75 @@
  */
 
 #include <usb.h>
+#include <flosslogic.h>
 
-void flosslogic_libusb_init(void)
+/**
+ * Initialize libflosslogic.
+ *
+ * @param ctx A pointer to a flosslogic_context.
+ * @return 0 if the init was successful, negative values upon errors.
+ */
+int flosslogic_init(struct flosslogic_context *ctx)
 {
+	if (ctx == NULL)
+		return -1;
+
+	ctx->num_devices_found = 0;
+
 	/* TODO: Error checking. */
 	usb_init();
 	usb_find_busses();
 	usb_find_devices();
+
+	return 0;
+}
+ 
+/**
+ * Check if the given USB device is a supported logic analyzer.
+ *
+ * @param dev The USB device to check.
+ * @return 1 if the USB device is recognized as supported, 0 otherwiѕe.
+ */
+static int is_supported_device(struct usb_device *dev)
+{
+	int i = 0;
+	struct logic_analyzer la;
+
+	while (1) {
+		la = flosslogic_logic_analyzers[i++];
+		if (la.shortname == NULL)
+			break;
+		if (dev->descriptor.idVendor != la.vid
+		    || dev->descriptor.idProduct != la.pid)
+			continue;
+
+		return 1;
+	}
+
+	return 0;
+}
+
+/**
+ * Scan for supported USB-based logic analyzers.
+ *
+ * @param ctx A flosslogic_context struct.
+ * @return The number of supported devices found, -1 upon errors.
+ */
+int flosslogic_scan_for_devices(struct flosslogic_context *ctx)
+{
+	struct usb_bus *bus;
+	struct usb_device *dev;
+	int devices_found = 0;
+
+	if (ctx == NULL)
+		return -1;
+
+	for (bus = usb_get_busses(); bus; bus = bus->next) {
+		for (dev = bus->devices; dev; dev = dev->next) {
+			if (is_supported_device(dev))
+				devices_found++;
+		}
+	}
+
+	return devices_found;
 }

@@ -26,14 +26,15 @@ CFLAGS  = -Wall -Wextra -Wshadow -g -I../include
 LDFLAGS = -L../lib
 LIBS    = -lflosslogic
 MANDIR ?= $(PREFIX)/share/man
-OBJS    = $(PROGRAM).o
+OBJS    = $(PROGRAM).o cmdline.o
+HEADERS = common.h
 
 all: $(PROGRAM)
 
-$(PROGRAM): $(OBJS)
+$(PROGRAM): $(OBJS) $(HEADERS)
 	$(CC) $(LDFLAGS) -o $(PROGRAM) $(OBJS) $(LIBS)
 
-%.o: %.c
+%.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:

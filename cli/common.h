@@ -18,38 +18,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef FLOSSLOGIC_FLOSSLOGIC_H
+#define FLOSSLOGIC_FLOSSLOGIC_H
+
 #include <stdint.h>
-// #include <string.h>
-// #include <getopt.h>
-#include <flosslogic.h>
-#include "common.h"
+
+#define PROGRAM_NAME	"flosslogic"
+#define PROGRAM_VERSION	"0.1"
+
+#define USAGE "Usage: %s [-d] [-n] [-s] [-V] [-v] [-h]\n\n\
+  -d | --device          Device to use (usbeesx, lps, logic)\n\
+  -n | --numsamples      Number of samples to acquire\n\
+  -s | --samplerate      Sample rate to use (in Msps)\n\
+  -V | --verbose         Verbose mode\n\
+  -v | --version         Show the program version\n\
+  -h | --help            Show a short help text\n\n"
 
 /* Command line options */
-int verbose = 0;
-uint8_t samplerate = 0;
-uint64_t numsamples = 0;
-char *devicestring;
+extern int verbose;
+extern uint8_t samplerate;
+extern uint64_t numsamples;
+extern char *devicestring;
 
-int main(int argc, char *argv[])
-{
-	int ret;
-	struct flosslogic_context ctx;
+void handle_cmdline_options(int argc, char *argv[]);
 
-	handle_cmdline_options(argc, argv);
-
-	if ((ret = flosslogic_init(&ctx)) < 0) {
-		fprintf(stderr, "Error initializing flosslogic (%d).\n", ret);
-		return EXIT_FAILURE;
-	}
-
-	if ((ret = flosslogic_scan_for_devices(&ctx)) < 0) {
-		fprintf(stderr, "Error scanning for devices (%d).\n", ret);
-		return EXIT_FAILURE;
-	}
-
-	printf("Found %d supported logic analyzers.\n", ret);
-
-	return EXIT_SUCCESS;
-}
+#endif

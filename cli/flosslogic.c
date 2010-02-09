@@ -27,7 +27,8 @@
 #define PROGRAM_NAME	"flosslogic"
 #define PROGRAM_VERSION	"0.1"
 
-#define USAGE "Usage: %s [-n] [-s] [-V] [-v] [-h]\n\n\
+#define USAGE "Usage: %s [-d] [-n] [-s] [-V] [-v] [-h]\n\n\
+  -d | --device          Device to use (usbeesx, lps, logic)\n\
   -n | --numsamples      Number of samples to acquire\n\
   -s | --samplerate      Sample rate to use (in Msps)\n\
   -V | --verbose         Verbose mode\n\
@@ -38,12 +39,14 @@
 int verbose = 0;
 uint8_t samplerate = 0;
 uint64_t numsamples = 0;
+char *devicestring;
 
 static void handle_cmdline_options(int argc, char *argv[])
 {
 	int opt, option_index;
 
 	static const struct option long_options[] = {
+		{"device",	required_argument,	NULL,	'd'},
 		{"numsamples",	required_argument,	NULL,	'n'},
 		{"samplerate",	required_argument,	NULL,	's'},
 		{"verbose",	no_argument,		NULL,	'V'},
@@ -52,9 +55,13 @@ static void handle_cmdline_options(int argc, char *argv[])
 		{0, 0, 0, 0}
 	};
 
-	while ((opt = getopt_long(argc, argv, "n:s:Vvh",
+	while ((opt = getopt_long(argc, argv, "d:n:s:Vvh",
 				  long_options, &option_index)) >= 0) {
 		switch (opt) {
+		case 'd':
+			/* TODO: Error handling. */
+			devicestring = strdup(optarg);
+			break;
 		case 'n':
 			/* TODO: Error handling. */
 			numsamples = strtol(optarg, (char **)NULL, 10);

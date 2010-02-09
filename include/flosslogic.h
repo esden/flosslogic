@@ -34,10 +34,26 @@ struct logic_analyzer {
 };
 
 static const struct logic_analyzer flosslogic_logic_analyzers[] = {
-	{"usbeesx",	0x08a9, 0x0009},
-	{"lps",		0x16d0, 0x0498},
-	{"logic",	0x0925, 0x3881},
-	{NULL,		0,	0},
+	{
+		"usbeesx",
+		0x08a9,
+		0x0009,
+	},
+	{
+		"lps",
+		0x16d0,
+		0x0498,
+	},
+	{
+		"logic",
+		0x0925,
+		0x3881,
+	},
+	{
+		NULL,
+		0,
+		0,
+	},
 };
 
 /* main.c */

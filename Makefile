@@ -21,12 +21,16 @@
 all:
 	$(MAKE) -C lib all
 	$(MAKE) -C cli all
+	cd gui && qmake
+	$(MAKE) -C gui all
 
 clean:
 	$(MAKE) -C lib clean
 	$(MAKE) -C cli clean
+	$(MAKE) -C gui distclean
 
 install:
 	$(MAKE) -C lib install
 	$(MAKE) -C cli install
+	@# gui: TODO?
 

@@ -21,8 +21,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-// #include <string.h>
-// #include <getopt.h>
 #include <flosslogic.h>
 #include "common.h"
 
@@ -34,8 +32,9 @@ char *devicestring;
 
 int main(int argc, char *argv[])
 {
-	int ret;
+	int ret, hw;
 	struct flosslogic_context ctx;
+	uint8_t *sample_buffer;
 
 	handle_cmdline_options(argc, argv);
 
@@ -49,7 +48,33 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	printf("Found %d supported logic analyzers.\n", ret);
+	hw = ret;
+
+	if (verbose)
+		printf("Found supported logic analyzer #%d.\n", hw);
+
+	if ((ret = flosslogic_hw_init(hw, &ctx)) < 0) {
+		fprintf(stderr, "Error initializing device %d (%d).\n",
+				hw, ret);
+		return EXIT_FAILURE;
+	}
+
+	if (verbose)
+		printf("Logic analyzer initialized successfully.\n");
+
+	if ((sample_buffer = flosslogic_hw_get_samples(hw, &ctx, numsamples,
+						       samplerate)) == NULL) {
+		fprintf(stderr, "Error getting samples from device %d.\n", hw);
+		return EXIT_FAILURE;
+	}
+
+	if (verbose)
+		printf("Logic analyzer samples acquired successfully.\n");
+
+	flosslogic_hw_shutdown(hw, &ctx);
+
+	if (verbose)
+		printf("Logic analyzer shutdown completed successfully.\n");
 
 	return EXIT_SUCCESS;
 }

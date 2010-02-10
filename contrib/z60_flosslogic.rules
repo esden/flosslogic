@@ -19,8 +19,7 @@
 ##
 
 ACTION!="add|change", GOTO="flosslogic_rules_end"
-SUBSYSTEM!="usb", GOTO="flosslogic_rules_end"
-ENV{DEVTYPE}!="usb_device", GOTO="flosslogic_rules_end"
+SUBSYSTEM!="usb|usb_device", GOTO="flosslogic_rules_end"
 
 # CWAV USBee SX
 # http://www.usbee.com/sx.html
@@ -35,4 +34,3 @@ ATTRS{idVendor}=="16d0", ATTRS{idProduct}=="0498", MODE="664", GROUP="plugdev"
 ATTRS{idVendor}=="0925", ATTRS{idProduct}=="3881", MODE="664", GROUP="plugdev"
 
 LABEL="flosslogic_rules_end"
-

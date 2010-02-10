@@ -40,6 +40,7 @@ extern uint8_t samplerate;
 extern uint64_t numsamples;
 extern char *devicestring;
 
+/* cmdline.c */
 void handle_cmdline_options(int argc, char *argv[]);
 
 #endif

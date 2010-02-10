@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
-#ifndef FLOSSLOGIC_FLOSSLOGIC_H
-#define FLOSSLOGIC_FLOSSLOGIC_H
+#ifndef FLOSSLOGIC_COMMON_H
+#define FLOSSLOGIC_COMMON_H
 
 #include <stdint.h>
 

@@ -20,6 +20,7 @@
 
 #include <usb.h>
 #include <flosslogic.h>
+#include "common.h"
 
 /**
  * Initialize libflosslogic.
@@ -33,6 +34,7 @@ int flosslogic_init(struct flosslogic_context *ctx)
 		return -1;
 
 	ctx->num_devices_found = 0;
+	/* TODO */
 
 	/* TODO: Error checking. */
 	usb_init();
@@ -46,7 +48,8 @@ int flosslogic_init(struct flosslogic_context *ctx)
  * Check if the given USB device is a supported logic analyzer.
  *
  * @param dev The USB device to check.
- * @return 1 if the USB device is recognized as supported, 0 otherwiѕe.
+ * @return The index of the supported logic analyzer that was found, or
+ *         -1 in case none is found.
  */
 static int is_supported_device(struct usb_device *dev)
 {
@@ -61,33 +64,64 @@ static int is_supported_device(struct usb_device *dev)
 		    || dev->descriptor.idProduct != la.pid)
 			continue;
 
-		return 1;
+		return (i - 1);
 	}
 
-	return 0;
+	return -1;
 }
 
 /**
  * Scan for supported USB-based logic analyzers.
  *
  * @param ctx A flosslogic_context struct.
- * @return The number of supported devices found, -1 upon errors.
+ * @return TODO
  */
 int flosslogic_scan_for_devices(struct flosslogic_context *ctx)
 {
 	struct usb_bus *bus;
 	struct usb_device *dev;
-	int devices_found = 0;
+	int ret;
 
 	if (ctx == NULL)
 		return -1;
 
 	for (bus = usb_get_busses(); bus; bus = bus->next) {
 		for (dev = bus->devices; dev; dev = dev->next) {
-			if (is_supported_device(dev))
-				devices_found++;
+			if ((ret = is_supported_device(dev)) >= 0) {
+				/* TODO: Support for multiple devices. */
+				ctx->usb_dev = dev;
+				return ret;
+			}
 		}
 	}
 
-	return devices_found;
+	return -2;
+}
+
+/* FIXME */
+int usb_block_read(usb_dev_handle *devhandle, int endpoint, char *buf,
+		   size_t nbytes)
+{
+	ssize_t rv;
+	size_t chunk_size = nbytes;
+	size_t left = nbytes;
+	size_t timeout = 3000; /* FIXME */
+
+	while (left) {
+		size_t block_size = (left > chunk_size) ? chunk_size : left;
+
+		rv = usb_bulk_read(devhandle, endpoint, buf, block_size,
+				   timeout);
+		if (rv < 0)
+			return -1;
+
+		left -= rv;
+
+		if ((size_t)rv < block_size) {
+			if (rv == 0)
+				return -1;
+		}
+	}
+
+	return 0; /* FIXME */
 }

@@ -18,23 +18,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
-#include <stdint.h>
+#ifndef LIBFLOSSLOGIC_COMMON_H
+#define LIBFLOSSLOGIC_COMMON_H
+
 #include <usb.h>
-#include <flosslogic.h>
 
-int flosslogic_hw_init(int hw, struct flosslogic_context *ctx)
-{
-	return flosslogic_logic_analyzers[hw].init(ctx);
-}
+int usb_block_read(usb_dev_handle *devhandle, int endpoint, char *buf,
+		   size_t nbytes);
 
-uint8_t *flosslogic_hw_get_samples(int hw, struct flosslogic_context *ctx,
-				   uint64_t numsamples, uint8_t samplerate)
-{
-	return flosslogic_logic_analyzers[hw].get_samples(ctx, numsamples,
-							  samplerate);
-}
-
-void flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx)
-{
-	flosslogic_logic_analyzers[hw].shutdown(ctx);
-}
+#endif

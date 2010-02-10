@@ -25,7 +25,7 @@ CFLAGS  = -Wall -Wextra -Werror -Wshadow -g -I../include
 LDFLAGS = -L../lib
 LIBS    = -lflosslogic
 MANDIR ?= $(PREFIX)/share/man
-OBJS    = $(PROGRAM).o cmdline.o
+OBJS    = $(PROGRAM).o cmdline.o output.o
 HEADERS = common.h
 
 all: $(PROGRAM)

@@ -18,32 +18,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
-#ifndef FLOSSLOGIC_COMMON_H
-#define FLOSSLOGIC_COMMON_H
-
+#include <stdio.h>
 #include <stdint.h>
 
-#define PROGRAM_NAME	"flosslogic"
-#define PROGRAM_VERSION	"0.1"
+/* TODO: Don't hardcode number of channels to 8. */
+void output_gnuplot(uint8_t *buf, uint64_t numsamples)
+{
+	uint64_t i, j, count = 1;
 
-#define USAGE "Usage: %s [-d] [-n] [-s] [-V] [-v] [-h]\n\n\
-  -d | --device          Device to use (usbeesx, lps, logic)\n\
-  -n | --numsamples      Number of samples to acquire\n\
-  -s | --samplerate      Sample rate to use (in Msps)\n\
-  -V | --verbose         Verbose mode\n\
-  -v | --version         Show the program version\n\
-  -h | --help            Show a short help text\n\n"
+	for (i = 0; i < numsamples; i++) {
+		/* The first column is a counter (needed for gnuplot). */
+		printf("%lld\t\t", count++);
 
-/* Command line options */
-extern int verbose;
-extern uint8_t samplerate;
-extern uint64_t numsamples;
-extern char *devicestring;
-
-/* cmdline.c */
-void handle_cmdline_options(int argc, char *argv[]);
-
-/* output.c */
-void output_gnuplot(uint8_t *buf, uint64_t numsamples);
-
-#endif
+		/* The next 8 columns are the values of all 8 channels. */
+		for (j = 0; j < 8; j++)
+			printf("%d ", ((buf[i] & (1 << j))) >> j);
+		printf("\n");
+	}
+}

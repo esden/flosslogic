@@ -71,6 +71,8 @@ int main(int argc, char *argv[])
 	if (verbose)
 		printf("Logic analyzer samples acquired successfully.\n");
 
+	output_gnuplot(sample_buffer, numsamples);
+
 	flosslogic_hw_shutdown(hw, &ctx);
 
 	if (verbose)

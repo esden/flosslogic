@@ -33,7 +33,6 @@ int flosslogic_init(struct flosslogic_context *ctx)
 	if (ctx == NULL)
 		return -1;
 
-	ctx->num_devices_found = 0;
 	/* TODO */
 
 	/* TODO: Error checking. */

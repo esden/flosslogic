@@ -54,7 +54,7 @@ int hw_usbeesx_init(struct flosslogic_context *ctx)
 }
 
 uint8_t *hw_usbeesx_get_samples(struct flosslogic_context *ctx,
-				uint64_t numsamples, uint8_t samplerate)
+				uint64_t numsamples, uint64_t samplerate)
 {
 	int ret;
 	uint64_t i;

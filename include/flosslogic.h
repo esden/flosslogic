@@ -36,14 +36,14 @@ struct logic_analyzer {
 	uint8_t samplesize;
 	int (*init) (struct flosslogic_context *ctx);
 	uint8_t * (*get_samples) (struct flosslogic_context *ctx,
-				  uint64_t numsamples, uint8_t samplerate);
+				  uint64_t numsamples, uint64_t samplerate);
 	void (*shutdown) (struct flosslogic_context *ctx);
 };
 
 /* main.c */
 int flosslogic_hw_init(int hw, struct flosslogic_context *ctx);
 uint8_t *flosslogic_hw_get_samples(int hw, struct flosslogic_context *ctx,
-				   uint64_t numsamples, uint8_t samplerate);
+				   uint64_t numsamples, uint64_t samplerate);
 void flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx);
 
 /* libusb.c */
@@ -53,7 +53,7 @@ int flosslogic_scan_for_devices(struct flosslogic_context *ctx);
 /* hw_usbeesx.c */
 int hw_usbeesx_init(struct flosslogic_context *ctx);
 uint8_t *hw_usbeesx_get_samples(struct flosslogic_context *ctx,
-				uint64_t numsamples, uint8_t samplerate);
+				uint64_t numsamples, uint64_t samplerate);
 void hw_usbeesx_shutdown(struct flosslogic_context *ctx);
 
 static const struct logic_analyzer flosslogic_logic_analyzers[] = {

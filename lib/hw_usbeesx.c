@@ -80,9 +80,9 @@ uint8_t *hw_usbeesx_get_samples(struct flosslogic_context *ctx,
 	ret = usb_interrupt_write(ctx->devhandle, 0x01, cmdbuf, 2, 3000);
 
 	/* TODO: Error handling. */
-	sample_buffer = malloc(numsamples * 1 /* TODO: Use samplesize. */);
+	sample_buffer = malloc(numsamples * (numchannels / 8));
 
-	for (i = 0; i < numsamples * 1 /* FIXME */; i += 512) {
+	for (i = 0; i < numsamples * (numchannels / 8); i += 512) {
 		/* 0x86 == EP 6, IN direction */
 		usb_block_read(ctx->devhandle, 0x86,
 			       (char *)(sample_buffer + i), 512);

@@ -33,7 +33,7 @@ struct logic_analyzer {
 	const char *shortname;
 	uint16_t vid;
 	uint16_t pid;
-	uint8_t samplesize;
+	uint8_t numchannels;
 	int (*init) (struct flosslogic_context *ctx);
 	uint8_t * (*get_samples) (struct flosslogic_context *ctx,
 				  uint64_t numsamples, uint64_t samplerate);
@@ -70,7 +70,7 @@ static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 		"lps",
 		0x16d0,
 		0x0498,
-		0,		/* TODO */
+		16,
 		NULL,
 		NULL,
 		NULL,
@@ -79,7 +79,7 @@ static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 		"logic",
 		0x0925,
 		0x3881,
-		0,		/* TODO */
+		8,
 		NULL,
 		NULL,
 		NULL,

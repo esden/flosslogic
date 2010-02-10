@@ -90,6 +90,7 @@ int flosslogic_scan_for_devices(struct flosslogic_context *ctx)
 			if ((ret = is_supported_device(dev)) >= 0) {
 				/* TODO: Support for multiple devices. */
 				ctx->usb_dev = dev;
+				ctx->la = (struct logic_analyzer *)&flosslogic_logic_analyzers[ret];
 				return ret;
 			}
 		}

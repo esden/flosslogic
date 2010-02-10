@@ -27,6 +27,7 @@ struct flosslogic_context {
 	int num_devices_found;
 	struct usb_device *usb_dev;
 	usb_dev_handle *devhandle;
+	struct logic_analyzer *la;
 };
 
 struct logic_analyzer {

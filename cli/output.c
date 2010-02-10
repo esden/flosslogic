@@ -20,9 +20,11 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <flosslogic.h>
 
 /* TODO: Don't hardcode number of channels to 8. */
-void output_gnuplot(uint8_t *buf, uint64_t numsamples)
+void output_gnuplot(uint8_t *buf, uint64_t numsamples,
+		    struct flosslogic_context *ctx)
 {
 	uint64_t i, j, count = 1;
 
@@ -30,9 +32,15 @@ void output_gnuplot(uint8_t *buf, uint64_t numsamples)
 		/* The first column is a counter (needed for gnuplot). */
 		printf("%lld\t\t", count++);
 
-		/* The next 8 columns are the values of all 8 channels. */
-		for (j = 0; j < 8; j++)
-			printf("%d ", ((buf[i] & (1 << j))) >> j);
+		/* The next columns are the values of all channels. */
+		for (j = 0; j < ctx->la->numchannels; j++) {
+			if (j < 8) {
+				printf("%d ", ((buf[i] & (1 << j))) >> j);
+			} else if (j >= 8 && j < 16) {
+				printf("%d ", ((buf[i + 1]
+				       & (1 << (j - 8)))) >> (j - 8));
+			}
+		}
 		printf("\n");
 	}
 }

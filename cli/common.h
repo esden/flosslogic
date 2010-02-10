@@ -44,6 +44,7 @@ extern char *devicestring;
 void handle_cmdline_options(int argc, char *argv[]);
 
 /* output.c */
-void output_gnuplot(uint8_t *buf, uint64_t numsamples);
+void output_gnuplot(uint8_t *buf, uint64_t numsamples,
+		    struct flosslogic_context *ctx);
 
 #endif

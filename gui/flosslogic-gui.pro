@@ -18,13 +18,14 @@
 ## Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 ##
 
-TARGET    = flosslogic-gui
-TEMPLATE  = app
+TARGET     = flosslogic-gui
+TEMPLATE   = app
 
-SOURCES  += main.cpp \
-           mainwindow.cpp
+SOURCES   += main.cpp \
+	     mainwindow.cpp
 
-HEADERS  += mainwindow.h
+HEADERS   += mainwindow.h
 
-FORMS    += mainwindow.ui
+FORMS     += mainwindow.ui
 
+RESOURCES += flosslogic-gui.qrc

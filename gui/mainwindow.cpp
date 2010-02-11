@@ -51,3 +51,8 @@ void MainWindow::on_actionPreferences_triggered()
 {
 	QMessageBox::about(this, tr("Preferences"), tr("Not yet implemented."));
 }
+
+void MainWindow::on_actionScan_triggered()
+{
+	statusBar()->showMessage(tr("Scanning for supported logic analyzers..."));
+}

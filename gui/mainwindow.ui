@@ -27,6 +27,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionScan"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -83,6 +84,11 @@
    </property>
    <property name="text">
     <string>Preferences</string>
+   </property>
+  </action>
+  <action name="actionScan">
+   <property name="text">
+    <string>Scan</string>
    </property>
   </action>
  </widget>

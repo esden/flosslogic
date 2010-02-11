@@ -79,8 +79,8 @@
   </action>
   <action name="actionPreferences">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/preferences-system.png</normaloff>icons/preferences-system.png</iconset>
+    <iconset resource="flosslogic-gui.qrc">
+     <normaloff>:/icons/preferences-system.png</normaloff>:/icons/preferences-system.png</iconset>
    </property>
    <property name="text">
     <string>Preferences</string>
@@ -93,7 +93,9 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="flosslogic-gui.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionQuit</sender>

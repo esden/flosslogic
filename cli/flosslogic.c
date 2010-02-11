@@ -26,7 +26,7 @@
 
 /* Command line options */
 int verbose = 0;
-uint8_t samplerate = 0;
+uint64_t samplerate = 0;
 uint64_t numsamples = 0;
 char *devicestring;
 

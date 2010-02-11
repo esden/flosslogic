@@ -77,6 +77,10 @@
    </property>
   </action>
   <action name="actionPreferences">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/preferences-system.png</normaloff>icons/preferences-system.png</iconset>
+   </property>
    <property name="text">
     <string>Preferences</string>
    </property>

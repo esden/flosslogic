@@ -41,3 +41,8 @@ void MainWindow::on_actionAbout_triggered()
 			   "<center>GNU GPL, version 2 or later</center>\n"
 			   "<center>http://www.flosslogic.org</center>"));
 }
+
+void MainWindow::on_actionAbout_Qt_triggered()
+{
+	QMessageBox::aboutQt(this, tr("About Qt"));
+}

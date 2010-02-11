@@ -40,6 +40,7 @@ private:
 	Ui::MainWindow *ui;
 
 private slots:
+	void on_actionAbout_Qt_triggered();
 	void on_actionAbout_triggered();
 };
 

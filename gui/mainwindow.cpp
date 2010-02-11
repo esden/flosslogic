@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
+#include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -30,4 +31,13 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+void MainWindow::on_actionAbout_triggered()
+{
+	QMessageBox::about(this, tr("About"),
+			   tr("<center>flosslogic-gui 0.1</center>\n\n"
+			   "<center>Copyright (C) 2010 "
+			   "Uwe Hermann &lt;uwe@hermann-uwe.de&gt;</center>\n"
+			   "<center>GNU GPL, version 2 or later</center>\n"
+			   "<center>http://www.flosslogic.org</center>"));
 }

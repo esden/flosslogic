@@ -46,3 +46,8 @@ void MainWindow::on_actionAbout_Qt_triggered()
 {
 	QMessageBox::aboutQt(this, tr("About Qt"));
 }
+
+void MainWindow::on_actionPreferences_triggered()
+{
+	QMessageBox::about(this, tr("Preferences"), tr("Not yet implemented."));
+}

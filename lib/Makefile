@@ -30,7 +30,9 @@ LIBS     ?= -lusb
 SRC       = main.c libusb.c hw_usbeesx.c
 HEADERSS  = ../include/flosslogic.h common.h
 
-all: $(SRC) $(HEADERS)
+all: lib$(LIBNAME).so
+
+lib$(LIBNAME).so: $(SRC) $(HEADERS)
 	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 \
 		-o lib$(LIBNAME).so $(SRC) \
 		$(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LIBS)
@@ -40,7 +42,7 @@ all: $(SRC) $(HEADERS)
 clean:
 	rm -f *.o *.so *.so.1 *.so.1.0.0
 
-install: all
+install: lib$(LIBNAME).so
 	mkdir -p $(PREFIX)/include
 	mkdir -p $(PREFIX)/lib
 	$(INSTALL) -m 644 ../include/$(LIBNAME).h $(PREFIX)/include

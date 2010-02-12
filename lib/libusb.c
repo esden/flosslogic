@@ -25,7 +25,7 @@
 /**
  * Initialize libflosslogic.
  *
- * @param ctx A pointer to a flosslogic_context.
+ * @param ctx A pointer to a flosslogic_context which is to be initialized.
  * @return 0 if the init was successful, negative values upon errors.
  */
 int flosslogic_init(struct flosslogic_context *ctx)
@@ -33,7 +33,9 @@ int flosslogic_init(struct flosslogic_context *ctx)
 	if (ctx == NULL)
 		return -1;
 
-	/* TODO */
+	ctx->usb_dev = NULL;
+	ctx->devhandle = NULL;
+	ctx->la = NULL;
 
 	/* TODO: Error checking. */
 	usb_init();

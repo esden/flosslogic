@@ -45,3 +45,5 @@ install: $(PROGRAM)
 	install -m 755 $(PROGRAM) $(DESTDIR)$(PREFIX)/bin
 	install -m 644 $(PROGRAM).1 $(DESTDIR)$(MANDIR)/man1
 
+.PHONY: all clean install
+

@@ -48,3 +48,5 @@ install: all
 	ln -sf lib$(LIBNAME).so $(PREFIX)/lib/lib$(LIBNAME).so.1
 	ln -sf lib$(LIBNAME).so.1 $(PREFIX)/lib/lib$(LIBNAME).so.1.0.0
 
+.PHONY: all clean install
+

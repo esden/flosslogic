@@ -34,3 +34,5 @@ install:
 	$(MAKE) -C cli install
 	@# gui: TODO?
 
+.PHONY: all clean install
+

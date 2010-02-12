@@ -19,6 +19,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include <stdint.h>
 #include <flosslogic.h>
 
@@ -43,4 +44,35 @@ void output_gnuplot(uint8_t *buf, uint64_t numsamples,
 		}
 		printf("\n");
 	}
+}
+
+int output_binary(uint8_t *buf, uint64_t numsamples, const char *filename,
+		  struct flosslogic_context *ctx)
+{
+	FILE *f;
+
+	if (buf == NULL)
+		return -1;
+	if (filename == NULL)
+		return -2;
+	if (ctx == NULL)
+		return -3;
+	if (ctx->la == NULL)
+		return -4;
+
+	/* If filename is "-", output to stdout. */
+	if (strlen(filename) == 1 && !strncmp(filename, "-", 1)) {
+		f = stdout;
+	} else {
+		/* TODO: Error handling. */
+		f = fopen(filename, "wb");
+	}
+
+	/* TODO: Error handling. */
+	fwrite(buf, numsamples * (ctx->la->numchannels / 8), 1, f);
+
+	/* TODO: Error handling. */
+	fclose(f);
+
+	return 0;
 }

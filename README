@@ -13,6 +13,37 @@ Additionally a custom Open-Hardware logic analyzer hardware may be created
 at some point.
 
 
+Status and API
+--------------
+
+The flosslogic project is currently work in progress.
+
+IMPORTANT: The API of the library is NOT yet considered stable! Please do
+           not rely on it, yet! Changes to function names, macro names etc.
+           can happen at any time without prior notice!
+
+
+Building
+--------
+
+ $ make
+
+
+Installation
+------------
+
+ $ make install
+
+
+License
+-------
+
+The flosslogic code is released under the terms of the GNU General
+Public License (GPL), version 2 or later.
+
+See COPYING for details.
+
+
 Website
 -------
 

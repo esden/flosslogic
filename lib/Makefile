@@ -44,7 +44,7 @@ install: all
 	mkdir -p $(PREFIX)/include
 	mkdir -p $(PREFIX)/lib
 	$(INSTALL) -m 644 ../include/$(LIBNAME).h $(PREFIX)/include
-	$(INSTALL) -m 755 lib$(LIBNAME).so $(PREFIX)/lib/lib$(LIBNAME).so.1.0.0
+	$(INSTALL) -m 755 lib$(LIBNAME).so $(PREFIX)/lib/lib$(LIBNAME).so
 	ln -sf lib$(LIBNAME).so $(PREFIX)/lib/lib$(LIBNAME).so.1
 	ln -sf lib$(LIBNAME).so.1 $(PREFIX)/lib/lib$(LIBNAME).so.1.0.0
 

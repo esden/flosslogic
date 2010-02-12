@@ -142,7 +142,7 @@ int hw_usbeesx_shutdown(struct flosslogic_context *ctx)
 
 	/* TODO: Don't hardcode the interface number here. */
 	if (ctx->devhandle != NULL) {
-		if (usb_release_interface(ctx->devhandle, 1) < 0)
+		if (usb_release_interface(ctx->devhandle, 0) < 0)
 			return -1;
 	}
 

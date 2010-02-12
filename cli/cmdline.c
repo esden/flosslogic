@@ -34,13 +34,14 @@ void handle_cmdline_options(int argc, char *argv[])
 		{"numsamples",	required_argument,	NULL,	'n'},
 		{"samplerate",	required_argument,	NULL,	's'},
 		{"outfile",	required_argument,	NULL,	'o'},
+		{"outformat",	required_argument,	NULL,	'f'},
 		{"verbose",	no_argument,		NULL,	'V'},
 		{"version",	no_argument,		NULL,	'v'},
 		{"help",	no_argument,		NULL,	'h'},
 		{0, 0, 0, 0}
 	};
 
-	while ((opt = getopt_long(argc, argv, "d:n:s:o:Vvh",
+	while ((opt = getopt_long(argc, argv, "d:n:s:o:f:Vvh",
 				  long_options, &option_index)) >= 0) {
 		switch (opt) {
 		case 'd':
@@ -58,6 +59,10 @@ void handle_cmdline_options(int argc, char *argv[])
 		case 'o':
 			/* TODO: Error handling. */
 			outfile = strdup(optarg);
+			break;
+		case 'f':
+			/* TODO: Error handling. */
+			outformat = strdup(optarg);
 			break;
 		case 'V':
 			verbose = 1;

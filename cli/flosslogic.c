@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 #include <flosslogic.h>
 #include "common.h"
 
@@ -29,7 +30,8 @@ int verbose = 0;
 uint64_t samplerate = 0;
 uint64_t numsamples = 0;
 char *devicestring;
-char *outfile = "flosslogic_binary.dat";
+char *outfile;
+char *outformat = "binary";
 
 int main(int argc, char *argv[])
 {
@@ -72,8 +74,16 @@ int main(int argc, char *argv[])
 	if (verbose)
 		printf("Logic analyzer samples acquired successfully.\n");
 
-	/* output_gnuplot(sample_buffer, numsamples, &ctx); */
-	output_binary(sample_buffer, numsamples, outfile, &ctx);
+	if (!strcmp(outformat, "binary")) {
+		if (outfile == NULL)
+			outfile = "flosslogic_binary.dat";
+		/* TODO: Error handling. */
+		output_binary(sample_buffer, numsamples, outfile, &ctx);
+	} else if (!strcmp(outformat, "gnuplot")) {
+		if (outfile == NULL)
+			outfile = "flosslogic_gnuplot.dat";
+		output_gnuplot(sample_buffer, numsamples, &ctx);
+	}
 
 	flosslogic_hw_shutdown(hw, &ctx);
 

@@ -112,7 +112,7 @@ uint8_t *hw_usbeesx_get_samples(struct flosslogic_context *ctx,
 
 	cmdbuf[0] = 0x01;
 	cmdbuf[1] = samplerate_config_value(samplerate); /* TODO: Error h. */
-	if (cmdbuf[1] == 0xff) {
+	if (cmdbuf[1] == (char)0xff) {
 		hw_usbeesx_shutdown(ctx);
 		/* TODO: Set error code. */
 		return NULL;

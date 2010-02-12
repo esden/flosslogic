@@ -30,6 +30,8 @@
  */
 int flosslogic_init(struct flosslogic_context *ctx)
 {
+	int num_bus_changes, num_device_changes;
+
 	if (ctx == NULL)
 		return -1;
 
@@ -37,10 +39,13 @@ int flosslogic_init(struct flosslogic_context *ctx)
 	ctx->devhandle = NULL;
 	ctx->la = NULL;
 
-	/* TODO: Error checking. */
 	usb_init();
-	usb_find_busses();
-	usb_find_devices();
+
+	/* Return code unused so far in this place. */
+	num_bus_changes = usb_find_busses();
+
+	/* Return code unused so far in this place. */
+	num_device_changes = usb_find_devices();
 
 	return 0;
 }

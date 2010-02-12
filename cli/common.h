@@ -30,6 +30,7 @@
   -d | --device          Device to use (usbeesx, lps, logic)\n\
   -n | --numsamples      Number of samples to acquire\n\
   -s | --samplerate      Sample rate to use (in sps)\n\
+  -o | --outfile         Output filename or '-' for stdout\n\
   -V | --verbose         Verbose mode\n\
   -v | --version         Show the program version\n\
   -h | --help            Show a short help text\n\n"
@@ -39,6 +40,7 @@ extern int verbose;
 extern uint64_t samplerate;
 extern uint64_t numsamples;
 extern char *devicestring;
+extern char *outfile;
 
 /* cmdline.c */
 void handle_cmdline_options(int argc, char *argv[]);

@@ -33,13 +33,14 @@ void handle_cmdline_options(int argc, char *argv[])
 		{"device",	required_argument,	NULL,	'd'},
 		{"numsamples",	required_argument,	NULL,	'n'},
 		{"samplerate",	required_argument,	NULL,	's'},
+		{"outfile",	required_argument,	NULL,	'o'},
 		{"verbose",	no_argument,		NULL,	'V'},
 		{"version",	no_argument,		NULL,	'v'},
 		{"help",	no_argument,		NULL,	'h'},
 		{0, 0, 0, 0}
 	};
 
-	while ((opt = getopt_long(argc, argv, "d:n:s:Vvh",
+	while ((opt = getopt_long(argc, argv, "d:n:s:o:Vvh",
 				  long_options, &option_index)) >= 0) {
 		switch (opt) {
 		case 'd':
@@ -53,6 +54,10 @@ void handle_cmdline_options(int argc, char *argv[])
 		case 's':
 			/* TODO: Error handling. */
 			samplerate = strtol(optarg, (char **)NULL, 10);
+			break;
+		case 'o':
+			/* TODO: Error handling. */
+			outfile = strdup(optarg);
 			break;
 		case 'V':
 			verbose = 1;

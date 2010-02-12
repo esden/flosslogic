@@ -29,6 +29,7 @@ int verbose = 0;
 uint64_t samplerate = 0;
 uint64_t numsamples = 0;
 char *devicestring;
+char *outfile = "flosslogic_binary.dat";
 
 int main(int argc, char *argv[])
 {
@@ -71,7 +72,8 @@ int main(int argc, char *argv[])
 	if (verbose)
 		printf("Logic analyzer samples acquired successfully.\n");
 
-	output_gnuplot(sample_buffer, numsamples, &ctx);
+	/* output_gnuplot(sample_buffer, numsamples, &ctx); */
+	output_binary(sample_buffer, numsamples, outfile, &ctx);
 
 	flosslogic_hw_shutdown(hw, &ctx);
 

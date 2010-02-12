@@ -18,11 +18,16 @@
 ## Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 ##
 
+SUBDIRS = lib cli gui
+
 all:
 	$(MAKE) -C lib all
 	$(MAKE) -C cli all
 	cd gui && qmake
 	$(MAKE) -C gui all
+
+$(SUBDIRS):
+	$(MAKE) -C $@
 
 clean:
 	$(MAKE) -C lib clean
@@ -34,5 +39,5 @@ install:
 	$(MAKE) -C cli install
 	@# gui: TODO?
 
-.PHONY: all clean install
+.PHONY: all clean install $(SUBDIRS)
 

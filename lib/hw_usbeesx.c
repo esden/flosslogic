@@ -113,6 +113,7 @@ uint8_t *hw_usbeesx_get_samples(struct flosslogic_context *ctx,
 	cmdbuf[0] = 0x01;
 	cmdbuf[1] = samplerate_config_value(samplerate); /* TODO: Error h. */
 	if (cmdbuf[1] == (char)0xff) {
+		/* Handle hw_usbeesx_shutdown() errors. */
 		hw_usbeesx_shutdown(ctx);
 		/* TODO: Set error code. */
 		return NULL;
@@ -134,10 +135,23 @@ uint8_t *hw_usbeesx_get_samples(struct flosslogic_context *ctx,
 	return sample_buffer;
 }
 
-void hw_usbeesx_shutdown(struct flosslogic_context *ctx)
+int hw_usbeesx_shutdown(struct flosslogic_context *ctx)
 {
-	/* TODO */
+	if (ctx == NULL)
+		return 0;
 
-	/* Hack to prevent compiler warning. */
-	ctx = ctx;
+	/* TODO: Don't hardcode the interface number here. */
+	if (ctx->devhandle != NULL) {
+		if (usb_release_interface(ctx->devhandle, 1) < 0)
+			return -1;
+	}
+
+	/* TODO: What about ctx->usb_dev? */
+
+	if (ctx->devhandle != NULL) {
+		if (usb_close(ctx->devhandle) < 0)
+			return -1;
+	}
+
+	return 0;
 }

@@ -34,7 +34,7 @@ uint8_t *flosslogic_hw_get_samples(int hw, struct flosslogic_context *ctx,
 							  samplerate);
 }
 
-void flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx)
+int flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx)
 {
-	flosslogic_logic_analyzers[hw].shutdown(ctx);
+	return flosslogic_logic_analyzers[hw].shutdown(ctx);
 }

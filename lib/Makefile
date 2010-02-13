@@ -27,7 +27,7 @@ CFLAGS   ?= -g -Wall -Wextra -Werror -Wshadow
 CPPFLAGS ?= -I../include
 LDFLAGS  ?= -L/usr/local/lib
 LIBS     ?= -lusb
-SRC       = main.c libusb.c hw_usbeesx.c
+SRC       = main.c libusb.c hw_usbeesx.c hw_lps.c
 HEADERSS  = ../include/flosslogic.h common.h
 
 all: lib$(LIBNAME).so

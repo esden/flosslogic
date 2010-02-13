@@ -56,6 +56,12 @@ uint8_t *hw_usbeesx_get_samples(struct flosslogic_context *ctx,
 				uint64_t numsamples, uint64_t samplerate);
 int hw_usbeesx_shutdown(struct flosslogic_context *ctx);
 
+/* hw_lps.c */
+int hw_lps_init(struct flosslogic_context *ctx);
+uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,
+			    uint64_t numsamples, uint64_t samplerate);
+int hw_lps_shutdown(struct flosslogic_context *ctx);
+
 static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 	{
 		"usbeesx",
@@ -71,9 +77,9 @@ static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 		0x16d0,
 		0x0498,
 		16,
-		NULL,
-		NULL,
-		NULL,
+		hw_lps_init,
+		hw_lps_get_samples,
+		hw_lps_shutdown,
 	},
 	{
 		"logic",

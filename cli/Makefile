@@ -26,11 +26,11 @@ LDFLAGS = -L../lib
 LIBS    = -lflosslogic
 MANDIR ?= $(PREFIX)/share/man
 OBJS    = $(PROGRAM).o cmdline.o output.o
-HEADERS = common.h
+HEADERS = ../include/flosslogic.h common.h
 
 all: $(PROGRAM)
 
-$(PROGRAM): $(OBJS) $(HEADERS)
+$(PROGRAM): $(OBJS) $(HEADERS) ../lib/libflosslogic.so
 	$(CC) $(LDFLAGS) -o $(PROGRAM) $(OBJS) $(LIBS)
 
 %.o: %.c $(HEADERS)

@@ -20,17 +20,20 @@
 
 PROGRAM = flosslogic
 
-PREFIX ?= /usr/local
-CFLAGS  = -Wall -Wextra -Werror -Wshadow -g -I../include
-LDFLAGS = -L../lib
-LIBS    = -lflosslogic
-MANDIR ?= $(PREFIX)/share/man
-OBJS    = $(PROGRAM).o cmdline.o output.o
-HEADERS = ../include/flosslogic.h common.h
+PREFIX  ?= /usr/local
+CFLAGS  += -Wall -Wextra -Werror -Wshadow -g -I../include
+LDFLAGS += -L../lib
+LIBS     = -lflosslogic
+MANDIR  ?= $(PREFIX)/share/man
+OBJS     = $(PROGRAM).o cmdline.o output.o
+HEADERS  = ../include/flosslogic.h common.h
 
 all: $(PROGRAM)
 
-$(PROGRAM): $(OBJS) $(HEADERS) ../lib/libflosslogic.so
+makelib:
+	$(MAKE) -C ../lib all
+
+$(PROGRAM): $(OBJS) $(HEADERS) makelib
 	$(CC) $(LDFLAGS) -o $(PROGRAM) $(OBJS) $(LIBS)
 
 %.o: %.c $(HEADERS)
@@ -45,5 +48,5 @@ install: $(PROGRAM)
 	install -m 755 $(PROGRAM) $(DESTDIR)$(PREFIX)/bin
 	install -m 644 $(PROGRAM).1 $(DESTDIR)$(MANDIR)/man1
 
-.PHONY: all clean install
+.PHONY: all clean install makelib
 

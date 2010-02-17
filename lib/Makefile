@@ -23,21 +23,33 @@ LIBNAME   = flosslogic
 CC       ?= gcc
 INSTALL  ?= install
 PREFIX   ?= /usr/local
-CFLAGS   ?= -g -Wall -Wextra -Werror -Wshadow
-CPPFLAGS ?= -I../include
-LDFLAGS  ?= -L/usr/local/lib
-LIBS     ?= -lusb
+CFLAGS   += -g -Wall -Wextra -Werror -Wshadow
+CPPFLAGS += -I../include
+LDFLAGS  += -L/usr/local/lib
+LIBS      = -lusb
 SRC       = main.c libusb.c hw_usbeesx.c hw_lps.c
 HEADERSS  = ../include/flosslogic.h common.h
 
-all: lib$(LIBNAME).so
+ifeq ($(shell uname -r),Darwin)
+SONAME    = lib$(LIBNAME).dylib
+else
+SONAME    = lib$(LIBNAME).so
+endif
 
-lib$(LIBNAME).so: $(SRC) $(HEADERS)
+all: $(SONAME)
+
+$(SONAME): $(SRC) $(HEADERS)
+ifeq ($(shell uname -r),Darwin)
+	$(CC) -dynamiclib -flat_namespace -undefined suppress \
+		-o lib$(LIBNAME).dylib $(SRC) \
+		$(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LIBS)
+else
 	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 \
 		-o lib$(LIBNAME).so $(SRC) \
 		$(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LIBS)
 	ln -sf lib$(LIBNAME).so lib$(LIBNAME).so.1
 	ln -sf lib$(LIBNAME).so.1 lib$(LIBNAME).so.1.0.0
+endif
 
 clean:
 	rm -f *.o *.so *.so.1 *.so.1.0.0

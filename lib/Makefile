@@ -21,7 +21,7 @@
 LIBNAME   = flosslogic
 
 OS        = $(shell uname)
-CC       ?= gcc
+CC        = gcc
 INSTALL  ?= install
 PREFIX   ?= /usr/local
 CFLAGS   += -g -Wall -Wextra -Werror -Wshadow

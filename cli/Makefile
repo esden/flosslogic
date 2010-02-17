@@ -18,8 +18,9 @@
 ## Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 ##
 
-PROGRAM = flosslogic
+PROGRAM  = flosslogic
 
+CC       = gcc
 PREFIX  ?= /usr/local
 CFLAGS  += -Wall -Wextra -Werror -Wshadow -g -I../include
 LDFLAGS += -L../lib

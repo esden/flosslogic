@@ -20,6 +20,7 @@
 
 LIBNAME   = flosslogic
 
+OS        = $(shell uname)
 CC       ?= gcc
 INSTALL  ?= install
 PREFIX   ?= /usr/local
@@ -30,7 +31,7 @@ LIBS      = -lusb
 SRC       = main.c libusb.c hw_usbeesx.c hw_lps.c
 HEADERSS  = ../include/flosslogic.h common.h
 
-ifeq ($(shell uname -r),Darwin)
+ifeq ($(OS),Darwin)
 SONAME    = lib$(LIBNAME).dylib
 else
 SONAME    = lib$(LIBNAME).so
@@ -39,7 +40,7 @@ endif
 all: $(SONAME)
 
 $(SONAME): $(SRC) $(HEADERS)
-ifeq ($(shell uname),Darwin)
+ifeq ($(OS),Darwin)
 	$(CC) -dynamiclib -flat_namespace -undefined suppress \
 		-o lib$(LIBNAME).dylib $(SRC) \
 		$(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LIBS)

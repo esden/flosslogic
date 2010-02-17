@@ -19,6 +19,7 @@
  */
 
 #include <stdint.h>
+#include <strings.h>
 #include <usb.h>
 #include <flosslogic.h>
 
@@ -37,4 +38,31 @@ uint8_t *flosslogic_hw_get_samples(int hw, struct flosslogic_context *ctx,
 int flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx)
 {
 	return flosslogic_logic_analyzers[hw].shutdown(ctx);
+}
+
+/**
+ * Check if the given string is the shortname of a supported LA.
+ *
+ * The check is done case-insensitive.
+ *
+ * @param la_string The string to check.
+ * @return 1 if la_string is the shortname of a supported LA, 0 otherwise.
+ */
+int flosslogic_is_supported_la(const char *la_string)
+{
+	int i = 0;
+	struct logic_analyzer la;
+
+	if (la_string == NULL)
+		return 0;
+
+	while (1) {
+		la = flosslogic_logic_analyzers[i++];
+		if (la.shortname == NULL)
+			break;
+		if (!strcasecmp(la_string, la.shortname))
+			return 1;
+	}
+
+	return 0;
 }

@@ -45,6 +45,7 @@ int flosslogic_hw_init(int hw, struct flosslogic_context *ctx);
 uint8_t *flosslogic_hw_get_samples(int hw, struct flosslogic_context *ctx,
 				   uint64_t numsamples, uint64_t samplerate);
 int flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx);
+int flosslogic_is_supported_la(const char *la_string);
 
 /* libusb.c */
 int flosslogic_init(struct flosslogic_context *ctx);

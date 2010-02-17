@@ -21,6 +21,7 @@
 #ifndef LIBFLOSSLOGIC_FLOSSLOGIC_H
 #define LIBFLOSSLOGIC_FLOSSLOGIC_H
 
+#include <stdint.h>
 #include <usb.h>
 
 struct flosslogic_context {

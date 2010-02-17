@@ -19,6 +19,7 @@
  */
 
 #include <usb.h>
+#include <sys/types.h>
 #include <flosslogic.h>
 #include "common.h"
 

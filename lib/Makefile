@@ -39,7 +39,7 @@ endif
 all: $(SONAME)
 
 $(SONAME): $(SRC) $(HEADERS)
-ifeq ($(shell uname -r),Darwin)
+ifeq ($(shell uname),Darwin)
 	$(CC) -dynamiclib -flat_namespace -undefined suppress \
 		-o lib$(LIBNAME).dylib $(SRC) \
 		$(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LIBS)
@@ -52,7 +52,7 @@ else
 endif
 
 clean:
-	rm -f *.o *.so *.so.1 *.so.1.0.0
+	rm -f *.o *.so *.so.1 *.so.1.0.0 *.dylib
 
 install: lib$(LIBNAME).so
 	mkdir -p $(PREFIX)/include

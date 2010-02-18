@@ -133,3 +133,33 @@ int usb_block_read(usb_dev_handle *devhandle, int endpoint, char *buf,
 
 	return 0; /* FIXME */
 }
+
+int flosslogic_usb_init(struct flosslogic_context *ctx, int configuration,
+			int interface, int altinterface)
+{
+	int ret;
+
+	ctx->devhandle = usb_open(ctx->usb_dev);
+	if (ctx->devhandle == NULL)
+		return -1;
+
+	ret = usb_set_configuration(ctx->devhandle, configuration);
+	if (ret < 0) {
+		usb_close(ctx->devhandle); /* TODO? */
+		return -2;
+	}
+
+	ret = usb_claim_interface(ctx->devhandle, interface);
+	if (ret < 0) {
+		usb_close(ctx->devhandle); /* TODO? */
+		return -3;
+	}
+
+	ret = usb_set_altinterface(ctx->devhandle, altinterface);
+	if (ret < 0) {
+		usb_close(ctx->devhandle); /* TODO? */
+		return -4;
+	}
+
+	return 0;
+}

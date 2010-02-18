@@ -27,31 +27,7 @@
 
 int hw_lps_init(struct flosslogic_context *ctx)
 {
-	int ret;
-
-	ctx->devhandle = usb_open(ctx->usb_dev);
-	if (ctx->devhandle == NULL)
-		return -1;
-
-	ret = usb_set_configuration(ctx->devhandle, 1);
-	if (ret < 0) {
-		usb_close(ctx->devhandle); /* TODO? */
-		return -2;
-	}
-
-	ret = usb_claim_interface(ctx->devhandle, 0);
-	if (ret < 0) {
-		usb_close(ctx->devhandle); /* TODO? */
-		return -3;
-	}
-
-	ret = usb_set_altinterface(ctx->devhandle, 2);
-	if (ret < 0) {
-		usb_close(ctx->devhandle); /* TODO? */
-		return -4;
-	}
-
-	return 0;
+	return flosslogic_usb_init(ctx, 1, 0, 2);
 }
 
 uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,

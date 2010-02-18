@@ -69,21 +69,6 @@ uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,
 
 int hw_lps_shutdown(struct flosslogic_context *ctx)
 {
-	if (ctx == NULL)
-		return 0;
-
 	/* TODO: Don't hardcode the interface number here. */
-	if (ctx->devhandle != NULL) {
-		if (usb_release_interface(ctx->devhandle, 0) < 0)
-			return -1;
-	}
-
-	/* TODO: What about ctx->usb_dev? */
-
-	if (ctx->devhandle != NULL) {
-		if (usb_close(ctx->devhandle) < 0)
-			return -1;
-	}
-
-	return 0;
+	return flosslogic_usb_shutdown(ctx, 0);
 }

@@ -163,3 +163,23 @@ int flosslogic_usb_init(struct flosslogic_context *ctx, int configuration,
 
 	return 0;
 }
+
+int flosslogic_usb_shutdown(struct flosslogic_context *ctx, int interface)
+{
+	if (ctx == NULL)
+		return 0;
+
+	if (ctx->devhandle != NULL) {
+		if (usb_release_interface(ctx->devhandle, interface) < 0)
+			return -1;
+	}
+
+	/* TODO: What about ctx->usb_dev? */
+
+	if (ctx->devhandle != NULL) {
+		if (usb_close(ctx->devhandle) < 0)
+			return -1;
+	}
+
+	return 0;
+}

@@ -53,6 +53,7 @@ int flosslogic_init(struct flosslogic_context *ctx);
 int flosslogic_scan_for_devices(struct flosslogic_context *ctx);
 int flosslogic_usb_init(struct flosslogic_context *ctx, int configuration,
 			int interface, int altinterface);
+int flosslogic_usb_shutdown(struct flosslogic_context *ctx, int interface);
 
 /* hw_usbeesx.c */
 int hw_usbeesx_init(struct flosslogic_context *ctx);

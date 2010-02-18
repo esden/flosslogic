@@ -47,9 +47,9 @@ extern char *outformat;
 void handle_cmdline_options(int argc, char *argv[]);
 
 /* output.c */
-void output_gnuplot(uint8_t *buf, uint64_t numsamples,
+void output_gnuplot(uint8_t *buf, uint64_t local_numsamples,
 		    struct flosslogic_context *ctx);
-int output_binary(uint8_t *buf, uint64_t numsamples, const char *filename,
-		  struct flosslogic_context *ctx);
+int output_binary(uint8_t *buf, uint64_t local_numsamples,
+		  const char *filename, struct flosslogic_context *ctx);
 
 #endif

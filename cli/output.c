@@ -24,12 +24,12 @@
 #include <flosslogic.h>
 
 /* TODO: Don't hardcode number of channels to 8. */
-void output_gnuplot(uint8_t *buf, uint64_t numsamples,
+void output_gnuplot(uint8_t *buf, uint64_t local_numsamples,
 		    struct flosslogic_context *ctx)
 {
 	uint64_t i, j, count = 1;
 
-	for (i = 0; i < numsamples; i++) {
+	for (i = 0; i < local_numsamples; i++) {
 		/* The first column is a counter (needed for gnuplot). */
 		printf("%lld\t\t", count++);
 
@@ -46,8 +46,8 @@ void output_gnuplot(uint8_t *buf, uint64_t numsamples,
 	}
 }
 
-int output_binary(uint8_t *buf, uint64_t numsamples, const char *filename,
-		  struct flosslogic_context *ctx)
+int output_binary(uint8_t *buf, uint64_t local_numsamples,
+		  const char *filename, struct flosslogic_context *ctx)
 {
 	FILE *f;
 
@@ -69,7 +69,7 @@ int output_binary(uint8_t *buf, uint64_t numsamples, const char *filename,
 	}
 
 	/* TODO: Error handling. */
-	fwrite(buf, numsamples * (ctx->la->numchannels / 8), 1, f);
+	fwrite(buf, local_numsamples * (ctx->la->numchannels / 8), 1, f);
 
 	/* TODO: Error handling. */
 	fclose(f);

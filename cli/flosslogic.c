@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 	hw = ret;
 
 	if (verbose)
-		printf("Found supported logic analyzer #%d.\n", hw);
+		fprintf(stderr, "Found supported logic analyzer #%d.\n", hw);
 
 	if ((ret = flosslogic_hw_init(hw, &ctx)) < 0) {
 		fprintf(stderr, "Error initializing device %d (%d).\n",
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 	}
 
 	if (verbose)
-		printf("Logic analyzer initialized successfully.\n");
+		fprintf(stderr, "Logic analyzer initialized.\n");
 
 	sample_buffer = flosslogic_hw_get_samples(hw, &ctx, numsamples,
 					          samplerate, 1000);
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 	}
 
 	if (verbose)
-		printf("Logic analyzer samples acquired successfully.\n");
+		fprintf(stderr, "Logic analyzer samples acquired.\n");
 
 	if (!strcmp(outformat, "binary")) {
 		if (outfile == NULL)
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 	flosslogic_hw_shutdown(hw, &ctx);
 
 	if (verbose)
-		printf("Logic analyzer shutdown completed successfully.\n");
+		fprintf(stderr, "Logic analyzer shutdown completed.\n");
 
 	return EXIT_SUCCESS;
 }

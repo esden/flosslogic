@@ -22,9 +22,9 @@
 #define LIBFLOSSLOGIC_COMMON_H
 
 #include <usb.h>
-#include <sys/types.h>
+#include <stdint.h>
 
 int usb_block_read(usb_dev_handle *devhandle, int endpoint, char *buf,
-		   size_t nbytes, int timeout);
+		   int numbytes, int timeout);
 
 #endif

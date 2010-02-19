@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
+#include <stdio.h>
 #include <usb.h>
-#include <sys/types.h>
 #include <flosslogic.h>
 #include "common.h"
 
@@ -108,29 +108,36 @@ int flosslogic_scan_for_devices(struct flosslogic_context *ctx)
 
 /* FIXME */
 int usb_block_read(usb_dev_handle *devhandle, int endpoint, char *buf,
-		   size_t nbytes, int timeout)
+		   int numbytes, int timeout)
 {
-	ssize_t rv;
-	size_t chunk_size = nbytes;
-	size_t left = nbytes;
+	int ret, block_size, chunk_size = numbytes, left = numbytes;
 
-	while (left) {
-		size_t block_size = (left > chunk_size) ? chunk_size : left;
+	if (devhandle == NULL)
+		return -1;
+	if (buf == NULL)
+		return -2;
+	if (numbytes <= 0)
+		return -3;
+	if (timeout < 0)
+		return -4;
 
-		rv = usb_bulk_read(devhandle, endpoint, buf, block_size,
-				   timeout);
-		if (rv < 0)
-			return -1;
+	while (left != 0) {
+		block_size = (left > chunk_size) ? chunk_size : left;
 
-		left -= rv;
+		ret = usb_bulk_read(devhandle, endpoint, buf, block_size,
+				    timeout);
+		if (ret < 0)
+			return -5;
 
-		if ((size_t)rv < block_size) {
-			if (rv == 0)
-				return -1;
+		left -= ret;
+
+		if (ret < block_size) {
+			if (ret == 0)
+				return -6;
 		}
 	}
 
-	return 0; /* FIXME */
+	return 0;
 }
 
 int flosslogic_usb_init(struct flosslogic_context *ctx, int configuration,

@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 		printf("Logic analyzer initialized successfully.\n");
 
 	sample_buffer = flosslogic_hw_get_samples(hw, &ctx, numsamples,
-					          samplerate, 3000);
+					          samplerate, 1000);
 	if (sample_buffer == NULL) {
 		fprintf(stderr, "Error getting samples from device %d.\n", hw);
 		return EXIT_FAILURE;

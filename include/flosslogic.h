@@ -37,14 +37,16 @@ struct logic_analyzer {
 	uint8_t numchannels;
 	int (*init) (struct flosslogic_context *ctx);
 	uint8_t * (*get_samples) (struct flosslogic_context *ctx,
-				  uint64_t numsamples, uint64_t samplerate);
+				  uint64_t numsamples, uint64_t samplerate,
+				  int timeout);
 	int (*shutdown) (struct flosslogic_context *ctx);
 };
 
 /* main.c */
 int flosslogic_hw_init(int hw, struct flosslogic_context *ctx);
 uint8_t *flosslogic_hw_get_samples(int hw, struct flosslogic_context *ctx,
-				   uint64_t numsamples, uint64_t samplerate);
+				   uint64_t numsamples, uint64_t samplerate,
+				   int timeout);
 int flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx);
 int flosslogic_is_supported_la(const char *la_string);
 
@@ -58,13 +60,15 @@ int flosslogic_usb_shutdown(struct flosslogic_context *ctx, int interface);
 /* hw_usbeesx.c */
 int hw_usbeesx_init(struct flosslogic_context *ctx);
 uint8_t *hw_usbeesx_get_samples(struct flosslogic_context *ctx,
-				uint64_t numsamples, uint64_t samplerate);
+				uint64_t numsamples, uint64_t samplerate,
+				int timeout);
 int hw_usbeesx_shutdown(struct flosslogic_context *ctx);
 
 /* hw_lps.c */
 int hw_lps_init(struct flosslogic_context *ctx);
 uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,
-			    uint64_t numsamples, uint64_t samplerate);
+			    uint64_t numsamples, uint64_t samplerate,
+			    int timeout);
 int hw_lps_shutdown(struct flosslogic_context *ctx);
 
 static const struct logic_analyzer flosslogic_logic_analyzers[] = {

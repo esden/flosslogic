@@ -25,6 +25,6 @@
 #include <sys/types.h>
 
 int usb_block_read(usb_dev_handle *devhandle, int endpoint, char *buf,
-		   size_t nbytes);
+		   size_t nbytes, int timeout);
 
 #endif

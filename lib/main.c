@@ -29,10 +29,11 @@ int flosslogic_hw_init(int hw, struct flosslogic_context *ctx)
 }
 
 uint8_t *flosslogic_hw_get_samples(int hw, struct flosslogic_context *ctx,
-				   uint64_t numsamples, uint64_t samplerate)
+				   uint64_t numsamples, uint64_t samplerate,
+				   int timeout)
 {
 	return flosslogic_logic_analyzers[hw].get_samples(ctx, numsamples,
-							  samplerate);
+							  samplerate, timeout);
 }
 
 int flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx)

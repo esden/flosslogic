@@ -108,12 +108,11 @@ int flosslogic_scan_for_devices(struct flosslogic_context *ctx)
 
 /* FIXME */
 int usb_block_read(usb_dev_handle *devhandle, int endpoint, char *buf,
-		   size_t nbytes)
+		   size_t nbytes, int timeout)
 {
 	ssize_t rv;
 	size_t chunk_size = nbytes;
 	size_t left = nbytes;
-	size_t timeout = 3000; /* FIXME */
 
 	while (left) {
 		size_t block_size = (left > chunk_size) ? chunk_size : left;

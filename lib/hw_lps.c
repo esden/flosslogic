@@ -31,14 +31,13 @@ int hw_lps_init(struct flosslogic_context *ctx)
 }
 
 uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,
-			    uint64_t numsamples, uint64_t samplerate)
+			    uint64_t numsamples, uint64_t samplerate,
+			    int timeout)
 {
 	int ret;
 	uint64_t i;
 	char cmdbuf[5];
 	uint8_t *sample_buffer;
-
-	/* TODO: Don't hardcode timeout. */
 
 	/* TODO */
 	samplerate = samplerate;
@@ -49,7 +48,7 @@ uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,
 	cmdbuf[2] = 0xc0;
 	cmdbuf[3] = 0xff;
 	cmdbuf[4] = 0x0c;
-	ret = usb_interrupt_write(ctx->devhandle, 0x01, cmdbuf, 5, 3000);
+	ret = usb_interrupt_write(ctx->devhandle, 0x01, cmdbuf, 5, timeout);
 
 	sample_buffer = malloc(numsamples * (ctx->la->numchannels / 8));
 	/* TODO: Better error handling? */
@@ -59,7 +58,7 @@ uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,
 	for (i = 0; i < numsamples * (ctx->la->numchannels / 8); i += 512) {
 		/* 0x86 == EP 6, IN direction */
 		ret = usb_block_read(ctx->devhandle, 0x86,
-			       (char *)(sample_buffer + i), 512);
+			       (char *)(sample_buffer + i), 512, timeout);
 	}
 
 	/* TODO: Shutdown command? */

@@ -83,7 +83,12 @@ int main(int argc, char *argv[])
 		if (outfile == NULL)
 			outfile = "flosslogic_gnuplot.dat";
 		output_gnuplot(sample_buffer, numsamples, &ctx);
+	} else if (!strcmp(outformat, "vcd")) {
+		if (outfile == NULL)
+			outfile = "flosslogic.vcd";
+		output_vcd(sample_buffer, numsamples, outfile, &ctx);
 	}
+
 
 	flosslogic_hw_shutdown(hw, &ctx);
 

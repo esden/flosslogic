@@ -76,3 +76,80 @@ int output_binary(uint8_t *buf, uint64_t local_numsamples,
 
 	return 0;
 }
+
+static int getbit(uint8_t *buf, int numbyte, int chan)
+{
+	if (chan < 8) {
+		return ((buf[numbyte] & (1 << chan))) >> chan;
+	} else if (chan >= 8 && chan < 16) {
+		return ((buf[numbyte + 1] & (1 << (chan - 8)))) >> (chan - 8);
+	} else {
+		/* Error. Currently only 8bit and 16bit LAs are supported. */
+		return -1;
+	}
+}
+
+/* TODO: Don't hardcode number of channels to 8. */
+int output_vcd(uint8_t *buf, uint64_t local_numsamples,
+	       const char *filename, struct flosslogic_context *ctx)
+{
+	int val, prev;
+	uint64_t i, j;
+	FILE *f;
+
+	if (buf == NULL)
+		return -1;
+	if (filename == NULL)
+		return -2;
+	if (ctx == NULL)
+		return -3;
+	if (ctx->la == NULL)
+		return -4;
+
+	/* If filename is "-", output to stdout. */
+	if (strlen(filename) == 1 && !strncmp(filename, "-", 1)) {
+		f = stdout;
+	} else {
+		/* TODO: Error handling. */
+		f = fopen(filename, "wb");
+	}
+
+	/* Header */
+	fprintf(f, "$date\nTODO\n$end\n"); /* TODO */
+	fprintf(f, "$version\nflosslogic 0.1\n$end\n"); /* TODO */
+	fprintf(f, "$comment\nTODO\n$end\n"); /* TODO */
+	fprintf(f, "$timescale\n%i ns\n$end\n", 1 /* TODO */);
+	fprintf(f, "$scope module flosslogic $end\n");
+
+	/* Wires / channels */
+	for (i = 0; (int)i < ctx->la->numchannels; i++) {
+		fprintf(f, "$var wire 1 %c channel%i $end\n",
+			(char)('!' + i), (int)i);
+	}
+
+	fprintf(f, "$upscope $end\n");
+	fprintf(f, "$enddefinitions $end\n");
+	fprintf(f, "$dumpvars\n");
+
+	for (i = 0; i < local_numsamples; i++) { /* TODO: Handle 2byte LAs. */
+		/* TODO */
+		fprintf(f, "#%i\n", (int)i * 1 /* TODO */);
+		for (j = 0; j < ctx->la->numchannels; j++) {
+			val = getbit(buf, i, j);
+			prev = (i == 0) ? ~val : getbit(buf, i - 1, j);
+			if (prev != val)
+				fprintf(f, "%i%c\n", val, (char)('!' + j));
+		}
+		fprintf(f, "\n");
+	}
+
+	/* End */
+	fprintf(f, "$dumpoff\n");
+	/* TODO */
+	fprintf(f, "$end\n");
+
+	/* TODO: Error handling. */
+	fclose(f);
+
+	return 0;
+}

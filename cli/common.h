@@ -51,5 +51,8 @@ void output_gnuplot(uint8_t *buf, uint64_t local_numsamples,
 		    struct flosslogic_context *ctx);
 int output_binary(uint8_t *buf, uint64_t local_numsamples,
 		  const char *filename, struct flosslogic_context *ctx);
+int output_vcd(uint8_t *buf, uint64_t local_numsamples,
+	       const char *filename, struct flosslogic_context *ctx);
+
 
 #endif

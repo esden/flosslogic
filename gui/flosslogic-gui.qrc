@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/" >
         <file>icons/preferences-system.png</file>
+        <file>icons/system-log-out.png</file>
+        <file>icons/document-new.png</file>
     </qresource>
 </RCC>

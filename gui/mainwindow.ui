@@ -72,6 +72,10 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="flosslogic-gui.qrc">
+     <normaloff>:/icons/system-log-out.png</normaloff>:/icons/system-log-out.png</iconset>
+   </property>
    <property name="text">
     <string>E&amp;xit</string>
    </property>
@@ -102,6 +106,10 @@
    </property>
   </action>
   <action name="actionScan">
+   <property name="icon">
+    <iconset resource="flosslogic-gui.qrc">
+     <normaloff>:/icons/document-new.png</normaloff>:/icons/document-new.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Scan</string>
    </property>

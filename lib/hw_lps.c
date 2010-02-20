@@ -30,6 +30,87 @@ int hw_lps_init(struct flosslogic_context *ctx)
 	return flosslogic_usb_init(ctx, 1, 0, 2);
 }
 
+static uint16_t samplerate_config_value(uint64_t samplerate)
+{
+	switch (samplerate) {
+	case 24000000:
+		return 0x01 | 0xee;
+		break;
+	case 16000000:
+		return 0x02 | 0xee;
+		break;
+	case 15000000:
+		return 0x01 | 0xae; /* AE */
+		break;
+	case 12000000:
+		return 0x03 | 0xee;
+		break;
+	case 10000000:
+		return 0x02 | 0xae; /* AE */
+		break;
+	case 8000000:
+		return 0x05 | 0xee;
+		break;
+	case 6000000:
+		return 0x07 | 0xee;
+		break;
+	case 5000000:
+		return 0x05 | 0xae; /* AE */
+		break;
+	case 4000000:
+		return 0x0b | 0xee;
+		break;
+	case 3000000:
+		return 0x0f | 0xee;
+		break;
+	case 2500000:
+		return 0x0b | 0xae; /* AE */
+		break;
+	case 2000000:
+		return 0x17 | 0xee;
+		break;
+	case 1500000:
+		return 0x1f | 0xee;
+		break;
+	case 1000000:
+		return 0x2f | 0xee;
+		break;
+	case 800000:
+		return 0x3b | 0xee;
+		break;
+	case 750000:
+		return 0x3f | 0xee;
+		break;
+	case 600000:
+		return 0x4f | 0xee;
+		break;
+	case 500000:
+		return 0x5f | 0xee;
+		break;
+	case 400000:
+		return 0x77 | 0xee;
+		break;
+	case 300000:
+		return 0x9f | 0xee;
+		break;
+	case 250000:
+		return 0xbf | 0xee;
+		break;
+	case 200000:
+		return 0xef | 0xee;
+		break;
+	case 150000:
+		return 0xc7 | 0xae; /* AE */
+		break;
+	case 120000:
+		return 0xf9 | 0xae; /* AE */
+		break;
+	}
+
+	/* Any other value yields an error. */
+	return 0xff | 0xff;
+}
+
 uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,
 			    uint64_t numsamples, uint64_t samplerate,
 			    int timeout)

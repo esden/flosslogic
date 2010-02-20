@@ -120,6 +120,9 @@ uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,
 	char cmdbuf[5];
 	uint8_t *sample_buffer;
 
+	/* Silence warnings. */
+	ret = samplerate_config_value(24000000);
+
 	/* TODO */
 	samplerate = samplerate;
 

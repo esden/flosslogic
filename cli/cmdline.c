@@ -31,6 +31,7 @@ void handle_cmdline_options(int argc, char *argv[])
 
 	static const struct option long_options[] = {
 		{"device",	required_argument,	NULL,	'd'},
+		{"firmware",	required_argument,	NULL,	'F'},
 		{"numsamples",	required_argument,	NULL,	'n'},
 		{"samplerate",	required_argument,	NULL,	's'},
 		{"outfile",	required_argument,	NULL,	'o'},
@@ -41,12 +42,16 @@ void handle_cmdline_options(int argc, char *argv[])
 		{0, 0, 0, 0}
 	};
 
-	while ((opt = getopt_long(argc, argv, "d:n:s:o:f:Vvh",
+	while ((opt = getopt_long(argc, argv, "d:F:n:s:o:f:Vvh",
 				  long_options, &option_index)) >= 0) {
 		switch (opt) {
 		case 'd':
 			/* TODO: Error handling. */
 			devicestring = strdup(optarg);
+			break;
+		case 'F':
+			/* TODO: Error handling. */
+			firmware_filename = strdup(optarg);
 			break;
 		case 'n':
 			/* TODO: Error handling. */

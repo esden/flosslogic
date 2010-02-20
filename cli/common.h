@@ -26,8 +26,9 @@
 #define PROGRAM_NAME	"flosslogic"
 #define PROGRAM_VERSION	"0.1"
 
-#define USAGE "Usage: %s [-d] [-n] [-s] [-V] [-v] [-h]\n\n\
+#define USAGE "Usage: %s [-d] [-F] [-n] [-s] [-V] [-v] [-h]\n\n\
   -d | --device          Device to use (usbeesx, lps, logic)\n\
+  -F | --firmware        Firmware file for the LA\n\
   -n | --numsamples      Number of samples to acquire\n\
   -s | --samplerate      Sample rate to use (in sps)\n\
   -o | --outfile         Output filename or '-' for stdout\n\
@@ -40,6 +41,7 @@ extern int verbose;
 extern uint64_t samplerate;
 extern uint64_t numsamples;
 extern char *devicestring;
+extern char *firmware_filename;
 extern char *outfile;
 extern char *outformat;
 

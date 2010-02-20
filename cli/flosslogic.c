@@ -30,6 +30,7 @@ int verbose = 0;
 uint64_t samplerate = 0;
 uint64_t numsamples = 0;
 char *devicestring;
+char *firmware_filename = NULL;
 char *outfile;
 char *outformat = "binary";
 
@@ -64,6 +65,9 @@ int main(int argc, char *argv[])
 
 	if (verbose)
 		fprintf(stderr, "Logic analyzer initialized.\n");
+
+	/* Load specified firmware file (if any) into a buffer. */
+	/* TODO */
 
 	sample_buffer = flosslogic_hw_get_samples(hw, &ctx, numsamples,
 					          samplerate, 1000);

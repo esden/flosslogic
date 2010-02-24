@@ -18,12 +18,17 @@
 ## Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 ##
 
+OS        = $(shell uname)
 SUBDIRS = lib cli gui
 
 all:
 	$(MAKE) -C lib all
 	$(MAKE) -C cli all
+ifeq ($(OS),Darwin)
+	cd gui && qmake -spec macx-g++
+else
 	cd gui && qmake
+endif
 	$(MAKE) -C gui all
 
 $(SUBDIRS):

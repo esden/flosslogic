@@ -44,12 +44,12 @@ int main(int argc, char *argv[])
 
 	if ((ret = flosslogic_init(&ctx)) < 0) {
 		fprintf(stderr, "Error initializing flosslogic (%d).\n", ret);
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
 	if ((ret = flosslogic_scan_for_devices(&ctx)) < 0) {
 		fprintf(stderr, "Error scanning for devices (%d).\n", ret);
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
 	hw = ret;
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 	if ((ret = flosslogic_hw_init(hw, &ctx)) < 0) {
 		fprintf(stderr, "Error initializing device %d (%d).\n",
 				hw, ret);
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
 	if (verbose)
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 					          samplerate, 1000);
 	if (sample_buffer == NULL) {
 		fprintf(stderr, "Error getting samples from device %d.\n", hw);
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
 	if (verbose)
@@ -100,5 +100,5 @@ int main(int argc, char *argv[])
 	if (verbose)
 		fprintf(stderr, "Logic analyzer shutdown completed.\n");
 
-	return EXIT_SUCCESS;
+	exit(EXIT_SUCCESS);
 }

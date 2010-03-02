@@ -42,7 +42,9 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	int i, low = 18, high = 2, current_x, current_y;
 	QPainter painter(this);
 
-	QPen pen(Qt::black, 3, Qt::SolidLine, Qt::SquareCap, Qt::BevelJoin);
+	/* TODO: Use Qt::black etc. */
+	QPen pen(QColor(2 + rand() * 16), 3, Qt::SolidLine, Qt::SquareCap,
+		 Qt::BevelJoin);
 	painter.setPen(pen);
 
 	current_x = 0;

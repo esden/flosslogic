@@ -29,20 +29,37 @@ ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)
 
 QSize ChannelRenderArea::minimumSizeHint() const
 {
-	return QSize(100, 50);
+	return QSize(400, 20);
 }
 
 QSize ChannelRenderArea::sizeHint() const
 {
-	return QSize(400, 50);
+	return QSize(400, 20);
 }
 
 void ChannelRenderArea::paintEvent(QPaintEvent *event)
 {
+	int i, low = 18, high = 2, current_x, current_y;
 	QPainter painter(this);
 
 	QPen pen(Qt::black, 3, Qt::SolidLine, Qt::SquareCap, Qt::BevelJoin);
 	painter.setPen(pen);
 
-	painter.drawLine(0, 0, 100, 50);
+	current_x = 0;
+	current_y = low; /* FIXME? */
+
+	QPainterPath path;
+	path.moveTo(current_x, current_y);
+
+	for (i = 1; i < 20; i++) {
+		current_x += 20;
+		path.lineTo(current_x, current_y);
+		if (current_y == low)
+			current_y = high;
+		else
+			current_y = low;
+		path.lineTo(current_x, current_y);
+	}
+
+	painter.drawPath(path);
 }

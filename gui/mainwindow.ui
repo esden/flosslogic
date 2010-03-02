@@ -14,16 +14,25 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="gridLayoutWidget">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>581</width>
-      <height>281</height>
+      <x>0</x>
+      <y>0</y>
+      <width>601</width>
+      <height>311</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout"/>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Tab1</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Tab 2</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

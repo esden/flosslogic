@@ -39,6 +39,12 @@ MainWindow::MainWindow(QWidget *parent)
 	for (i = 0; i < 8; i++) {
 		lineEdits[i] = new QLineEdit(this);
 		lineEdits[i]->setText(s.sprintf("Channel %d", i));
+
+		/* Use random colors for the channel names for now. */
+		QPalette p = QPalette(QApplication::palette());
+		p.setColor(QPalette::Base, QColor(2 + qrand() * 16));
+		lineEdits[i]->setPalette(p);
+
 		ui->gridLayout->addWidget(lineEdits[i]);
 
 		channelRenderAreas[i] = new ChannelRenderArea(this);

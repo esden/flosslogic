@@ -18,7 +18,7 @@
 ## Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 ##
 
-OS        = $(shell uname)
+OS      = $(shell uname)
 SUBDIRS = lib cli gui
 
 all:

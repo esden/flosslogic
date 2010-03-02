@@ -30,6 +30,9 @@ Q_OBJECT
 public:
 	explicit ChannelRenderArea(QWidget *parent = 0);
 
+	QSize minimumSizeHint() const;
+	QSize sizeHint() const;
+
 signals:
 
 public slots:

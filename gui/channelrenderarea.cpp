@@ -22,4 +22,15 @@
 
 ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)
 {
+
+}
+
+QSize ChannelRenderArea::minimumSizeHint() const
+{
+	return QSize(100, 50);
+}
+
+QSize ChannelRenderArea::sizeHint() const
+{
+	return QSize(400, 50);
 }

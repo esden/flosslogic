@@ -20,13 +20,25 @@
 
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QLineEdit>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
 {
+	int i;
+	QLineEdit *lineEdits[8];
+	QString s;
+
 	ui->setupUi(this);
+
+	/* TODO: Don't hardcode number of channels. */
+	for (i = 0; i < 8; i++) {
+		lineEdits[i] = new QLineEdit(this);
+		lineEdits[i]->setText(s.sprintf("Channel %d", i));
+		ui->gridLayout->addWidget(lineEdits[i]);
+	}
 }
 
 MainWindow::~MainWindow()

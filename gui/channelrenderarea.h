@@ -25,8 +25,15 @@
 
 class ChannelRenderArea : public QWidget
 {
+Q_OBJECT
+
 public:
-	ChannelRenderArea();
+	explicit ChannelRenderArea(QWidget *parent = 0);
+
+signals:
+
+public slots:
+
 };
 
 #endif // CHANNELRENDERAREA_H

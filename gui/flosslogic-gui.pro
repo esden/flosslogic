@@ -22,9 +22,11 @@ TARGET     = flosslogic-gui
 TEMPLATE   = app
 
 SOURCES   += main.cpp \
-	     mainwindow.cpp
+	     mainwindow.cpp \
+	     channelrenderarea.cpp
 
-HEADERS   += mainwindow.h
+HEADERS   += mainwindow.h \
+	     channelrenderarea.h
 
 FORMS     += mainwindow.ui
 

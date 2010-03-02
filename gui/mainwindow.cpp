@@ -23,12 +23,14 @@
 #include <QLineEdit>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "channelrenderarea.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
 {
 	int i;
 	QLineEdit *lineEdits[8];
+	ChannelRenderArea *channelRenderAreas[8];
 	QString s;
 
 	ui->setupUi(this);
@@ -38,6 +40,9 @@ MainWindow::MainWindow(QWidget *parent)
 		lineEdits[i] = new QLineEdit(this);
 		lineEdits[i]->setText(s.sprintf("Channel %d", i));
 		ui->gridLayout->addWidget(lineEdits[i]);
+
+		channelRenderAreas[i] = new ChannelRenderArea(this);
+		ui->gridLayout->addWidget(channelRenderAreas[i], i, 2);
 	}
 }
 

@@ -23,14 +23,17 @@
       <height>311</height>
      </rect>
     </property>
-    <widget class="QWidget" name="tab">
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="channelsTab">
      <attribute name="title">
-      <string>Tab1</string>
+      <string>Channels</string>
      </attribute>
     </widget>
-    <widget class="QWidget" name="tab_2">
+    <widget class="QWidget" name="consoleTab">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>Console</string>
      </attribute>
     </widget>
    </widget>

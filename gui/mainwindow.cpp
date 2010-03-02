@@ -19,6 +19,7 @@
  */
 
 #include <QMessageBox>
+#include <QFileDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -55,4 +56,10 @@ void MainWindow::on_actionPreferences_triggered()
 void MainWindow::on_actionScan_triggered()
 {
 	statusBar()->showMessage(tr("Scanning for supported logic analyzers..."));
+}
+
+void MainWindow::on_action_Open_triggered()
+{
+	QString fileName = QFileDialog::getOpenFileName(this,
+		tr("Open sample file"), "/", tr("Raw sample files (*.bin)"));
 }

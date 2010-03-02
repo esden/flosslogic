@@ -18,6 +18,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
+#include <QPainter>
+#include <QPen>
 #include "channelrenderarea.h"
 
 ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)
@@ -33,4 +35,14 @@ QSize ChannelRenderArea::minimumSizeHint() const
 QSize ChannelRenderArea::sizeHint() const
 {
 	return QSize(400, 50);
+}
+
+void ChannelRenderArea::paintEvent(QPaintEvent *event)
+{
+	QPainter painter(this);
+
+	QPen pen(Qt::black, 3, Qt::SolidLine, Qt::SquareCap, Qt::BevelJoin);
+	painter.setPen(pen);
+
+	painter.drawLine(0, 0, 100, 50);
 }

@@ -33,6 +33,9 @@ public:
 	QSize minimumSizeHint() const;
 	QSize sizeHint() const;
 
+protected:
+	void paintEvent(QPaintEvent *event);
+
 signals:
 
 public slots:

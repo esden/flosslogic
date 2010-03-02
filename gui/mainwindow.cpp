@@ -84,5 +84,5 @@ void MainWindow::on_actionScan_triggered()
 void MainWindow::on_action_Open_triggered()
 {
 	QString fileName = QFileDialog::getOpenFileName(this,
-		tr("Open sample file"), "/", tr("Raw sample files (*.bin)"));
+		tr("Open sample file"), ".", tr("Raw sample files (*.bin)"));
 }

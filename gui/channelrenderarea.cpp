@@ -30,11 +30,13 @@ ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)
 QSize ChannelRenderArea::minimumSizeHint() const
 {
 	return QSize(400, 20);
+	// return QSize(Qt::PreferredSize, Qt::PreferredSize);
 }
 
 QSize ChannelRenderArea::sizeHint() const
 {
 	return QSize(400, 20);
+	// return QSize(Qt::PreferredSize, Qt::PreferredSize);
 }
 
 void ChannelRenderArea::paintEvent(QPaintEvent *event)

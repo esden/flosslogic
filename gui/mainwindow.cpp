@@ -21,6 +21,8 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QLineEdit>
+#include <QDockWidget>
+#include <QGridLayout>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "channelrenderarea.h"
@@ -31,12 +33,24 @@ MainWindow::MainWindow(QWidget *parent)
 	int i;
 	QLineEdit *lineEdits[8];
 	ChannelRenderArea *channelRenderAreas[8];
+	QDockWidget *dockWidgets[8];
+	QGridLayout *gridLayouts[8];
 	QString s;
 
 	ui->setupUi(this);
 
+	/* FIXME */
+	ui->tabWidget->setMaximumSize(400, 800);
+	QMainWindow::setCentralWidget(ui->tabWidget);
+
+	// this->setDockOptions(QMainWindow::AllowNestedDocks);
+
 	/* TODO: Don't hardcode number of channels. */
 	for (i = 0; i < 8; i++) {
+		dockWidgets[i] = new QDockWidget(s.sprintf("Channel %d", i),
+						 this);
+		dockWidgets[i]->setAllowedAreas(Qt::RightDockWidgetArea);
+
 		lineEdits[i] = new QLineEdit(this);
 		lineEdits[i]->setText(s.sprintf("Channel %d", i));
 
@@ -44,11 +58,17 @@ MainWindow::MainWindow(QWidget *parent)
 		QPalette p = QPalette(QApplication::palette());
 		p.setColor(QPalette::Base, QColor(2 + qrand() * 16));
 		lineEdits[i]->setPalette(p);
-
-		ui->gridLayout->addWidget(lineEdits[i]);
+		// ui->gridLayout->addWidget(lineEdits[i]);
+		dockWidgets[i]->setWidget(lineEdits[i]);
+		addDockWidget(Qt::RightDockWidgetArea, dockWidgets[i]);
 
 		channelRenderAreas[i] = new ChannelRenderArea(this);
-		ui->gridLayout->addWidget(channelRenderAreas[i], i, 2);
+		channelRenderAreas[i]->setSizePolicy(QSizePolicy::Minimum,
+					QSizePolicy::MinimumExpanding);
+		// ui->gridLayout->addWidget(channelRenderAreas[i], i, 2);
+
+		dockWidgets[i]->setWidget(channelRenderAreas[i]);
+		addDockWidget(Qt::RightDockWidgetArea, dockWidgets[i]);
 	}
 }
 

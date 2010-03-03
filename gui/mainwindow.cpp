@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
 	ChannelRenderArea *channelRenderAreas[8];
 	QDockWidget *dockWidgets[8];
 	QGridLayout *gridLayouts[8];
+	QWidget *widgets[8];
 	QString s;
 
 	ui->setupUi(this);
@@ -47,27 +48,26 @@ MainWindow::MainWindow(QWidget *parent)
 
 	/* TODO: Don't hardcode number of channels. */
 	for (i = 0; i < 8; i++) {
-		dockWidgets[i] = new QDockWidget(s.sprintf("Channel %d", i),
-						 this);
-		dockWidgets[i]->setAllowedAreas(Qt::RightDockWidgetArea);
+		widgets[i] = new QWidget(this);
+		gridLayouts[i] = new QGridLayout(widgets[i]);
 
 		lineEdits[i] = new QLineEdit(this);
 		lineEdits[i]->setText(s.sprintf("Channel %d", i));
-
 		/* Use random colors for the channel names for now. */
 		QPalette p = QPalette(QApplication::palette());
 		p.setColor(QPalette::Base, QColor(2 + qrand() * 16));
 		lineEdits[i]->setPalette(p);
-		// ui->gridLayout->addWidget(lineEdits[i]);
-		dockWidgets[i]->setWidget(lineEdits[i]);
-		addDockWidget(Qt::RightDockWidgetArea, dockWidgets[i]);
+		gridLayouts[i]->addWidget(lineEdits[i], i, 1);
 
 		channelRenderAreas[i] = new ChannelRenderArea(this);
 		channelRenderAreas[i]->setSizePolicy(QSizePolicy::Minimum,
 					QSizePolicy::MinimumExpanding);
-		// ui->gridLayout->addWidget(channelRenderAreas[i], i, 2);
+		gridLayouts[i]->addWidget(channelRenderAreas[i], i, 2);
 
-		dockWidgets[i]->setWidget(channelRenderAreas[i]);
+		dockWidgets[i] = new QDockWidget(s.sprintf("Channel %d", i),
+						 this);
+		dockWidgets[i]->setAllowedAreas(Qt::RightDockWidgetArea);
+		dockWidgets[i]->setWidget(widgets[i]);
 		addDockWidget(Qt::RightDockWidgetArea, dockWidgets[i]);
 	}
 }

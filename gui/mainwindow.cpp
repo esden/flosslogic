@@ -30,12 +30,15 @@
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
 {
+/* TODO: Don't hardcode number of channels. */
+#define NUMCHANNELS 8
+
 	int i;
-	QLineEdit *lineEdits[8];
-	ChannelRenderArea *channelRenderAreas[8];
-	QDockWidget *dockWidgets[8];
-	QGridLayout *gridLayouts[8];
-	QWidget *widgets[8];
+	QLineEdit *lineEdits[NUMCHANNELS];
+	ChannelRenderArea *channelRenderAreas[NUMCHANNELS];
+	QDockWidget *dockWidgets[NUMCHANNELS];
+	QGridLayout *gridLayouts[NUMCHANNELS];
+	QWidget *widgets[NUMCHANNELS];
 	QString s;
 	QColor color;
 
@@ -47,8 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	// this->setDockOptions(QMainWindow::AllowNestedDocks);
 
-	/* TODO: Don't hardcode number of channels. */
-	for (i = 0; i < 8; i++) {
+	for (i = 0; i < NUMCHANNELS; i++) {
 		widgets[i] = new QWidget(this);
 		gridLayouts[i] = new QGridLayout(widgets[i]);
 

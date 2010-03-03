@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
 	QGridLayout *gridLayouts[8];
 	QWidget *widgets[8];
 	QString s;
+	QColor color;
 
 	ui->setupUi(this);
 
@@ -55,13 +56,16 @@ MainWindow::MainWindow(QWidget *parent)
 		lineEdits[i]->setText(s.sprintf("Channel %d", i));
 		/* Use random colors for the channel names for now. */
 		QPalette p = QPalette(QApplication::palette());
-		p.setColor(QPalette::Base, QColor(2 + qrand() * 16));
+		// p.setColor(QPalette::Base, QColor(2 + qrand() * 16));
+		color = QColor(2 + qrand() * 16);
+		p.setColor(QPalette::Base, color);
 		lineEdits[i]->setPalette(p);
 		gridLayouts[i]->addWidget(lineEdits[i], i, 1);
 
 		channelRenderAreas[i] = new ChannelRenderArea(this);
 		channelRenderAreas[i]->setSizePolicy(QSizePolicy::Minimum,
 					QSizePolicy::MinimumExpanding);
+		channelRenderAreas[i]->setChannelColor(color);
 		gridLayouts[i]->addWidget(channelRenderAreas[i], i, 2);
 
 		dockWidgets[i] = new QDockWidget(s.sprintf("Channel %d", i),

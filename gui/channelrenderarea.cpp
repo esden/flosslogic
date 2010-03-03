@@ -24,7 +24,7 @@
 
 ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)
 {
-
+	channelColor = Qt::black;
 }
 
 QSize ChannelRenderArea::minimumSizeHint() const
@@ -45,7 +45,7 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	QPainter painter(this);
 
 	/* TODO: Use Qt::black etc. */
-	QPen pen(QColor(2 + rand() * 16), 3, Qt::SolidLine, Qt::SquareCap,
+	QPen pen(this->getChannelColor(), 3, Qt::SolidLine, Qt::SquareCap,
 		 Qt::BevelJoin);
 	painter.setPen(pen);
 
@@ -66,4 +66,14 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	}
 
 	painter.drawPath(path);
+}
+
+void ChannelRenderArea::setChannelColor(QColor color)
+{
+	channelColor = color;
+}
+
+QColor ChannelRenderArea::getChannelColor(void)
+{
+	return channelColor;
 }

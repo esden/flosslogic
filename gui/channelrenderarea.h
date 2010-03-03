@@ -22,6 +22,8 @@
 #define CHANNELRENDERAREA_H
 
 #include <QWidget>
+#include <QSize>
+#include <QColor>
 
 class ChannelRenderArea : public QWidget
 {
@@ -33,6 +35,9 @@ public:
 	QSize minimumSizeHint() const;
 	QSize sizeHint() const;
 
+	QColor getChannelColor(void);
+	void setChannelColor(QColor color);
+
 protected:
 	void paintEvent(QPaintEvent *event);
 
@@ -40,6 +45,8 @@ signals:
 
 public slots:
 
+private:
+	QColor channelColor;
 };
 
 #endif // CHANNELRENDERAREA_H

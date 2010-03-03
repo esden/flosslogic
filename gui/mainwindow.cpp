@@ -72,6 +72,10 @@ MainWindow::MainWindow(QWidget *parent)
 		dockWidgets[i]->setAllowedAreas(Qt::RightDockWidgetArea);
 		dockWidgets[i]->setWidget(widgets[i]);
 		addDockWidget(Qt::RightDockWidgetArea, dockWidgets[i]);
+
+		/* If the user renames a channel, adapt the dock title. */
+		QObject::connect(lineEdits[i], SIGNAL(textChanged(QString)),
+				 dockWidgets[i], SLOT(setWindowTitle(QString)));
 	}
 }
 

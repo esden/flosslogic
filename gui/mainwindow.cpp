@@ -56,7 +56,6 @@ MainWindow::MainWindow(QWidget *parent)
 		lineEdits[i]->setText(s.sprintf("Channel %d", i));
 		/* Use random colors for the channel names for now. */
 		QPalette p = QPalette(QApplication::palette());
-		// p.setColor(QPalette::Base, QColor(2 + qrand() * 16));
 		color = QColor(2 + qrand() * 16);
 		p.setColor(QPalette::Base, color);
 		lineEdits[i]->setPalette(p);

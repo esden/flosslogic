@@ -41,7 +41,7 @@ QSize ChannelRenderArea::sizeHint() const
 
 void ChannelRenderArea::paintEvent(QPaintEvent *event)
 {
-	int i, low = 18, high = 2, current_x, current_y;
+	int i, low = this->height() - 2, high = 2, current_x, current_y;
 	QPainter painter(this);
 
 	/* TODO: Use Qt::black etc. */

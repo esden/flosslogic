@@ -19,9 +19,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>421</width>
-      <height>311</height>
+      <width>150</width>
+      <height>300</height>
      </rect>
+    </property>
+    <property name="tabPosition">
+     <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -41,8 +44,8 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>581</width>
-        <height>271</height>
+        <width>111</width>
+        <height>291</height>
        </rect>
       </property>
       <property name="verticalScrollBarPolicy">
@@ -108,7 +111,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionQuit">
    <property name="icon">
-    <iconset resource="flosslogic-gui.qrc">
+    <iconset>
      <normaloff>:/icons/system-log-out.png</normaloff>:/icons/system-log-out.png</iconset>
    </property>
    <property name="text">
@@ -133,7 +136,7 @@
   </action>
   <action name="actionPreferences">
    <property name="icon">
-    <iconset resource="flosslogic-gui.qrc">
+    <iconset>
      <normaloff>:/icons/preferences-system.png</normaloff>:/icons/preferences-system.png</iconset>
    </property>
    <property name="text">
@@ -142,7 +145,7 @@
   </action>
   <action name="actionScan">
    <property name="icon">
-    <iconset resource="flosslogic-gui.qrc">
+    <iconset>
      <normaloff>:/icons/document-new.png</normaloff>:/icons/document-new.png</iconset>
    </property>
    <property name="text">
@@ -166,9 +169,7 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="flosslogic-gui.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>actionQuit</sender>

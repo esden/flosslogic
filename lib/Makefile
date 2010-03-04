@@ -32,7 +32,7 @@ CFLAGS   += -g -Wall -Wextra -Werror -Wshadow
 CPPFLAGS += -I../include
 LDFLAGS  += -L/usr/local/lib -L.
 LIBS      = -lusb
-SRC       = main.c libusb.c fx2.c hw_usbeesx.c hw_lps.c
+SRC       = libflosslogic.c libusb.c fx2.c hw_usbeesx.c hw_lps.c
 HEADERSS  = ../include/flosslogic.h common.h
 
 ifeq ($(OS),Darwin)

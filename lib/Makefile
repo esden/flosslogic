@@ -21,18 +21,24 @@
 LIBNAME   = flosslogic
 
 OS        = $(shell uname)
+ifeq ($(findstring MINGW,$(OS)),MINGW)
+	# OS is of the form MINWG32_XXXX, replace it with plain "MINGW".
+	OS = MINGW
+endif
 CC        = gcc
 INSTALL  ?= install
 PREFIX   ?= /usr/local
 CFLAGS   += -g -Wall -Wextra -Werror -Wshadow
 CPPFLAGS += -I../include
-LDFLAGS  += -L/usr/local/lib
+LDFLAGS  += -L/usr/local/lib -L.
 LIBS      = -lusb
 SRC       = main.c libusb.c fx2.c hw_usbeesx.c hw_lps.c
 HEADERSS  = ../include/flosslogic.h common.h
 
 ifeq ($(OS),Darwin)
 SONAME    = lib$(LIBNAME).dylib
+else ifeq ($(OS),MINGW)
+SONAME    = lib$(LIBNAME).a
 else
 SONAME    = lib$(LIBNAME).so
 endif
@@ -44,6 +50,9 @@ ifeq ($(OS),Darwin)
 	$(CC) -dynamiclib -flat_namespace -undefined suppress \
 		-o lib$(LIBNAME).dylib $(SRC) \
 		$(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LIBS)
+else ifeq ($(OS),MINGW)
+	$(CC) -shared -o $(SONAME) $(SRC) \
+		$(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LIBS)
 else
 	$(CC) -shared -Wl,-soname,lib$(LIBNAME).so.1 \
 		-o lib$(LIBNAME).so $(SRC) \
@@ -53,7 +62,7 @@ else
 endif
 
 clean:
-	rm -f *.o *.so *.so.1 *.so.1.0.0 *.dylib
+	rm -f *.o *.so *.so.1 *.so.1.0.0 *.dylib *.dll *.dll.a *.a
 
 install: lib$(LIBNAME).so
 	mkdir -p $(PREFIX)/include

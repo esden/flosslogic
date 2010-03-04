@@ -118,4 +118,15 @@ void MainWindow::on_action_Open_triggered()
 		   "Gnuplot data files (*.dat);;"
 		   "VCD files (*.vcd);;"
 		   "All files (*)"));
+
+	statusBar()->showMessage(fileName);
+}
+
+void MainWindow::on_action_Save_as_triggered()
+{
+	QString fileName = QFileDialog::getSaveFileName(this,
+		tr("Save sample file"), ".",
+		tr("Raw sample files (*.raw *.bin);;All files (*)"));
+
+	statusBar()->showMessage(fileName);
 }

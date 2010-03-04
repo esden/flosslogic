@@ -69,15 +69,21 @@ MainWindow::MainWindow(QWidget *parent)
 		channelRenderAreas[i]->setChannelColor(color);
 		gridLayouts[i]->addWidget(channelRenderAreas[i], i, 2);
 
-		dockWidgets[i] = new QDockWidget(s.sprintf("Channel %d", i),
-						 this);
+		dockWidgets[i] = new QDockWidget(this);
 		dockWidgets[i]->setAllowedAreas(Qt::RightDockWidgetArea);
+		dockWidgets[i]->setFeatures(
+			QDockWidget::DockWidgetClosable |
+			QDockWidget::DockWidgetMovable |
+			QDockWidget::DockWidgetFloatable |
+			QDockWidget::DockWidgetVerticalTitleBar);
 		dockWidgets[i]->setWidget(widgets[i]);
 		addDockWidget(Qt::RightDockWidgetArea, dockWidgets[i]);
 
+#if 0
 		/* If the user renames a channel, adapt the dock title. */
 		QObject::connect(lineEdits[i], SIGNAL(textChanged(QString)),
 				 dockWidgets[i], SLOT(setWindowTitle(QString)));
+#endif
 	}
 }
 

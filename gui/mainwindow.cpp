@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
 		gridLayouts[i] = new QGridLayout(widgets[i]);
 
 		lineEdits[i] = new QLineEdit(this);
+		lineEdits[i]->setMaximumWidth(150);
 		lineEdits[i]->setText(s.sprintf("Channel %d", i));
 		/* Use random colors for the channel names for now. */
 		QPalette p = QPalette(QApplication::palette());

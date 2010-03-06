@@ -21,6 +21,10 @@
 #ifndef LIBFLOSSLOGIC_FLOSSLOGIC_H
 #define LIBFLOSSLOGIC_FLOSSLOGIC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <usb.h>
 
@@ -109,5 +113,9 @@ static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 		NULL,
 	},
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

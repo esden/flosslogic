@@ -19,7 +19,10 @@
  */
 
 #include <QtGui/QApplication>
+#include <flosslogic.h>
 #include "mainwindow.h"
+
+struct flosslogic_context ctx;
 
 int main(int argc, char *argv[])
 {
@@ -27,6 +30,8 @@ int main(int argc, char *argv[])
 	MainWindow w;
 
 	w.setWindowTitle("flosslogic");
+
+	flosslogic_init(&ctx);
 
 	w.show();
 	return a.exec();

@@ -30,4 +30,8 @@ HEADERS   += mainwindow.h \
 
 FORMS     += mainwindow.ui
 
+LIBS      += -L../lib -lflosslogic
+
+INCLUDEPATH += ../include
+
 RESOURCES += flosslogic-gui.qrc

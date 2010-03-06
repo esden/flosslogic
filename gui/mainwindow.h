@@ -23,6 +23,10 @@
 
 #include <QtGui/QMainWindow>
 
+#include <flosslogic.h>
+
+extern struct flosslogic_context ctx;
+
 namespace Ui
 {
 	class MainWindow;

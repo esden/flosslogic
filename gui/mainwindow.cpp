@@ -27,6 +27,8 @@
 #include "ui_mainwindow.h"
 #include "channelrenderarea.h"
 
+#include <flosslogic.h>
+
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -114,7 +116,19 @@ void MainWindow::on_actionPreferences_triggered()
 
 void MainWindow::on_actionScan_triggered()
 {
-	statusBar()->showMessage(tr("Scanning for supported logic analyzers..."));
+	int ret;
+	QString s;
+
+	statusBar()->showMessage(tr("Scanning for logic analyzers..."));
+
+	ret = flosslogic_scan_for_devices(&ctx);
+	if (ret < 0) {
+		s = tr("No supported logic analyzer found.");
+	} else {
+		s = tr("Found supported logic analyzer: ");
+		s.append(flosslogic_logic_analyzers[ret].shortname);
+	}
+	statusBar()->showMessage(s);
 }
 
 void MainWindow::on_action_Open_triggered()

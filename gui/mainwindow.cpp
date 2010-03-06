@@ -94,6 +94,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+	int hw;
+
+	hw = getCurrentLA();
+	if (hw >= 0)
+		flosslogic_hw_shutdown(hw, &ctx);
+
 	delete ui;
 }
 

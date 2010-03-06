@@ -39,9 +39,12 @@ class MainWindow : public QMainWindow
 public:
 	MainWindow(QWidget *parent = 0);
 	~MainWindow();
+	void setCurrentLA(int la);
+	int getCurrentLA(void);
 
 private:
 	Ui::MainWindow *ui;
+	int currentLA;
 
 private slots:
 	void on_action_Save_as_triggered();

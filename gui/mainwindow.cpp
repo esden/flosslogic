@@ -44,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent)
 	QString s;
 	QColor color;
 
+	setCurrentLA(-1);
+
 	ui->setupUi(this);
 
 	/* FIXME */
@@ -94,6 +96,17 @@ MainWindow::~MainWindow()
 {
 	delete ui;
 }
+
+void MainWindow::setCurrentLA(int la)
+{
+	currentLA = la;
+}
+
+int MainWindow::getCurrentLA(void)
+{
+	return currentLA;
+}
+
 void MainWindow::on_actionAbout_triggered()
 {
 	QMessageBox::about(this, tr("About"),
@@ -129,6 +142,8 @@ void MainWindow::on_actionScan_triggered()
 		s.append(flosslogic_logic_analyzers[ret].shortname);
 	}
 	statusBar()->showMessage(s);
+
+	setCurrentLA(ret);
 }
 
 void MainWindow::on_action_Open_triggered()

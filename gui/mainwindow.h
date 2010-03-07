@@ -22,7 +22,11 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QLineEdit>
+#include <QDockWidget>
+#include <QGridLayout>
 #include <flosslogic.h>
+#include "channelrenderarea.h"
 
 extern struct flosslogic_context ctx;
 extern uint8_t *sample_buffer;
@@ -41,6 +45,18 @@ public:
 	~MainWindow();
 	void setCurrentLA(int la);
 	int getCurrentLA(void);
+
+	/* TODO: Don't hardcode number of channels. */
+#define NUMCHANNELS 8
+
+	/* FIXME */
+	QLineEdit *lineEdits[NUMCHANNELS];
+	ChannelRenderArea *channelRenderAreas[NUMCHANNELS];
+	QDockWidget *dockWidgets[NUMCHANNELS];
+	QGridLayout *gridLayouts[NUMCHANNELS];
+	QWidget *widgets[NUMCHANNELS];
+
+	void setupDockWidgets(void);
 
 private:
 	Ui::MainWindow *ui;

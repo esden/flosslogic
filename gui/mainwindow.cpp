@@ -20,28 +20,14 @@
 
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QLineEdit>
-#include <QDockWidget>
-#include <QGridLayout>
 #include <QProgressDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "channelrenderarea.h"
-
-#include <flosslogic.h>
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
 {
-/* TODO: Don't hardcode number of channels. */
-#define NUMCHANNELS 8
-
 	int i;
-	QLineEdit *lineEdits[NUMCHANNELS];
-	ChannelRenderArea *channelRenderAreas[NUMCHANNELS];
-	QDockWidget *dockWidgets[NUMCHANNELS];
-	QGridLayout *gridLayouts[NUMCHANNELS];
-	QWidget *widgets[NUMCHANNELS];
 	QString s;
 	QColor color;
 
@@ -53,6 +39,26 @@ MainWindow::MainWindow(QWidget *parent)
 	QMainWindow::setCentralWidget(ui->infoLabel);
 
 	// this->setDockOptions(QMainWindow::AllowNestedDocks);
+
+	setupDockWidgets();
+}
+
+MainWindow::~MainWindow()
+{
+	int hw;
+
+	hw = getCurrentLA();
+	if (hw >= 0)
+		flosslogic_hw_shutdown(hw, &ctx);
+
+	delete ui;
+}
+
+void MainWindow::setupDockWidgets(void)
+{
+	int i;
+	QString s;
+	QColor color;
 
 	for (i = 0; i < NUMCHANNELS; i++) {
 		widgets[i] = new QWidget(this);
@@ -91,18 +97,6 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
 	}
 }
-
-MainWindow::~MainWindow()
-{
-	int hw;
-
-	hw = getCurrentLA();
-	if (hw >= 0)
-		flosslogic_hw_shutdown(hw, &ctx);
-
-	delete ui;
-}
-
 void MainWindow::setCurrentLA(int la)
 {
 	currentLA = la;

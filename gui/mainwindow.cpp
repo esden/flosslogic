@@ -36,8 +36,6 @@ MainWindow::MainWindow(QWidget *parent)
 	QMainWindow::setCentralWidget(ui->infoLabel);
 
 	// this->setDockOptions(QMainWindow::AllowNestedDocks);
-
-	setupDockWidgets();
 }
 
 MainWindow::~MainWindow()
@@ -57,7 +55,14 @@ void MainWindow::setupDockWidgets(void)
 	QString s;
 	QColor color;
 
-	for (i = 0; i < NUMCHANNELS; i++) {
+	if (getCurrentLA() < 0)
+		return;
+
+	/* TODO: Do not create new dockWidgets if we already have them. */
+
+	/* TODO: Kill any old dockWidgets before creating new ones? */
+
+	for (i = 0; i < getNumChannels(); i++) {
 		widgets[i] = new QWidget(this);
 		gridLayouts[i] = new QGridLayout(widgets[i]);
 
@@ -154,10 +159,13 @@ void MainWindow::on_actionScan_triggered()
 	}
 
 	setCurrentLA(ret);
+	setNumChannels(flosslogic_logic_analyzers[ret].numchannels);
 
 	ret = flosslogic_hw_init(getCurrentLA(), &ctx);
 	if (ret < 0)
 		statusBar()->showMessage(tr("ERROR: LA init failed."));
+
+	setupDockWidgets();
 }
 
 void MainWindow::on_action_Open_triggered()

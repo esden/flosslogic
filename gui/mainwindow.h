@@ -45,6 +45,8 @@ public:
 	~MainWindow();
 	void setCurrentLA(int la);
 	int getCurrentLA(void);
+	void setNumChannels(int ch);
+	int getNumChannels(void);
 
 	/* TODO: Don't hardcode number of channels. */
 #define NUMCHANNELS 8
@@ -61,6 +63,7 @@ public:
 private:
 	Ui::MainWindow *ui;
 	int currentLA;
+	int numChannels;
 
 private slots:
 	void on_action_Get_samples_triggered();

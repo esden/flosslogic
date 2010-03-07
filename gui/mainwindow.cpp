@@ -27,11 +27,8 @@
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
 {
-	int i;
-	QString s;
-	QColor color;
-
-	setCurrentLA(-1);
+	currentLA = -1;
+	numChannels = -1;
 
 	ui->setupUi(this);
 
@@ -97,6 +94,7 @@ void MainWindow::setupDockWidgets(void)
 #endif
 	}
 }
+
 void MainWindow::setCurrentLA(int la)
 {
 	currentLA = la;
@@ -105,6 +103,16 @@ void MainWindow::setCurrentLA(int la)
 int MainWindow::getCurrentLA(void)
 {
 	return currentLA;
+}
+
+void MainWindow::setNumChannels(int ch)
+{
+	numChannels = ch;
+}
+
+int MainWindow::getNumChannels(void)
+{
+	return numChannels;
 }
 
 void MainWindow::on_actionAbout_triggered()

@@ -14,51 +14,21 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QLabel" name="infoLabel">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>150</width>
-      <height>300</height>
+      <width>111</width>
+      <height>311</height>
      </rect>
     </property>
-    <property name="tabPosition">
-     <enum>QTabWidget::West</enum>
+    <property name="text">
+     <string>Test</string>
     </property>
-    <property name="currentIndex">
-     <number>0</number>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
     </property>
-    <property name="tabsClosable">
-     <bool>true</bool>
-    </property>
-    <property name="movable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="consoleTab">
-     <attribute name="title">
-      <string>Console</string>
-     </attribute>
-     <widget class="QPlainTextEdit" name="plainTextEdit">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>111</width>
-        <height>291</height>
-       </rect>
-      </property>
-      <property name="verticalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOn</enum>
-      </property>
-      <property name="undoRedoEnabled">
-       <bool>false</bool>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

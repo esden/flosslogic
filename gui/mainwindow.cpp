@@ -50,8 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 
 	/* FIXME */
-	ui->tabWidget->setMaximumSize(150, 311);
-	QMainWindow::setCentralWidget(ui->tabWidget);
+	QMainWindow::setCentralWidget(ui->infoLabel);
 
 	// this->setDockOptions(QMainWindow::AllowNestedDocks);
 

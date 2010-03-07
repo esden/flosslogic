@@ -111,8 +111,14 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionScan"/>
+   <addaction name="action_New"/>
+   <addaction name="action_Open"/>
+   <addaction name="action_Save_as"/>
    <addaction name="actionPreferences"/>
+   <addaction name="separator"/>
+   <addaction name="actionScan"/>
+   <addaction name="action_Get_samples"/>
+   <addaction name="separator"/>
    <addaction name="actionQuit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

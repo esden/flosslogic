@@ -23,6 +23,7 @@
 #include "mainwindow.h"
 
 struct flosslogic_context ctx;
+uint8_t *sample_buffer;
 
 int main(int argc, char *argv[])
 {

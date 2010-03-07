@@ -20,7 +20,10 @@
 
 #include <QPainter>
 #include <QPen>
+#include <flosslogic.h>
 #include "channelrenderarea.h"
+
+extern uint8_t *sample_buffer;
 
 ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)
 {
@@ -41,8 +44,11 @@ QSize ChannelRenderArea::sizeHint() const
 
 void ChannelRenderArea::paintEvent(QPaintEvent *event)
 {
-	int i, low = this->height() - 2, high = 2, current_x, current_y;
+	int i, bit, low = this->height() - 2, high = 2, current_x, current_y;
 	QPainter painter(this);
+
+	if (sample_buffer == NULL)
+		return;
 
 	/* TODO: Use Qt::black etc. */
 	QPen pen(this->getChannelColor(), 1, Qt::SolidLine, Qt::SquareCap,
@@ -58,7 +64,8 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	for (i = 1; i < 512 * 100; i++) {
 		current_x += 10;
 		path.lineTo(current_x, current_y);
-		if (current_y == low)
+		bit = getbit(sample_buffer, i, 0 /* channel */); // TODO
+		if (bit != 0)
 			current_y = high;
 		else
 			current_y = low;

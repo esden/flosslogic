@@ -77,6 +77,7 @@ int output_binary(uint8_t *buf, uint64_t local_numsamples,
 	return 0;
 }
 
+#if 0
 static int getbit(uint8_t *buf, int numbyte, int chan)
 {
 	if (chan < 8) {
@@ -88,6 +89,7 @@ static int getbit(uint8_t *buf, int numbyte, int chan)
 		return -1;
 	}
 }
+#endif
 
 /* TODO: Don't hardcode number of channels to 8. */
 int output_vcd(uint8_t *buf, uint64_t local_numsamples,

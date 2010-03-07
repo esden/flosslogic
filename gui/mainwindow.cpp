@@ -218,5 +218,7 @@ void MainWindow::on_action_Get_samples_triggered()
 	}
 	progress.setValue(maxValue);
 
+	sample_buffer = buf;
+
 	flosslogic_hw_get_samples_shutdown(&ctx, 1000);
 }

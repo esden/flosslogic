@@ -22,10 +22,10 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
-
 #include <flosslogic.h>
 
 extern struct flosslogic_context ctx;
+extern uint8_t *sample_buffer;
 
 namespace Ui
 {

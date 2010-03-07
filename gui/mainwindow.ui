@@ -159,28 +159,44 @@
   <action name="actionScan">
    <property name="icon">
     <iconset resource="flosslogic-gui.qrc">
-     <normaloff>:/icons/document-new.png</normaloff>:/icons/document-new.png</iconset>
+     <normaloff>:/icons/view-refresh.png</normaloff>:/icons/view-refresh.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Scan</string>
    </property>
   </action>
   <action name="action_Open">
+   <property name="icon">
+    <iconset resource="flosslogic-gui.qrc">
+     <normaloff>:/icons/document-open.png</normaloff>:/icons/document-open.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Open...</string>
    </property>
   </action>
   <action name="action_New">
+   <property name="icon">
+    <iconset resource="flosslogic-gui.qrc">
+     <normaloff>:/icons/document-new.png</normaloff>:/icons/document-new.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;New...</string>
    </property>
   </action>
   <action name="action_Save_as">
+   <property name="icon">
+    <iconset resource="flosslogic-gui.qrc">
+     <normaloff>:/icons/document-save-as.png</normaloff>:/icons/document-save-as.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Save as...</string>
    </property>
   </action>
   <action name="action_Get_samples">
+   <property name="icon">
+    <iconset resource="flosslogic-gui.qrc">
+     <normaloff>:/icons/media-record.png</normaloff>:/icons/media-record.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Get samples...</string>
    </property>

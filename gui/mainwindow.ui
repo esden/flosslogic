@@ -141,7 +141,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionQuit">
    <property name="icon">
-    <iconset resource="flosslogic-gui.qrc">
+    <iconset>
      <normaloff>:/icons/system-log-out.png</normaloff>:/icons/system-log-out.png</iconset>
    </property>
    <property name="text">
@@ -166,7 +166,7 @@
   </action>
   <action name="actionPreferences">
    <property name="icon">
-    <iconset resource="flosslogic-gui.qrc">
+    <iconset>
      <normaloff>:/icons/preferences-system.png</normaloff>:/icons/preferences-system.png</iconset>
    </property>
    <property name="text">
@@ -175,7 +175,7 @@
   </action>
   <action name="actionScan">
    <property name="icon">
-    <iconset resource="flosslogic-gui.qrc">
+    <iconset>
      <normaloff>:/icons/view-refresh.png</normaloff>:/icons/view-refresh.png</iconset>
    </property>
    <property name="text">
@@ -184,7 +184,7 @@
   </action>
   <action name="action_Open">
    <property name="icon">
-    <iconset resource="flosslogic-gui.qrc">
+    <iconset>
      <normaloff>:/icons/document-open.png</normaloff>:/icons/document-open.png</iconset>
    </property>
    <property name="text">
@@ -193,7 +193,7 @@
   </action>
   <action name="action_New">
    <property name="icon">
-    <iconset resource="flosslogic-gui.qrc">
+    <iconset>
      <normaloff>:/icons/document-new.png</normaloff>:/icons/document-new.png</iconset>
    </property>
    <property name="text">
@@ -202,7 +202,7 @@
   </action>
   <action name="action_Save_as">
    <property name="icon">
-    <iconset resource="flosslogic-gui.qrc">
+    <iconset>
      <normaloff>:/icons/document-save-as.png</normaloff>:/icons/document-save-as.png</iconset>
    </property>
    <property name="text">
@@ -211,7 +211,7 @@
   </action>
   <action name="action_Get_samples">
    <property name="icon">
-    <iconset resource="flosslogic-gui.qrc">
+    <iconset>
      <normaloff>:/icons/media-record.png</normaloff>:/icons/media-record.png</iconset>
    </property>
    <property name="text">
@@ -220,9 +220,7 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="flosslogic-gui.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>actionQuit</sender>

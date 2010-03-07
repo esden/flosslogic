@@ -84,3 +84,13 @@ QColor ChannelRenderArea::getChannelColor(void)
 {
 	return channelColor;
 }
+
+void ChannelRenderArea::setChannelNumber(int ch)
+{
+	channelNumber = ch;
+}
+
+int ChannelRenderArea::getChannelNumber(void)
+{
+	return channelNumber;
+}

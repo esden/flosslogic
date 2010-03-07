@@ -79,6 +79,7 @@ void MainWindow::setupDockWidgets(void)
 		channelRenderAreas[i] = new ChannelRenderArea(this);
 		channelRenderAreas[i]->setSizePolicy(QSizePolicy::Minimum,
 					QSizePolicy::MinimumExpanding);
+		channelRenderAreas[i]->setChannelNumber(i);
 		channelRenderAreas[i]->setChannelColor(color);
 		gridLayouts[i]->addWidget(channelRenderAreas[i], i, 2);
 

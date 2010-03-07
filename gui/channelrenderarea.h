@@ -37,6 +37,8 @@ public:
 
 	QColor getChannelColor(void);
 	void setChannelColor(QColor color);
+	void setChannelNumber(int ch);
+	int getChannelNumber(void);
 
 protected:
 	void paintEvent(QPaintEvent *event);
@@ -46,6 +48,7 @@ signals:
 public slots:
 
 private:
+	int channelNumber;
 	QColor channelColor;
 };
 

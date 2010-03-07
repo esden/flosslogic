@@ -28,12 +28,31 @@ int flosslogic_hw_init(int hw, struct flosslogic_context *ctx)
 	return flosslogic_logic_analyzers[hw].init(ctx);
 }
 
+/* TODO: Remove later? */
 uint8_t *flosslogic_hw_get_samples(int hw, struct flosslogic_context *ctx,
-				   uint64_t numsamples, uint64_t samplerate,
-				   int timeout)
+		uint64_t numsamples, uint64_t samplerate, int timeout)
 {
 	return flosslogic_logic_analyzers[hw].get_samples(ctx, numsamples,
 							  samplerate, timeout);
+}
+
+uint8_t *flosslogic_hw_get_samples_init(struct flosslogic_context *ctx,
+		uint64_t numsamples, uint64_t samplerate, int timeout)
+{
+	return hw_usbeesx_get_samples_init(ctx, numsamples,
+					   samplerate, timeout);
+}
+
+int flosslogic_hw_get_samples_chunk(struct flosslogic_context *ctx,
+		uint8_t *buf, uint64_t chunksize, uint64_t pos, int timeout)
+{
+	return hw_usbeesx_get_samples_chunk(ctx, buf, chunksize, pos, timeout);
+}
+
+int flosslogic_hw_get_samples_shutdown(struct flosslogic_context *ctx,
+				       int timeout)
+{
+	return hw_usbeesx_get_samples_shutdown(ctx, timeout);
 }
 
 int flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx)

@@ -40,17 +40,29 @@ struct logic_analyzer {
 	uint16_t pid;
 	uint8_t numchannels;
 	int (*init) (struct flosslogic_context *ctx);
+	/* TODO: Remove later? */
 	uint8_t * (*get_samples) (struct flosslogic_context *ctx,
-				  uint64_t numsamples, uint64_t samplerate,
-				  int timeout);
+		uint64_t numsamples, uint64_t samplerate, int timeout);
+	uint8_t * (*hw_get_samples_init) (struct flosslogic_context *ctx,
+		uint64_t numsamples, uint64_t samplerate, int timeout);
+	int (*hw_get_samples_chunk) (struct flosslogic_context *ctx,
+		uint8_t *buf, uint64_t chunksize, uint64_t pos, int timeout);
+	int (*hw_get_samples_shutdown) (struct flosslogic_context *ctx,
+					int timeout);
 	int (*shutdown) (struct flosslogic_context *ctx);
 };
 
 /* main.c */
 int flosslogic_hw_init(int hw, struct flosslogic_context *ctx);
+/* TODO: Remove later? */
 uint8_t *flosslogic_hw_get_samples(int hw, struct flosslogic_context *ctx,
-				   uint64_t numsamples, uint64_t samplerate,
-				   int timeout);
+		uint64_t numsamples, uint64_t samplerate, int timeout);
+uint8_t *flosslogic_hw_get_samples_init(struct flosslogic_context *ctx,
+		uint64_t numsamples, uint64_t samplerate, int timeout);
+int flosslogic_hw_get_samples_chunk(struct flosslogic_context *ctx,
+		uint8_t *buf, uint64_t chunksize, uint64_t pos, int timeout);
+int flosslogic_hw_get_samples_shutdown(struct flosslogic_context *ctx,
+				      int timeout);
 int flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx);
 int flosslogic_is_supported_la(const char *la_string);
 
@@ -63,16 +75,21 @@ int flosslogic_usb_shutdown(struct flosslogic_context *ctx, int interface);
 
 /* hw_usbeesx.c */
 int hw_usbeesx_init(struct flosslogic_context *ctx);
+/* TODO: Remove later? */
 uint8_t *hw_usbeesx_get_samples(struct flosslogic_context *ctx,
-				uint64_t numsamples, uint64_t samplerate,
-				int timeout);
+		uint64_t numsamples, uint64_t samplerate, int timeout);
+uint8_t *hw_usbeesx_get_samples_init(struct flosslogic_context *ctx,
+		uint64_t numsamples, uint64_t samplerate, int timeout);
+int hw_usbeesx_get_samples_chunk(struct flosslogic_context *ctx,
+		uint8_t *buf, uint64_t chunksize, uint64_t pos, int timeout);
+int hw_usbeesx_get_samples_shutdown(struct flosslogic_context *ctx,
+				    int timeout);
 int hw_usbeesx_shutdown(struct flosslogic_context *ctx);
 
 /* hw_lps.c */
 int hw_lps_init(struct flosslogic_context *ctx);
 uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,
-			    uint64_t numsamples, uint64_t samplerate,
-			    int timeout);
+		uint64_t numsamples, uint64_t samplerate, int timeout);
 int hw_lps_shutdown(struct flosslogic_context *ctx);
 
 static const struct logic_analyzer flosslogic_logic_analyzers[] = {
@@ -83,6 +100,9 @@ static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 		8,
 		hw_usbeesx_init,
 		hw_usbeesx_get_samples,
+		hw_usbeesx_get_samples_init,
+		hw_usbeesx_get_samples_chunk,
+		hw_usbeesx_get_samples_shutdown,
 		hw_usbeesx_shutdown,
 	},
 	{
@@ -92,6 +112,9 @@ static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 		16,
 		hw_lps_init,
 		hw_lps_get_samples,
+		NULL,
+		NULL,
+		NULL,
 		hw_lps_shutdown,
 	},
 	{
@@ -102,12 +125,18 @@ static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 		NULL,
 		NULL,
 		NULL,
+		NULL,
+		NULL,
+		NULL,
 	},
 	{
 		NULL,
 		0,
 		0,
 		0,
+		NULL,
+		NULL,
+		NULL,
 		NULL,
 		NULL,
 		NULL,

@@ -66,9 +66,70 @@ static uint8_t samplerate_config_value(uint64_t samplerate)
 	return 0xff;
 }
 
+uint8_t *hw_usbeesx_get_samples_init(struct flosslogic_context *ctx,
+		uint64_t numsamples, uint64_t samplerate, int timeout)
+{
+	int ret, bufsize;
+	char cmdbuf[2];
+	uint8_t *sample_buffer;
+
+	cmdbuf[0] = 0x01;
+	/* TODO: Error handling. */
+	ret = usb_interrupt_write(ctx->devhandle, 0x81, cmdbuf, 1, timeout);
+
+	cmdbuf[0] = 0x55;
+	/* TODO: Error handling. */
+	ret = usb_interrupt_write(ctx->devhandle, 0x81, cmdbuf, 1, timeout);
+
+	/* TODO */
+
+	cmdbuf[0] = 0x01;
+	cmdbuf[1] = samplerate_config_value(samplerate); /* TODO: Error h. */
+	if (cmdbuf[1] == (char)0xff) {
+		/* Handle hw_usbeesx_shutdown() errors. */
+		hw_usbeesx_shutdown(ctx);
+		/* TODO: Set error code. */
+		return NULL;
+	}
+	/* TODO: Error handling. */
+	ret = usb_interrupt_write(ctx->devhandle, 0x01, cmdbuf, 2, timeout);
+
+	bufsize = numsamples * (ctx->la->numchannels / 8);
+	sample_buffer = malloc(bufsize);
+	/* TODO: Better error handling? */
+	if (sample_buffer == NULL)
+		return NULL;
+
+	return sample_buffer;
+}
+
+int hw_usbeesx_get_samples_chunk(struct flosslogic_context *ctx,
+		uint8_t *buf, uint64_t chunksize, uint64_t pos, int timeout)
+{
+	/* 0x86 == EP 6, IN direction */
+	usb_block_read(ctx->devhandle, 0x86,
+		       (char *)(buf + pos), chunksize, timeout);
+
+	/* TODO: Error handling. */
+	/* TODO: Guaranteed delivery of chunksize. */
+
+	return 0;
+}
+
+int hw_usbeesx_get_samples_shutdown(struct flosslogic_context *ctx,
+				    int timeout)
+{
+	/* TODO: Shutdown command? */
+
+	/* QUICK HACK: Prevent compiler warnings. */
+	ctx = ctx;
+	timeout = timeout;
+
+	return 0;
+}
+
 uint8_t *hw_usbeesx_get_samples(struct flosslogic_context *ctx,
-				uint64_t numsamples, uint64_t samplerate,
-				int timeout)
+		uint64_t numsamples, uint64_t samplerate, int timeout)
 {
 	int ret, bufsize;
 	uint64_t i;

@@ -29,13 +29,13 @@ ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)
 
 QSize ChannelRenderArea::minimumSizeHint() const
 {
-	return QSize(300, 20);
+	return QSize(300, 10);
 	// return QSize(Qt::PreferredSize, Qt::PreferredSize);
 }
 
 QSize ChannelRenderArea::sizeHint() const
 {
-	return QSize(300, 20);
+	return QSize(500, 10);
 	// return QSize(Qt::PreferredSize, Qt::PreferredSize);
 }
 
@@ -55,8 +55,8 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	QPainterPath path;
 	path.moveTo(current_x, current_y);
 
-	for (i = 1; i < 20; i++) {
-		current_x += 20;
+	for (i = 1; i < 512 * 100; i++) {
+		current_x += 10;
 		path.lineTo(current_x, current_y);
 		if (current_y == low)
 			current_y = high;

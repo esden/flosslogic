@@ -45,7 +45,7 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	QPainter painter(this);
 
 	/* TODO: Use Qt::black etc. */
-	QPen pen(this->getChannelColor(), 3, Qt::SolidLine, Qt::SquareCap,
+	QPen pen(this->getChannelColor(), 1, Qt::SolidLine, Qt::SquareCap,
 		 Qt::BevelJoin);
 	painter.setPen(pen);
 

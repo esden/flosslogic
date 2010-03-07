@@ -38,7 +38,7 @@ QSize ChannelRenderArea::minimumSizeHint() const
 
 QSize ChannelRenderArea::sizeHint() const
 {
-	return QSize(400, 10);
+	return QSize(300, 10);
 	// return QSize(Qt::PreferredSize, Qt::PreferredSize);
 }
 

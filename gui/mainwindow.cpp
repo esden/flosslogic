@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 
 	/* FIXME */
-	QMainWindow::setCentralWidget(ui->infoLabel);
+	QMainWindow::setCentralWidget(ui->mainWidget);
 
 	// this->setDockOptions(QMainWindow::AllowNestedDocks);
 }
@@ -160,6 +160,10 @@ void MainWindow::on_actionScan_triggered()
 
 	setCurrentLA(ret);
 	setNumChannels(flosslogic_logic_analyzers[ret].numchannels);
+
+	ui->comboBoxLA->addItem(flosslogic_logic_analyzers[ret].shortname);
+	ui->channelsLabel->setText(s.sprintf("Channels: %d",
+			flosslogic_logic_analyzers[ret].numchannels));
 
 	ret = flosslogic_hw_init(getCurrentLA(), &ctx);
 	if (ret < 0)

@@ -143,13 +143,19 @@ void MainWindow::on_actionScan_triggered()
 	ret = flosslogic_scan_for_devices(&ctx);
 	if (ret < 0) {
 		s = tr("No supported logic analyzer found.");
+		statusBar()->showMessage(s);
+		return;
 	} else {
 		s = tr("Found supported logic analyzer: ");
 		s.append(flosslogic_logic_analyzers[ret].shortname);
+		statusBar()->showMessage(s);
 	}
-	statusBar()->showMessage(s);
 
 	setCurrentLA(ret);
+
+	ret = flosslogic_hw_init(getCurrentLA(), &ctx);
+	if (ret < 0)
+		statusBar()->showMessage(tr("ERROR: LA init failed."));
 }
 
 void MainWindow::on_action_Open_triggered()
@@ -175,6 +181,7 @@ void MainWindow::on_action_Save_as_triggered()
 
 void MainWindow::on_action_Get_samples_triggered()
 {
+	uint8_t *buf;
 	int maxValue = 1000;
 	QString s;
 
@@ -191,6 +198,8 @@ void MainWindow::on_action_Get_samples_triggered()
 
 		usleep(100);
 		/* TODO: Do actual work here. */
+		// buf = flosslogic_hw_get_samples(getCurrentLA(), &ctx, 1000,
+		// 				1000000, 1000);
 		statusBar()->showMessage(s.sprintf("%d", i));
 	}
 	progress.setValue(maxValue);

@@ -23,6 +23,7 @@
 #include <QLineEdit>
 #include <QDockWidget>
 #include <QGridLayout>
+#include <QProgressDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "channelrenderarea.h"
@@ -171,4 +172,31 @@ void MainWindow::on_action_Save_as_triggered()
 		tr("Raw sample files (*.raw *.bin);;All files (*)"));
 
 	statusBar()->showMessage(fileName);
+}
+
+void MainWindow::on_action_Get_samples_triggered()
+{
+	int maxValue = 1000;
+	QString s;
+
+	QProgressDialog progress("Getting samples from logic analyzer...",
+				 "Abort", 0, maxValue, this);
+	progress.setWindowModality(Qt::WindowModal);
+	progress.setMinimumDuration(500);
+
+	for (int i = 0; i < maxValue; i++) {
+		progress.setValue(i);
+
+		if (progress.wasCanceled())
+			break;
+
+		usleep(100);
+		/* TODO: Do actual work here. */
+		statusBar()->showMessage(s.sprintf("%d", i));
+	}
+	progress.setValue(maxValue);
+
+	/* TODO: Properly handle an abort. */
+
+	statusBar()->showMessage("");
 }

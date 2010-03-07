@@ -78,6 +78,7 @@
     <addaction name="action_Open"/>
     <addaction name="action_Save_as"/>
     <addaction name="actionScan"/>
+    <addaction name="action_Get_samples"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -165,6 +166,11 @@
   <action name="action_Save_as">
    <property name="text">
     <string>&amp;Save as...</string>
+   </property>
+  </action>
+  <action name="action_Get_samples">
+   <property name="text">
+    <string>&amp;Get samples...</string>
    </property>
   </action>
  </widget>

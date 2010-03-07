@@ -47,6 +47,7 @@ private:
 	int currentLA;
 
 private slots:
+	void on_action_Get_samples_triggered();
 	void on_action_Save_as_triggered();
 	void on_action_Open_triggered();
 	void on_actionScan_triggered();

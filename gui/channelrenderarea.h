@@ -35,8 +35,8 @@ public:
 	QSize minimumSizeHint() const;
 	QSize sizeHint() const;
 
-	QColor getChannelColor(void);
 	void setChannelColor(QColor color);
+	QColor getChannelColor(void);
 	void setChannelNumber(int ch);
 	int getChannelNumber(void);
 

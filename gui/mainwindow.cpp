@@ -239,3 +239,23 @@ void MainWindow::on_action_Get_samples_triggered()
 
 	flosslogic_hw_get_samples_shutdown(&ctx, 1000);
 }
+
+void MainWindow::setSampleRate(uint64_t s)
+{
+	sampleRate = s;
+}
+
+uint64_t MainWindow::getSampleRate(void)
+{
+	return sampleRate;
+}
+
+void MainWindow::setNumSamples(uint64_t s)
+{
+	numSamples = s;
+}
+
+uint64_t MainWindow::getNumSamples(void)
+{
+	return numSamples;
+}

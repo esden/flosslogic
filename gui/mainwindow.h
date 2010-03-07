@@ -43,10 +43,15 @@ class MainWindow : public QMainWindow
 public:
 	MainWindow(QWidget *parent = 0);
 	~MainWindow();
+
 	void setCurrentLA(int la);
 	int getCurrentLA(void);
 	void setNumChannels(int ch);
 	int getNumChannels(void);
+	void setSampleRate(uint64_t s);
+	uint64_t getSampleRate(void);
+	void setNumSamples(uint64_t s);
+	uint64_t getNumSamples(void);
 
 	/* TODO: Don't hardcode number of channels. */
 #define NUMCHANNELS 8
@@ -64,6 +69,8 @@ private:
 	Ui::MainWindow *ui;
 	int currentLA;
 	int numChannels;
+	uint64_t sampleRate;
+	uint64_t numSamples;
 
 private slots:
 	void on_action_Get_samples_triggered();

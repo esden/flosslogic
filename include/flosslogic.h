@@ -66,6 +66,9 @@ int flosslogic_hw_get_samples_shutdown(struct flosslogic_context *ctx,
 int flosslogic_hw_shutdown(int hw, struct flosslogic_context *ctx);
 int flosslogic_is_supported_la(const char *la_string);
 
+/* output.c */
+int getbit(uint8_t *buf, int numbyte, int chan);
+
 /* libusb.c */
 int flosslogic_init(struct flosslogic_context *ctx);
 int flosslogic_scan_for_devices(struct flosslogic_context *ctx);

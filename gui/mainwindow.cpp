@@ -162,8 +162,10 @@ void MainWindow::on_actionScan_triggered()
 	setNumChannels(flosslogic_logic_analyzers[ret].numchannels);
 
 	ui->comboBoxLA->addItem(flosslogic_logic_analyzers[ret].shortname);
-	ui->channelsLabel->setText(s.sprintf("Channels: %d",
+	ui->labelChannels->setText(s.sprintf("Channels: %d",
 			flosslogic_logic_analyzers[ret].numchannels));
+	ui->comboBoxSampleRate->addItem("24MHz"); /* FIXME */
+	ui->comboBoxNumSamples->addItem("1000000"); /* FIXME */
 
 	ret = flosslogic_hw_init(getCurrentLA(), &ctx);
 	if (ret < 0)

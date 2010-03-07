@@ -181,30 +181,42 @@ void MainWindow::on_action_Save_as_triggered()
 
 void MainWindow::on_action_Get_samples_triggered()
 {
+	int ret;
 	uint8_t *buf;
-	int maxValue = 1000;
-	QString s;
+	uint64_t pos = 0;
+	uint64_t maxValue = 512 * 10000; /* FIXME */
+	uint64_t chunksize = 512;
+
+	if (getCurrentLA() < 0) {
+		/* TODO */
+		return;
+	}
+
+	buf = flosslogic_hw_get_samples_init(&ctx, maxValue, 1000000, 1000);
+	if (buf == NULL) {
+		/* TODO: Error handling. */
+		return;
+	}
 
 	QProgressDialog progress("Getting samples from logic analyzer...",
 				 "Abort", 0, maxValue, this);
 	progress.setWindowModality(Qt::WindowModal);
 	progress.setMinimumDuration(500);
 
-	for (int i = 0; i < maxValue; i++) {
+	for (uint64_t i = 0; i < maxValue; i += chunksize) {
 		progress.setValue(i);
 
+		/* TODO: Properly handle an abort. */
 		if (progress.wasCanceled())
 			break;
 
-		usleep(100);
-		/* TODO: Do actual work here. */
-		// buf = flosslogic_hw_get_samples(getCurrentLA(), &ctx, 1000,
-		// 				1000000, 1000);
-		statusBar()->showMessage(s.sprintf("%d", i));
+		/* Get a small chunk of samples. */
+		ret = flosslogic_hw_get_samples_chunk(&ctx, buf, chunksize,
+						      pos, 1000);
+		pos += chunksize;
+		/* TODO: Error handling. */
 	}
 	progress.setValue(maxValue);
 
-	/* TODO: Properly handle an abort. */
-
-	statusBar()->showMessage("");
+	flosslogic_hw_get_samples_shutdown(&ctx, 1000);
 }

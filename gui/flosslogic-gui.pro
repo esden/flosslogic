@@ -23,10 +23,12 @@ TEMPLATE   = app
 
 SOURCES   += main.cpp \
 	     mainwindow.cpp \
-	     channelrenderarea.cpp
+	     channelrenderarea.cpp \
+	     configdialog.cpp
 
 HEADERS   += mainwindow.h \
-	     channelrenderarea.h
+	     channelrenderarea.h \
+	     configdialog.h
 
 FORMS     += mainwindow.ui
 

@@ -23,6 +23,7 @@
 #include <QProgressDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "configdialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
@@ -138,7 +139,9 @@ void MainWindow::on_actionAbout_Qt_triggered()
 
 void MainWindow::on_actionPreferences_triggered()
 {
-	QMessageBox::about(this, tr("Preferences"), tr("Not yet implemented."));
+	ConfigDialog *dialog = new ConfigDialog();
+	dialog->exec();
+	/* TODO */
 }
 
 void MainWindow::on_actionScan_triggered()

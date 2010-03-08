@@ -46,9 +46,13 @@ License
 -------
 
 The flosslogic code is released under the terms of the GNU General
-Public License (GPL), version 2 or later.
+Public License (GPL), version 2 or later. See COPYING for details.
 
-See COPYING for details.
+The icons for the GUI are taken from the Tango Icon Library:
+
+  http://tango.freedesktop.org/Tango_Icon_Library
+
+They are all released into the public domain by their authors.
 
 
 Website

@@ -56,9 +56,6 @@ void MainWindow::setupDockWidgets(void)
 	QString s;
 	QColor color;
 
-	if (getCurrentLA() < 0)
-		return;
-
 	/* TODO: Do not create new dockWidgets if we already have them. */
 
 	/* TODO: Kill any old dockWidgets before creating new ones? */
@@ -94,6 +91,7 @@ void MainWindow::setupDockWidgets(void)
 		dockWidgets[i]->setWidget(widgets[i]);
 		addDockWidget(Qt::RightDockWidgetArea, dockWidgets[i]);
 
+		// dockWidgets[i]->show();
 #if 0
 		/* If the user renames a channel, adapt the dock title. */
 		QObject::connect(lineEdits[i], SIGNAL(textChanged(QString)),
@@ -175,7 +173,8 @@ void MainWindow::on_actionScan_triggered()
 	if (ret < 0)
 		statusBar()->showMessage(tr("ERROR: LA init failed."));
 
-	setupDockWidgets();
+	if (getCurrentLA() >= 0)
+		setupDockWidgets();
 }
 
 void MainWindow::on_action_Open_triggered()
@@ -187,7 +186,29 @@ void MainWindow::on_action_Open_triggered()
 		   "VCD files (*.vcd);;"
 		   "All files (*)"));
 
-	statusBar()->showMessage(fileName);
+	/* TODO: Error handling. */
+
+	QFile file(fileName);
+	file.open(QIODevice::ReadOnly);
+	QDataStream in(&file);
+
+	/* TODO: Implement support for loading different input formats. */
+
+	sample_buffer = (uint8_t *)malloc(512 * 100); /* FIXME */
+
+	in.readRawData((char *)sample_buffer, 512 * 100 /* FIXME */);
+	file.close();
+
+	setNumChannels(8); /* FIXME */
+
+	/* FIXME. */
+	setupDockWidgets();
+
+	/* FIXME. */
+	// for (int i = 0; i < 8; i++)
+	// 	widgets[i]->repaint();
+
+	// statusBar()->showMessage(fileName);
 }
 
 void MainWindow::on_action_Save_as_triggered()

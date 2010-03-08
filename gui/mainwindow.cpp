@@ -196,7 +196,18 @@ void MainWindow::on_action_Save_as_triggered()
 		tr("Save sample file"), ".",
 		tr("Raw sample files (*.raw *.bin);;All files (*)"));
 
-	statusBar()->showMessage(fileName);
+	/* TODO: Error handling. */
+
+	QFile file(fileName);
+	file.open(QIODevice::WriteOnly);
+	QDataStream out(&file);
+
+	/* TODO: Implement support for saving to different output formats. */
+
+	out.writeRawData((const char *)sample_buffer, 512 * 100 /* FIXME */);
+	file.close();
+
+	// statusBar()->showMessage(fileName);
 }
 
 void MainWindow::on_action_Get_samples_triggered()

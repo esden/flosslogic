@@ -50,6 +50,8 @@ public slots:
 private:
 	int channelNumber;
 	QColor channelColor;
+	uint64_t sample_start;
+	uint64_t sample_stop;
 };
 
 #endif // CHANNELRENDERAREA_H

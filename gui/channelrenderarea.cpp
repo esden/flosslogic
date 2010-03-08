@@ -45,8 +45,12 @@ QSize ChannelRenderArea::sizeHint() const
 
 void ChannelRenderArea::paintEvent(QPaintEvent *event)
 {
-	int i, bit, low = this->height() - 2, high = 2, current_x, current_y;
+	int bit, low = this->height() - 2, high = 2, current_x, current_y;
+	uint64_t i;
 	QPainter painter(this);
+
+	sample_start = 0;
+	sample_stop = 512 * 100;
 
 	if (sample_buffer == NULL)
 		return;
@@ -62,7 +66,7 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	QPainterPath path;
 	path.moveTo(current_x, current_y);
 
-	for (i = 1; i < 512 * 100; i++) {
+	for (i = sample_start; i < sample_stop; i++) {
 		current_x += 10;
 		path.lineTo(current_x, current_y);
 		bit = getbit(sample_buffer, i, getChannelNumber());

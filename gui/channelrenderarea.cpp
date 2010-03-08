@@ -22,6 +22,7 @@
 #include <QPen>
 #include <flosslogic.h>
 #include "channelrenderarea.h"
+#include "mainwindow.h"
 
 extern uint8_t *sample_buffer;
 
@@ -64,7 +65,7 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	for (i = 1; i < 512 * 100; i++) {
 		current_x += 10;
 		path.lineTo(current_x, current_y);
-		bit = getbit(sample_buffer, i, 0 /* channel */); // TODO
+		bit = getbit(sample_buffer, i, getChannelNumber());
 		if (bit != 0)
 			current_y = high;
 		else

@@ -205,10 +205,11 @@ void MainWindow::on_actionScan_triggered()
 	if (getCurrentLA() >= 0)
 		setupDockWidgets();
 
-	/* Enable all fields now (i.e. make them non-gray). */
+	/* Enable all relevant fields now (i.e. make them non-gray). */
 	ui->comboBoxSampleRate->setEnabled(true);
 	ui->comboBoxNumSamples->setEnabled(true);
 	ui->labelChannels->setEnabled(true);
+	ui->action_Get_samples->setEnabled(true);
 }
 
 void MainWindow::on_action_Open_triggered()
@@ -325,10 +326,11 @@ void MainWindow::on_action_Get_samples_triggered()
 	ui->labelSampleEnd->setText(s);
 #endif
 
-	/* Enable the relevant labels. */
+	/* Enable the relevant labels/buttons. */
 	ui->labelSampleStart->setEnabled(true);
 	ui->labelSampleEnd->setEnabled(true);
 	ui->labelZoomFactor->setEnabled(true);
+	ui->action_Save_as->setEnabled(true);
 
 	flosslogic_hw_get_samples_shutdown(&ctx, 1000);
 }
@@ -357,10 +359,36 @@ void MainWindow::on_action_New_triggered()
 {
 	for (int i = 0; i < NUMCHANNELS; i++) {
 		if (dockWidgets[i]) {
+			/* TODO: Check if all childs are also killed. */
 			delete dockWidgets[i];
 			dockWidgets[i] = NULL;
 		}
 	}
 
+	ui->comboBoxLA->clear();
+	ui->comboBoxLA->addItem(tr("No LA detected"));
+
+	ui->labelChannels->setText(tr("Channels: "));
+	ui->labelChannels->setEnabled(false);
+
+	ui->comboBoxSampleRate->clear();
+	ui->comboBoxSampleRate->setEnabled(false);
+
+	ui->comboBoxNumSamples->clear();
+	ui->comboBoxNumSamples->setEnabled(false);
+
+	ui->labelSampleStart->setText(tr("Start sample: "));
+	ui->labelSampleStart->setEnabled(false);
+
+	ui->labelSampleEnd->setText(tr("End sample: "));
+	ui->labelSampleEnd->setEnabled(false);
+
+	ui->labelZoomFactor->setText(tr("Zoom factor: "));
+	ui->labelZoomFactor->setEnabled(false);
+
+	ui->action_Save_as->setEnabled(false);
+	ui->action_Get_samples->setEnabled(false);
+
 	/* TODO: More cleanups. */
+	/* TODO: Free sample buffer(s). */
 }

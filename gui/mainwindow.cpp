@@ -238,6 +238,7 @@ void MainWindow::on_action_Get_samples_triggered()
 	uint64_t pos = 0;
 	uint64_t maxValue = 512 * 10000; /* FIXME */
 	uint64_t chunksize = 512;
+	QString s;
 
 	if (getCurrentLA() < 0) {
 		/* TODO */
@@ -271,6 +272,20 @@ void MainWindow::on_action_Get_samples_triggered()
 	progress.setValue(maxValue);
 
 	sample_buffer = buf;
+	for (int i = 0; i < getNumChannels(); i++) {
+		channelRenderAreas[i]->setSampleStart(0);
+		channelRenderAreas[i]->setSampleEnd(1000);
+	}
+
+	/* FIXME */
+	s.sprintf("%d", (int)channelRenderAreas[0]->getSampleStart());
+	s.prepend(tr("Start sample: "));
+	ui->labelSampleStart->setText(s);
+
+	/* FIXME */
+	s.sprintf("%d", (int)channelRenderAreas[0]->getSampleEnd());
+	s.prepend(tr("End sample: "));
+	ui->labelSampleEnd->setText(s);
 
 	flosslogic_hw_get_samples_shutdown(&ctx, 1000);
 }

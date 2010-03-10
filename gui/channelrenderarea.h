@@ -40,6 +40,11 @@ public:
 	void setChannelNumber(int ch);
 	int getChannelNumber(void);
 
+	void setSampleStart(uint64_t s);
+	uint64_t getSampleStart(void);
+	void setSampleEnd(uint64_t e);
+	uint64_t getSampleEnd(void);
+
 protected:
 	void paintEvent(QPaintEvent *event);
 
@@ -50,8 +55,8 @@ public slots:
 private:
 	int channelNumber;
 	QColor channelColor;
-	uint64_t sample_start;
-	uint64_t sample_stop;
+	uint64_t sampleStart;
+	uint64_t sampleEnd;
 };
 
 #endif // CHANNELRENDERAREA_H

@@ -49,9 +49,6 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	uint64_t i;
 	QPainter painter(this);
 
-	sample_start = 0;
-	sample_stop = 512 * 100;
-
 	if (sample_buffer == NULL)
 		return;
 
@@ -66,7 +63,7 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	QPainterPath path;
 	path.moveTo(current_x, current_y);
 
-	for (i = sample_start; i < sample_stop; i++) {
+	for (i = getSampleStart(); i < getSampleEnd(); i++) {
 		current_x += 10;
 		path.lineTo(current_x, current_y);
 		bit = getbit(sample_buffer, i, getChannelNumber());
@@ -98,4 +95,24 @@ void ChannelRenderArea::setChannelNumber(int ch)
 int ChannelRenderArea::getChannelNumber(void)
 {
 	return channelNumber;
+}
+
+void ChannelRenderArea::setSampleStart(uint64_t s)
+{
+	sampleStart = s;
+}
+
+uint64_t ChannelRenderArea::getSampleStart(void)
+{
+	return sampleStart;
+}
+
+void ChannelRenderArea::setSampleEnd(uint64_t e)
+{
+	sampleEnd = e;
+}
+
+uint64_t ChannelRenderArea::getSampleEnd(void)
+{
+	return sampleEnd;
 }

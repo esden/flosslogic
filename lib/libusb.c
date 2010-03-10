@@ -31,8 +31,6 @@
  */
 int flosslogic_init(struct flosslogic_context *ctx)
 {
-	int num_bus_changes, num_device_changes;
-
 	if (ctx == NULL)
 		return -1;
 
@@ -41,12 +39,6 @@ int flosslogic_init(struct flosslogic_context *ctx)
 	ctx->la = NULL;
 
 	usb_init();
-
-	/* Return code unused so far in this place. */
-	num_bus_changes = usb_find_busses();
-
-	/* Return code unused so far in this place. */
-	num_device_changes = usb_find_devices();
 
 	return 0;
 }
@@ -87,10 +79,16 @@ int flosslogic_scan_for_devices(struct flosslogic_context *ctx)
 {
 	struct usb_bus *bus;
 	struct usb_device *dev;
-	int ret;
+	int ret, num_bus_changes, num_device_changes;
 
 	if (ctx == NULL)
 		return -1;
+
+	/* Return code unused so far in this place. */
+	num_bus_changes = usb_find_busses();
+
+	/* Return code unused so far in this place. */
+	num_device_changes = usb_find_devices();
 
 	for (bus = usb_get_busses(); bus; bus = bus->next) {
 		for (dev = bus->devices; dev; dev = dev->next) {

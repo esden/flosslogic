@@ -24,6 +24,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "configdialog.h"
+#include <flosslogic.h>
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
@@ -144,8 +145,9 @@ void MainWindow::on_actionPreferences_triggered()
 
 void MainWindow::on_actionScan_triggered()
 {
-	int ret;
+	int ret, i;
 	QString s;
+	struct logic_analyzer la;
 
 	statusBar()->showMessage(tr("Scanning for logic analyzers..."));
 
@@ -166,8 +168,16 @@ void MainWindow::on_actionScan_triggered()
 	ui->comboBoxLA->addItem(flosslogic_logic_analyzers[ret].shortname);
 	ui->labelChannels->setText(s.sprintf("Channels: %d",
 			flosslogic_logic_analyzers[ret].numchannels));
-	ui->comboBoxSampleRate->addItem("24MHz"); /* FIXME */
-	ui->comboBoxNumSamples->addItem("1000000"); /* FIXME */
+
+	i = 0;
+	la = flosslogic_logic_analyzers[getCurrentLA()];
+	while (la.samplerates[i].string != NULL) {
+		ui->comboBoxSampleRate->addItem(la.samplerates[i].string,
+			la.samplerates[i].samplerate);
+		i++;
+	}
+
+	ui->comboBoxNumSamples->addItem("1000000", 1000000); /* FIXME */
 
 	ret = flosslogic_hw_init(getCurrentLA(), &ctx);
 	if (ret < 0)

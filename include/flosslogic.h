@@ -34,11 +34,17 @@ struct flosslogic_context {
 	struct logic_analyzer *la;
 };
 
+struct samplerates {
+	uint64_t samplerate;
+	const char *string;
+};
+
 struct logic_analyzer {
 	const char *shortname;
 	uint16_t vid;
 	uint16_t pid;
 	uint8_t numchannels;
+	const struct samplerates *samplerates;
 	int (*init) (struct flosslogic_context *ctx);
 	/* TODO: Remove later? */
 	uint8_t * (*get_samples) (struct flosslogic_context *ctx,
@@ -95,12 +101,26 @@ uint8_t *hw_lps_get_samples(struct flosslogic_context *ctx,
 		uint64_t numsamples, uint64_t samplerate, int timeout);
 int hw_lps_shutdown(struct flosslogic_context *ctx);
 
+static const struct samplerates usbeesx_samplerates[] = {
+	{24000000, "24MHz"},
+	{16000000, "16MHz"},
+	{12000000, "12MHz"},
+	{8000000,  "8MHz"},
+	{6000000,  "6MHz"},
+	{4000000,  "4MHz"},
+	{3000000,  "3MHz"},
+	{2000000,  "2MHz"},
+	{1000000,  "1MHz"},
+	{0,        NULL}
+};
+
 static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 	{
 		"usbeesx",
 		0x08a9,
 		0x0009,
 		8,
+		usbeesx_samplerates,
 		hw_usbeesx_init,
 		hw_usbeesx_get_samples,
 		hw_usbeesx_get_samples_init,
@@ -113,6 +133,7 @@ static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 		0x16d0,
 		0x0498,
 		16,
+		NULL,
 		hw_lps_init,
 		hw_lps_get_samples,
 		NULL,
@@ -131,12 +152,14 @@ static const struct logic_analyzer flosslogic_logic_analyzers[] = {
 		NULL,
 		NULL,
 		NULL,
+		NULL,
 	},
 	{
 		NULL,
 		0,
 		0,
 		0,
+		NULL,
 		NULL,
 		NULL,
 		NULL,

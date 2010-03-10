@@ -92,6 +92,13 @@ void MainWindow::setupDockWidgets(void)
 		dockWidgets[i]->setWidget(widgets[i]);
 		addDockWidget(Qt::RightDockWidgetArea, dockWidgets[i]);
 
+		QObject::connect(channelRenderAreas[i],
+				 SIGNAL(sampleStartChanged(QString)),
+				 ui->labelSampleStart, SLOT(setText(QString)));
+		QObject::connect(channelRenderAreas[i],
+				 SIGNAL(sampleEndChanged(QString)),
+				 ui->labelSampleEnd, SLOT(setText(QString)));
+
 		// dockWidgets[i]->show();
 #if 0
 		/* If the user renames a channel, adapt the dock title. */
@@ -294,9 +301,10 @@ void MainWindow::on_action_Get_samples_triggered()
 	sample_buffer = buf;
 	for (int i = 0; i < getNumChannels(); i++) {
 		channelRenderAreas[i]->setSampleStart(0);
-		channelRenderAreas[i]->setSampleEnd(1000);
+		channelRenderAreas[i]->setSampleEnd(512 * 100);
 	}
 
+#if 0
 	/* FIXME */
 	s.sprintf("%d", (int)channelRenderAreas[0]->getSampleStart());
 	s.prepend(tr("Start sample: "));
@@ -306,6 +314,7 @@ void MainWindow::on_action_Get_samples_triggered()
 	s.sprintf("%d", (int)channelRenderAreas[0]->getSampleEnd());
 	s.prepend(tr("End sample: "));
 	ui->labelSampleEnd->setText(s);
+#endif
 
 	/* Enable both labels. */
 	ui->labelSampleStart->setEnabled(true);

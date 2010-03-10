@@ -64,7 +64,7 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	path.moveTo(current_x, current_y);
 
 	for (i = getSampleStart(); i < getSampleEnd(); i++) {
-		current_x += 10;
+		current_x += 2;
 		path.lineTo(current_x, current_y);
 		bit = getbit(sample_buffer, i, getChannelNumber());
 		if (bit != 0)
@@ -75,6 +75,29 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	}
 
 	painter.drawPath(path);
+}
+
+/* TODO: Change scrollwheel to zoom (not scroll) later. */
+void ChannelRenderArea::wheelEvent(QWheelEvent *event)
+{
+	uint64_t sampleStartNew, sampleEndNew;
+
+	sampleStartNew = getSampleStart() + event->delta() / WHEEL_DELTA;
+	sampleEndNew = getSampleEnd() + event->delta() / WHEEL_DELTA;
+
+	/* TODO: More checks. */
+
+#if 1
+	if (sampleStartNew < 0 || sampleEndNew < 0)
+		return;
+	if (sampleStartNew > 512 * 1000 || sampleEndNew > 512 * 1000 /* FIXME */)
+		return;
+#endif
+
+	setSampleStart(sampleStartNew);
+	setSampleEnd(sampleEndNew); /* FIXME: Use len? */
+
+	repaint();
 }
 
 void ChannelRenderArea::setChannelColor(QColor color)
@@ -99,7 +122,12 @@ int ChannelRenderArea::getChannelNumber(void)
 
 void ChannelRenderArea::setSampleStart(uint64_t s)
 {
+	QString str;
+
 	sampleStart = s;
+
+	emit(sampleStartChanged(sampleStart));
+	emit(sampleStartChanged(str.sprintf("%ld", sampleStart)));
 }
 
 uint64_t ChannelRenderArea::getSampleStart(void)
@@ -109,7 +137,12 @@ uint64_t ChannelRenderArea::getSampleStart(void)
 
 void ChannelRenderArea::setSampleEnd(uint64_t e)
 {
+	QString str;
+
 	sampleEnd = e;
+
+	emit(sampleEndChanged(sampleEnd));
+	emit(sampleEndChanged(str.sprintf("%ld", sampleEnd)));
 }
 
 uint64_t ChannelRenderArea::getSampleEnd(void)

@@ -24,6 +24,7 @@
 #include <QWidget>
 #include <QSize>
 #include <QColor>
+#include <QWheelEvent>
 
 class ChannelRenderArea : public QWidget
 {
@@ -40,17 +41,22 @@ public:
 	void setChannelNumber(int ch);
 	int getChannelNumber(void);
 
-	void setSampleStart(uint64_t s);
 	uint64_t getSampleStart(void);
-	void setSampleEnd(uint64_t e);
 	uint64_t getSampleEnd(void);
 
 protected:
 	void paintEvent(QPaintEvent *event);
+	void wheelEvent(QWheelEvent *event);
 
 signals:
+	void sampleStartChanged(uint64_t);
+	void sampleStartChanged(QString);
+	void sampleEndChanged(uint64_t);
+	void sampleEndChanged(QString);
 
 public slots:
+	void setSampleStart(uint64_t s);
+	void setSampleEnd(uint64_t s);
 
 private:
 	int channelNumber;

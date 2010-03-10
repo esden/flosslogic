@@ -165,6 +165,7 @@ void MainWindow::on_actionScan_triggered()
 	setCurrentLA(ret);
 	setNumChannels(flosslogic_logic_analyzers[ret].numchannels);
 
+	ui->comboBoxLA->clear();
 	ui->comboBoxLA->addItem(flosslogic_logic_analyzers[ret].shortname);
 	ui->labelChannels->setText(s.sprintf("Channels: %d",
 			flosslogic_logic_analyzers[ret].numchannels));
@@ -189,6 +190,11 @@ void MainWindow::on_actionScan_triggered()
 
 	if (getCurrentLA() >= 0)
 		setupDockWidgets();
+
+	/* Enable all fields now (i.e. make them non-gray). */
+	ui->comboBoxSampleRate->setEnabled(true);
+	ui->comboBoxNumSamples->setEnabled(true);
+	ui->labelChannels->setEnabled(true);
 }
 
 void MainWindow::on_action_Open_triggered()
@@ -300,6 +306,10 @@ void MainWindow::on_action_Get_samples_triggered()
 	s.sprintf("%d", (int)channelRenderAreas[0]->getSampleEnd());
 	s.prepend(tr("End sample: "));
 	ui->labelSampleEnd->setText(s);
+
+	/* Enable both labels. */
+	ui->labelSampleStart->setEnabled(true);
+	ui->labelSampleEnd->setEnabled(true);
 
 	flosslogic_hw_get_samples_shutdown(&ctx, 1000);
 }

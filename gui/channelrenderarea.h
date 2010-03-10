@@ -43,6 +43,7 @@ public:
 
 	uint64_t getSampleStart(void);
 	uint64_t getSampleEnd(void);
+	float getZoomFactor(void);
 
 protected:
 	void paintEvent(QPaintEvent *event);
@@ -53,16 +54,20 @@ signals:
 	void sampleStartChanged(QString);
 	void sampleEndChanged(uint64_t);
 	void sampleEndChanged(QString);
+	void zoomFactorChanged(float);
+	void zoomFactorChanged(QString);
 
 public slots:
 	void setSampleStart(uint64_t s);
 	void setSampleEnd(uint64_t s);
+	void setZoomFactor(float z);
 
 private:
 	int channelNumber;
 	QColor channelColor;
 	uint64_t sampleStart;
 	uint64_t sampleEnd;
+	float zoomFactor;
 };
 
 #endif // CHANNELRENDERAREA_H

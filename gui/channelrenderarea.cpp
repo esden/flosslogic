@@ -28,7 +28,11 @@ extern uint8_t *sample_buffer;
 
 ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)
 {
+	channelNumber = -1;
 	channelColor = Qt::black;
+	sampleStart = 0;
+	sampleEnd = 0;
+	zoomFactor = 1.0;
 }
 
 QSize ChannelRenderArea::minimumSizeHint() const
@@ -80,6 +84,11 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 /* TODO: Change scrollwheel to zoom (not scroll) later. */
 void ChannelRenderArea::wheelEvent(QWheelEvent *event)
 {
+	float zoomFactorNew = getZoomFactor() + event->delta() / WHEEL_DELTA;
+
+	setZoomFactor(zoomFactorNew);
+
+#if 0
 	uint64_t sampleStartNew, sampleEndNew;
 
 	sampleStartNew = getSampleStart() + event->delta() / WHEEL_DELTA;
@@ -96,6 +105,7 @@ void ChannelRenderArea::wheelEvent(QWheelEvent *event)
 
 	setSampleStart(sampleStartNew);
 	setSampleEnd(sampleEndNew); /* FIXME: Use len? */
+#endif
 
 	repaint();
 }
@@ -148,4 +158,19 @@ void ChannelRenderArea::setSampleEnd(uint64_t e)
 uint64_t ChannelRenderArea::getSampleEnd(void)
 {
 	return sampleEnd;
+}
+
+void ChannelRenderArea::setZoomFactor(float z)
+{
+	QString str;
+
+	zoomFactor = z;
+
+	emit(zoomFactorChanged(zoomFactor));
+	emit(zoomFactorChanged(str.sprintf("%f", zoomFactor)));
+}
+
+float ChannelRenderArea::getZoomFactor(void)
+{
+	return zoomFactor;
 }

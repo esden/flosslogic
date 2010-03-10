@@ -98,6 +98,9 @@ void MainWindow::setupDockWidgets(void)
 		QObject::connect(channelRenderAreas[i],
 				 SIGNAL(sampleEndChanged(QString)),
 				 ui->labelSampleEnd, SLOT(setText(QString)));
+		QObject::connect(channelRenderAreas[i],
+				 SIGNAL(zoomFactorChanged(QString)),
+				 ui->labelZoomFactor, SLOT(setText(QString)));
 
 		// dockWidgets[i]->show();
 #if 0
@@ -316,9 +319,10 @@ void MainWindow::on_action_Get_samples_triggered()
 	ui->labelSampleEnd->setText(s);
 #endif
 
-	/* Enable both labels. */
+	/* Enable the relevant labels. */
 	ui->labelSampleStart->setEnabled(true);
 	ui->labelSampleEnd->setEnabled(true);
+	ui->labelZoomFactor->setEnabled(true);
 
 	flosslogic_hw_get_samples_shutdown(&ctx, 1000);
 }

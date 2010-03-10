@@ -25,6 +25,11 @@
 #include "channelrenderarea.h"
 #include "mainwindow.h"
 
+/* WHEEL_DELTA was introduced in Qt 4.6, earlier versions don't have it. */
+#ifndef WHEEL_DELTA
+#define WHEEL_DELTA 120
+#endif
+
 extern uint8_t *sample_buffer;
 
 ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)

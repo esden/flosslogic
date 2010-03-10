@@ -25,6 +25,7 @@
 #include <QSize>
 #include <QColor>
 #include <QWheelEvent>
+#include <stdint.h>
 
 class ChannelRenderArea : public QWidget
 {

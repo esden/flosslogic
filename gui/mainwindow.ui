@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>121</width>
+      <width>130</width>
       <height>311</height>
      </rect>
     </property>
@@ -28,7 +28,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>121</width>
+       <width>129</width>
        <height>311</height>
       </rect>
      </property>
@@ -131,7 +131,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>20</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -228,6 +228,9 @@
    <property name="text">
     <string>&amp;Scan</string>
    </property>
+   <property name="toolTip">
+    <string>Scan for supported logic analyzers</string>
+   </property>
   </action>
   <action name="action_Open">
    <property name="icon">
@@ -248,6 +251,9 @@
    </property>
   </action>
   <action name="action_Save_as">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>:/icons/document-save-as.png</normaloff>:/icons/document-save-as.png</iconset>
@@ -257,6 +263,9 @@
    </property>
   </action>
   <action name="action_Get_samples">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>:/icons/media-record.png</normaloff>:/icons/media-record.png</iconset>

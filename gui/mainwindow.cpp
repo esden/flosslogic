@@ -134,11 +134,12 @@ int MainWindow::getNumChannels(void)
 void MainWindow::on_actionAbout_triggered()
 {
 	QMessageBox::about(this, tr("About"),
-			   tr("<center>flosslogic-gui 0.1</center>\n\n"
-			   "<center>Copyright (C) 2010 "
-			   "Uwe Hermann &lt;uwe@hermann-uwe.de&gt;</center>\n"
-			   "<center>GNU GPL, version 2 or later</center>\n"
-			   "<center>http://www.flosslogic.org</center>"));
+		tr("<center>flosslogic-gui 0.1</center><br />\n"
+		"<center>Copyright (C) 2010 "
+		"Uwe Hermann &lt;uwe@hermann-uwe.de&gt;</center>\n"
+		"<center>GNU GPL, version 2 or later</center><br />\n"
+		"<center><a href=\"http://www.flosslogic.org\">"
+		"http://www.flosslogic.org</a></center>"));
 }
 
 void MainWindow::on_actionAbout_Qt_triggered()
@@ -189,7 +190,6 @@ void MainWindow::on_actionScan_triggered()
 	}
 
 	/* FIXME */
-	ui->comboBoxNumSamples->addItem("51200", 51200);
 	ui->comboBoxNumSamples->addItem("3000000", 3000000);
 	ui->comboBoxNumSamples->addItem("2000000", 2000000);
 	ui->comboBoxNumSamples->addItem("1000000", 1000000);

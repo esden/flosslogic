@@ -177,7 +177,11 @@ void MainWindow::on_actionScan_triggered()
 		i++;
 	}
 
-	ui->comboBoxNumSamples->addItem("1000000", 1000000); /* FIXME */
+	/* FIXME */
+	ui->comboBoxNumSamples->addItem("3000000", 3000000);
+	ui->comboBoxNumSamples->addItem("2000000", 2000000);
+	ui->comboBoxNumSamples->addItem("1000000", 1000000);
+	ui->comboBoxNumSamples->setEditable(true);
 
 	ret = flosslogic_hw_init(getCurrentLA(), &ctx);
 	if (ret < 0)

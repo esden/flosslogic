@@ -53,8 +53,8 @@ public:
 	void setNumSamples(uint64_t s);
 	uint64_t getNumSamples(void);
 
-	/* TODO: Don't hardcode number of channels. */
-#define NUMCHANNELS 8
+	/* TODO: Don't hardcode maximum number of channels. */
+#define NUMCHANNELS 64
 
 	/* FIXME */
 	QLineEdit *lineEdits[NUMCHANNELS];
@@ -73,6 +73,7 @@ private:
 	uint64_t numSamples;
 
 private slots:
+	void on_action_New_triggered();
 	void on_action_Get_samples_triggered();
 	void on_action_Save_as_triggered();
 	void on_action_Open_triggered();

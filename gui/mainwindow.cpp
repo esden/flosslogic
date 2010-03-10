@@ -32,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent)
 	currentLA = -1;
 	numChannels = -1;
 
+	for (int i = 0; i < NUMCHANNELS; i++)
+		dockWidgets[i] = NULL;
+
 	ui->setupUi(this);
 
 	/* FIXME */
@@ -348,4 +351,16 @@ void MainWindow::setNumSamples(uint64_t s)
 uint64_t MainWindow::getNumSamples(void)
 {
 	return numSamples;
+}
+
+void MainWindow::on_action_New_triggered()
+{
+	for (int i = 0; i < NUMCHANNELS; i++) {
+		if (dockWidgets[i]) {
+			delete dockWidgets[i];
+			dockWidgets[i] = NULL;
+		}
+	}
+
+	/* TODO: More cleanups. */
 }

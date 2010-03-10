@@ -60,6 +60,9 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	uint64_t i;
 	QPainter painter(this);
 
+	/* Quick hack to prevent compiler warning. */
+	event = event;
+
 	if (sample_buffer == NULL)
 		return;
 
@@ -172,7 +175,7 @@ void ChannelRenderArea::setSampleStart(uint64_t s)
 	sampleStart = s;
 
 	emit(sampleStartChanged(sampleStart));
-	emit(sampleStartChanged(str.sprintf("%ld", sampleStart)));
+	emit(sampleStartChanged(str.sprintf("%llu", sampleStart)));
 }
 
 uint64_t ChannelRenderArea::getSampleStart(void)
@@ -187,7 +190,7 @@ void ChannelRenderArea::setSampleEnd(uint64_t e)
 	sampleEnd = e;
 
 	emit(sampleEndChanged(sampleEnd));
-	emit(sampleEndChanged(str.sprintf("%ld", sampleEnd)));
+	emit(sampleEndChanged(str.sprintf("%llu", sampleEnd)));
 }
 
 uint64_t ChannelRenderArea::getSampleEnd(void)

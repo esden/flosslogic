@@ -189,6 +189,7 @@ void MainWindow::on_actionScan_triggered()
 	}
 
 	/* FIXME */
+	ui->comboBoxNumSamples->addItem("51200", 51200);
 	ui->comboBoxNumSamples->addItem("3000000", 3000000);
 	ui->comboBoxNumSamples->addItem("2000000", 2000000);
 	ui->comboBoxNumSamples->addItem("1000000", 1000000);
@@ -266,7 +267,8 @@ void MainWindow::on_action_Get_samples_triggered()
 	int ret;
 	uint8_t *buf;
 	uint64_t pos = 0;
-	uint64_t maxValue = 512 * 10000; /* FIXME */
+	uint64_t numSamplesLocal = ui->comboBoxNumSamples->itemData(
+			ui->comboBoxNumSamples->currentIndex()).toLongLong();
 	uint64_t chunksize = 512;
 	QString s;
 
@@ -275,18 +277,18 @@ void MainWindow::on_action_Get_samples_triggered()
 		return;
 	}
 
-	buf = flosslogic_hw_get_samples_init(&ctx, maxValue, 1000000, 1000);
+	buf = flosslogic_hw_get_samples_init(&ctx, numSamplesLocal, 1000000, 1000);
 	if (buf == NULL) {
 		/* TODO: Error handling. */
 		return;
 	}
 
 	QProgressDialog progress("Getting samples from logic analyzer...",
-				 "Abort", 0, maxValue, this);
+				 "Abort", 0, numSamplesLocal, this);
 	progress.setWindowModality(Qt::WindowModal);
 	progress.setMinimumDuration(500);
 
-	for (uint64_t i = 0; i < maxValue; i += chunksize) {
+	for (uint64_t i = 0; i < numSamplesLocal; i += chunksize) {
 		progress.setValue(i);
 
 		/* TODO: Properly handle an abort. */
@@ -299,12 +301,13 @@ void MainWindow::on_action_Get_samples_triggered()
 		pos += chunksize;
 		/* TODO: Error handling. */
 	}
-	progress.setValue(maxValue);
+	progress.setValue(numSamplesLocal);
 
 	sample_buffer = buf;
 	for (int i = 0; i < getNumChannels(); i++) {
+		channelRenderAreas[i]->setNumSamples(numSamplesLocal);
 		channelRenderAreas[i]->setSampleStart(0);
-		channelRenderAreas[i]->setSampleEnd(512 * 100);
+		channelRenderAreas[i]->setSampleEnd(numSamplesLocal);
 	}
 
 #if 0

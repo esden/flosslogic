@@ -20,6 +20,7 @@
 
 #include <QPainter>
 #include <QPen>
+#include <QColor>
 #include <flosslogic.h>
 #include "channelrenderarea.h"
 #include "mainwindow.h"
@@ -30,6 +31,7 @@ ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)
 {
 	channelNumber = -1;
 	channelColor = Qt::black;
+	numSamples = 0;
 	sampleStart = 0;
 	sampleEnd = 0;
 	zoomFactor = 1.0;
@@ -61,6 +63,8 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 		 Qt::BevelJoin);
 	painter.setPen(pen);
 
+	// painter.fillRect(0, 0, this->width(), this->height(), QColor(Qt::gray));
+
 	current_x = 0;
 	current_y = low; /* FIXME? */
 
@@ -79,14 +83,30 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	}
 
 	painter.drawPath(path);
+	// painter.scale(getZoomFactor(), getZoomFactor());
 }
 
-/* TODO: Change scrollwheel to zoom (not scroll) later. */
 void ChannelRenderArea::wheelEvent(QWheelEvent *event)
 {
-	float zoomFactorNew = getZoomFactor() + event->delta() / WHEEL_DELTA;
+	uint64_t sampleStartNew, sampleEndNew;
+	float zoomFactorNew;
 
+	/* FIXME: Make this constant user-configurable. */
+	zoomFactorNew = getZoomFactor()
+			+ 0.01 * (event->delta() / WHEEL_DELTA);
+	if (zoomFactorNew < 0)
+		zoomFactorNew = 0;
+	if (zoomFactorNew > 2)
+		zoomFactorNew = 2; /* FIXME: Don't hardcode. */
 	setZoomFactor(zoomFactorNew);
+
+	sampleStartNew = 0; /* FIXME */
+	sampleEndNew = getNumSamples() * zoomFactorNew;
+	if (sampleEndNew > getNumSamples())
+		sampleEndNew = getNumSamples();
+
+	setSampleStart(sampleStartNew);
+	setSampleEnd(sampleEndNew);
 
 #if 0
 	uint64_t sampleStartNew, sampleEndNew;
@@ -128,6 +148,16 @@ void ChannelRenderArea::setChannelNumber(int ch)
 int ChannelRenderArea::getChannelNumber(void)
 {
 	return channelNumber;
+}
+
+void ChannelRenderArea::setNumSamples(uint64_t s)
+{
+	numSamples = s;
+}
+
+uint64_t ChannelRenderArea::getNumSamples(void)
+{
+	return numSamples;
 }
 
 void ChannelRenderArea::setSampleStart(uint64_t s)

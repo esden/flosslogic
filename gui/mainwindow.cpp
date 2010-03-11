@@ -214,6 +214,7 @@ void MainWindow::on_actionScan_triggered()
 
 void MainWindow::on_action_Open_triggered()
 {
+	QString s;
 	QString fileName = QFileDialog::getOpenFileName(this,
 		tr("Open sample file"), ".",
 		tr("Raw sample files (*.raw *.bin);;"
@@ -236,16 +237,51 @@ void MainWindow::on_action_Open_triggered()
 	}
 
 	in.readRawData((char *)sample_buffer, file.size());
+
+	setNumSamples(file.size());
+	setNumChannels(8); /* FIXME */
+
 	file.close();
 
-	setNumChannels(8); /* FIXME */
 	setupDockWidgets();
 
-	/* FIXME. */
-	// for (int i = 0; i < 8; i++)
-	// 	widgets[i]->repaint();
+	ui->comboBoxLA->clear();
+	ui->comboBoxLA->addItem(tr("File"));
 
-	// statusBar()->showMessage(fileName);
+	/* FIXME: Store number of channels in the file or allow user config. */
+	s.sprintf("%d", getNumChannels());
+	s.prepend(tr("Channels: "));
+	ui->labelChannels->setText(s);
+	ui->labelChannels->setEnabled(false);
+
+	ui->comboBoxSampleRate->clear();
+	ui->comboBoxSampleRate->setEnabled(false); /* FIXME */
+
+	ui->comboBoxNumSamples->clear();
+	ui->comboBoxNumSamples->addItem(s.sprintf("%d", getNumSamples()),
+					getNumSamples());
+	ui->comboBoxNumSamples->setEnabled(true);
+
+	ui->labelSampleStart->setText(tr("Start sample: "));
+	ui->labelSampleStart->setEnabled(true);
+
+	ui->labelSampleEnd->setText(tr("End sample: "));
+	ui->labelSampleEnd->setEnabled(true);
+
+	ui->labelZoomFactor->setText(tr("Zoom factor: "));
+	ui->labelZoomFactor->setEnabled(true);
+
+	ui->action_Save_as->setEnabled(true);
+	ui->action_Get_samples->setEnabled(false);
+
+
+	/* FIXME */
+#if 0
+	for (int i = 0; i < 8; i++) {
+		widgets[i]->repaint();
+		channelRenderAreas[i]->repaint();
+	}
+#endif
 }
 
 void MainWindow::on_action_Save_as_triggered()
@@ -266,8 +302,6 @@ void MainWindow::on_action_Save_as_triggered()
 	out.writeRawData((const char *)sample_buffer,
 			 getNumSamples() * (getNumChannels() / 8));
 	file.close();
-
-	// statusBar()->showMessage(fileName);
 }
 
 void MainWindow::on_action_Get_samples_triggered()

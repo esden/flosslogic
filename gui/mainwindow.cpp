@@ -221,7 +221,8 @@ void MainWindow::on_action_Open_triggered()
 		   "VCD files (*.vcd);;"
 		   "All files (*)"));
 
-	/* TODO: Error handling. */
+	if (fileName == NULL)
+		return;
 
 	QFile file(fileName);
 	file.open(QIODevice::ReadOnly);
@@ -229,14 +230,15 @@ void MainWindow::on_action_Open_triggered()
 
 	/* TODO: Implement support for loading different input formats. */
 
-	sample_buffer = (uint8_t *)malloc(512 * 100); /* FIXME */
+	sample_buffer = (uint8_t *)malloc(file.size());
+	if (sample_buffer == NULL) {
+		/* TODO: Error handling. */
+	}
 
-	in.readRawData((char *)sample_buffer, 512 * 100 /* FIXME */);
+	in.readRawData((char *)sample_buffer, file.size());
 	file.close();
 
 	setNumChannels(8); /* FIXME */
-
-	/* FIXME. */
 	setupDockWidgets();
 
 	/* FIXME. */
@@ -252,7 +254,8 @@ void MainWindow::on_action_Save_as_triggered()
 		tr("Save sample file"), ".",
 		tr("Raw sample files (*.raw *.bin);;All files (*)"));
 
-	/* TODO: Error handling. */
+	if (fileName == NULL)
+		return;
 
 	QFile file(fileName);
 	file.open(QIODevice::WriteOnly);
@@ -260,7 +263,8 @@ void MainWindow::on_action_Save_as_triggered()
 
 	/* TODO: Implement support for saving to different output formats. */
 
-	out.writeRawData((const char *)sample_buffer, 512 * 100 /* FIXME */);
+	out.writeRawData((const char *)sample_buffer,
+			 getNumSamples() * (getNumChannels() / 8));
 	file.close();
 
 	// statusBar()->showMessage(fileName);

@@ -274,10 +274,14 @@ void MainWindow::on_action_Open_triggered()
 	ui->action_Save_as->setEnabled(true);
 	ui->action_Get_samples->setEnabled(false);
 
+	for (int i = 0; i < getNumChannels(); i++) {
+		channelRenderAreas[i]->setSampleStart(0);
+		channelRenderAreas[i]->setSampleEnd(getNumSamples());
+	}
 
 	/* FIXME */
 #if 0
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < getNumChannels(); i++) {
 		widgets[i]->repaint();
 		channelRenderAreas[i]->repaint();
 	}
@@ -429,4 +433,9 @@ void MainWindow::on_action_New_triggered()
 
 	/* TODO: More cleanups. */
 	/* TODO: Free sample buffer(s). */
+}
+
+uint8_t *getDemoSampleBuffer(void)
+{
+	/* TODO */
 }

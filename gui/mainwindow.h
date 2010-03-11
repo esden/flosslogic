@@ -64,6 +64,7 @@ public:
 	QWidget *widgets[NUMCHANNELS];
 
 	void setupDockWidgets(void);
+	uint8_t *getDemoSampleBuffer(void);
 
 private:
 	Ui::MainWindow *ui;

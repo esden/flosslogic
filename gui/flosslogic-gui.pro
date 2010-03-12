@@ -37,3 +37,11 @@ LIBS      += -L../lib -lflosslogic
 INCLUDEPATH += ../include
 
 RESOURCES += flosslogic-gui.qrc
+
+macx {
+	LIBS += -L/opt/local/lib
+	INCLUDEPATH += /opt/local/include
+	FILETYPES.files = ../lib/libflosslogic.dylib
+	FILETYPES.path = Contents/Frameworks
+	QMAKE_BUNDLE_DATA += FILETYPES
+}

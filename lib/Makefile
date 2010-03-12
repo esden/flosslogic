@@ -48,6 +48,7 @@ all: $(SONAME)
 $(SONAME): $(SRC) $(HEADERS)
 ifeq ($(OS),Darwin)
 	$(CC) -dynamiclib -flat_namespace -undefined suppress \
+		-Wl,-install_name,@executable_path/../Frameworks/lib$(LIBNAME).dylib \
 		-o lib$(LIBNAME).dylib $(SRC) \
 		$(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LIBS)
 else ifeq ($(OS),MINGW)

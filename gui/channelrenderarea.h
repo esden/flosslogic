@@ -48,6 +48,8 @@ public:
 	uint64_t getSampleEnd(void);
 	float getZoomFactor(void);
 
+	void generatePainterPath(uint64_t ss, uint64_t se, int low, int high);
+
 protected:
 	void paintEvent(QPaintEvent *event);
 	void wheelEvent(QWheelEvent *event);
@@ -72,6 +74,9 @@ private:
 	uint64_t sampleEnd;
 	uint64_t numSamples;
 	float zoomFactor;
+	QPainterPath painterPath;
+	int first;
+
 };
 
 #endif // CHANNELRENDERAREA_H

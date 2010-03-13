@@ -275,8 +275,11 @@ void MainWindow::on_action_Open_triggered()
 	ui->action_Get_samples->setEnabled(false);
 
 	for (int i = 0; i < getNumChannels(); i++) {
+		channelRenderAreas[i]->setChannelNumber(i);
+		channelRenderAreas[i]->setNumSamples(file.size());
 		channelRenderAreas[i]->setSampleStart(0);
 		channelRenderAreas[i]->setSampleEnd(getNumSamples());
+		channelRenderAreas[i]->update();
 	}
 
 	/* FIXME */
@@ -351,9 +354,11 @@ void MainWindow::on_action_Get_samples_triggered()
 
 	sample_buffer = buf;
 	for (int i = 0; i < getNumChannels(); i++) {
+		channelRenderAreas[i]->setChannelNumber(i);
 		channelRenderAreas[i]->setNumSamples(numSamplesLocal);
 		channelRenderAreas[i]->setSampleStart(0);
 		channelRenderAreas[i]->setSampleEnd(numSamplesLocal);
+		channelRenderAreas[i]->update();
 	}
 
 #if 0

@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
 	currentLA = -1;
 	numChannels = -1;
 
-	for (int i = 0; i < NUMCHANNELS; i++)
+	for (int i = 0; i < NUMCHANNELS; ++i)
 		dockWidgets[i] = NULL;
 
 	ui->setupUi(this);
@@ -64,7 +64,7 @@ void MainWindow::setupDockWidgets(void)
 
 	/* TODO: Kill any old dockWidgets before creating new ones? */
 
-	for (i = 0; i < getNumChannels(); i++) {
+	for (i = 0; i < getNumChannels(); ++i) {
 		widgets[i] = new QWidget(this);
 		gridLayouts[i] = new QGridLayout(widgets[i]);
 
@@ -274,7 +274,7 @@ void MainWindow::on_action_Open_triggered()
 	ui->action_Save_as->setEnabled(true);
 	ui->action_Get_samples->setEnabled(false);
 
-	for (int i = 0; i < getNumChannels(); i++) {
+	for (int i = 0; i < getNumChannels(); ++i) {
 		channelRenderAreas[i]->setChannelNumber(i);
 		channelRenderAreas[i]->setNumSamples(file.size());
 		channelRenderAreas[i]->setSampleStart(0);
@@ -284,7 +284,7 @@ void MainWindow::on_action_Open_triggered()
 
 	/* FIXME */
 #if 0
-	for (int i = 0; i < getNumChannels(); i++) {
+	for (int i = 0; i < getNumChannels(); ++i) {
 		widgets[i]->repaint();
 		channelRenderAreas[i]->repaint();
 	}
@@ -353,7 +353,7 @@ void MainWindow::on_action_Get_samples_triggered()
 	progress.setValue(numSamplesLocal);
 
 	sample_buffer = buf;
-	for (int i = 0; i < getNumChannels(); i++) {
+	for (int i = 0; i < getNumChannels(); ++i) {
 		channelRenderAreas[i]->setChannelNumber(i);
 		channelRenderAreas[i]->setNumSamples(numSamplesLocal);
 		channelRenderAreas[i]->setSampleStart(0);
@@ -404,7 +404,7 @@ uint64_t MainWindow::getNumSamples(void)
 
 void MainWindow::on_action_New_triggered()
 {
-	for (int i = 0; i < NUMCHANNELS; i++) {
+	for (int i = 0; i < NUMCHANNELS; ++i) {
 		if (dockWidgets[i]) {
 			/* TODO: Check if all childs are also killed. */
 			delete dockWidgets[i];

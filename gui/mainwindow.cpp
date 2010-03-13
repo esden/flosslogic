@@ -95,15 +95,27 @@ void MainWindow::setupDockWidgets(void)
 		dockWidgets[i]->setWidget(widgets[i]);
 		addDockWidget(Qt::RightDockWidgetArea, dockWidgets[i]);
 
+		/* Update labels upon changes. */
 		QObject::connect(channelRenderAreas[i],
-				 SIGNAL(sampleStartChanged(QString)),
-				 ui->labelSampleStart, SLOT(setText(QString)));
+			SIGNAL(sampleStartChanged(QString)),
+			ui->labelSampleStart, SLOT(setText(QString)));
 		QObject::connect(channelRenderAreas[i],
-				 SIGNAL(sampleEndChanged(QString)),
-				 ui->labelSampleEnd, SLOT(setText(QString)));
+			SIGNAL(sampleEndChanged(QString)),
+			ui->labelSampleEnd, SLOT(setText(QString)));
 		QObject::connect(channelRenderAreas[i],
-				 SIGNAL(zoomFactorChanged(QString)),
-				 ui->labelZoomFactor, SLOT(setText(QString)));
+			SIGNAL(zoomFactorChanged(QString)),
+			ui->labelZoomFactor, SLOT(setText(QString)));
+
+		/* Redraw channels upon changes. */
+		QObject::connect(channelRenderAreas[i],
+			SIGNAL(sampleStartChanged(QString)),
+			channelRenderAreas[i], SLOT(generatePainterPath()));
+		QObject::connect(channelRenderAreas[i],
+			SIGNAL(sampleEndChanged(QString)),
+			channelRenderAreas[i], SLOT(generatePainterPath()));
+		QObject::connect(channelRenderAreas[i],
+			SIGNAL(zoomFactorChanged(QString)),
+			channelRenderAreas[i], SLOT(generatePainterPath()));
 
 		// dockWidgets[i]->show();
 #if 0
@@ -283,12 +295,6 @@ void MainWindow::on_action_Open_triggered()
 	}
 
 	/* FIXME */
-#if 0
-	for (int i = 0; i < getNumChannels(); ++i) {
-		widgets[i]->repaint();
-		channelRenderAreas[i]->repaint();
-	}
-#endif
 }
 
 void MainWindow::on_action_Save_as_triggered()

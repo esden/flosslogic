@@ -40,8 +40,7 @@ ChannelRenderArea::ChannelRenderArea(QWidget *parent) : QWidget(parent)
 	sampleStart = 0;
 	sampleEnd = 0;
 	zoomFactor = 1.0;
-	// painterPath = NULL;
-	first = 1;
+	painterPath = new QPainterPath();
 }
 
 QSize ChannelRenderArea::minimumSizeHint() const
@@ -56,28 +55,46 @@ QSize ChannelRenderArea::sizeHint() const
 	// return QSize(Qt::PreferredSize, Qt::PreferredSize);
 }
 
-void ChannelRenderArea::generatePainterPath(uint64_t ss, uint64_t se,
-					    int low, int high)
+void ChannelRenderArea::generatePainterPath(void)
 {
-	int current_x, current_y, oldval, newval, ch;
+	int current_x, current_y, oldval, newval;
+	int low = this->height() - 2, high = 2, ch = getChannelNumber();
+	uint64_t ss = getSampleStart(), se = getSampleEnd();
 
-	ch = getChannelNumber();
+	if (sample_buffer == NULL)
+		return;
+
+	delete painterPath;
+	painterPath = new QPainterPath();
+
 	current_x = 0;
 	oldval = getbit(sample_buffer, 0, ch);
 	current_y = (oldval) ? high : low;
-	painterPath.moveTo(current_x, current_y);
+	painterPath->moveTo(current_x, current_y);
 
 	for (uint64_t i = ss + 1; i < se; ++i) {
 		current_x += 2;
 		newval = getbit(sample_buffer, i, ch);
 		if (oldval != newval) {
-			painterPath.lineTo(current_x, current_y);
+			painterPath->lineTo(current_x, current_y);
 			current_y = (newval) ? high : low;
-			painterPath.lineTo(current_x, current_y);
+			painterPath->lineTo(current_x, current_y);
 			oldval = newval;
 		}
 	}
-	painterPath.lineTo(current_x, current_y);
+	painterPath->lineTo(current_x, current_y);
+
+	/* Force a redraw. */
+	this->update();
+}
+
+void ChannelRenderArea::resizeEvent(QResizeEvent *event)
+{
+	/* Quick hack to prevent compiler warning. */
+	event = event;
+
+	/* Quick hack to force a redraw upon resize. */
+	generatePainterPath();
 }
 
 void ChannelRenderArea::paintEvent(QPaintEvent *event)
@@ -98,15 +115,7 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	// painter.fillRect(0, 0, this->width(), this->height(), QColor(Qt::gray));
 	// painter.setRenderHint(QPainter::Antialiasing, false);
 
-	if (first) {
-		/* TODO: Also re-generate the path upon dockWindow changes. */
-		/* TODO: Error handling. */
-		generatePainterPath(getSampleStart(), getSampleEnd(),
-				    this->height() - 2, 2);
-		first = 0;
-	}
-
-	painter.drawPath(painterPath);
+	painter.drawPath(*painterPath);
 
 	// painter.scale(getZoomFactor(), getZoomFactor());
 }

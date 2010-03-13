@@ -48,9 +48,8 @@ public:
 	uint64_t getSampleEnd(void);
 	float getZoomFactor(void);
 
-	void generatePainterPath(uint64_t ss, uint64_t se, int low, int high);
-
 protected:
+	void resizeEvent(QResizeEvent *event);
 	void paintEvent(QPaintEvent *event);
 	void wheelEvent(QWheelEvent *event);
 
@@ -66,6 +65,7 @@ public slots:
 	void setSampleStart(uint64_t s);
 	void setSampleEnd(uint64_t s);
 	void setZoomFactor(float z);
+	void generatePainterPath(void);
 
 private:
 	int channelNumber;
@@ -74,8 +74,7 @@ private:
 	uint64_t sampleEnd;
 	uint64_t numSamples;
 	float zoomFactor;
-	QPainterPath painterPath;
-	int first;
+	QPainterPath *painterPath;
 
 };
 

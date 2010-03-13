@@ -57,8 +57,9 @@ QSize ChannelRenderArea::sizeHint() const
 void ChannelRenderArea::paintEvent(QPaintEvent *event)
 {
 	int bit, low = this->height() - 2, high = 2, current_x, current_y;
-	uint64_t i;
+	uint64_t i, ss, se;
 	QPainter painter(this);
+	int oldval, newval, ch;
 
 	/* Quick hack to prevent compiler warning. */
 	event = event;
@@ -72,25 +73,40 @@ void ChannelRenderArea::paintEvent(QPaintEvent *event)
 	painter.setPen(pen);
 
 	// painter.fillRect(0, 0, this->width(), this->height(), QColor(Qt::gray));
-
-	current_x = 0;
-	current_y = low; /* FIXME? */
+	// painter.setRenderHint(QPainter::Antialiasing, false);
 
 	QPainterPath path;
+
+	current_x = 0;
+	oldval = getbit(sample_buffer, 0, getChannelNumber());
+	if (oldval != 0)
+		current_y = high;
+	else
+		current_y = low;
 	path.moveTo(current_x, current_y);
 
-	for (i = getSampleStart(); i < getSampleEnd(); i++) {
+	ss = getSampleStart();
+	se = getSampleEnd();
+	ch = getChannelNumber();
+
+	for (i = ss + 1; i < se; ++i) {
 		current_x += 2;
-		path.lineTo(current_x, current_y);
-		bit = getbit(sample_buffer, i, getChannelNumber());
-		if (bit != 0)
-			current_y = high;
-		else
-			current_y = low;
-		path.lineTo(current_x, current_y);
+
+		newval = getbit(sample_buffer, i, ch);
+
+		if (oldval != newval) {
+			path.lineTo(current_x, current_y);
+			if (newval != 0)
+				current_y = high;
+			else
+				current_y = low;
+			path.lineTo(current_x, current_y);
+			oldval = newval;
+		}
 	}
 
 	painter.drawPath(path);
+
 	// painter.scale(getZoomFactor(), getZoomFactor());
 }
 

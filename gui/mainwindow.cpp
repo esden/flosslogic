@@ -270,7 +270,7 @@ void MainWindow::on_action_Open_triggered()
 	ui->comboBoxSampleRate->setEnabled(false); /* FIXME */
 
 	ui->comboBoxNumSamples->clear();
-	ui->comboBoxNumSamples->addItem(s.sprintf("%d", getNumSamples()),
+	ui->comboBoxNumSamples->addItem(s.sprintf("%llu", getNumSamples()),
 					getNumSamples());
 	ui->comboBoxNumSamples->setEnabled(true);
 
@@ -449,4 +449,5 @@ void MainWindow::on_action_New_triggered()
 uint8_t *getDemoSampleBuffer(void)
 {
 	/* TODO */
+	return NULL;
 }
